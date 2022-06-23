@@ -4,13 +4,10 @@ import Chats from '../components/Chats'
 import ContactInfo from "../components/ContactInfo"
 import { useSwipeable } from 'react-swipeable'
 import PageLogin from './login'
-import { AuthContextProvider, LoadingContextProvider } from '../context';
+import { AuthContextProvider } from '../context';
+import { Navigation } from "../components/Surface/Navigation";
 
 export default function Home() {
-  const { setLoading } = LoadingContextProvider()
-  /*useEffect(() => {
-    setLoading(false);
-  }, []);*/
   const [active, setActive] = useState(0)
   const handler = useSwipeable({
     onSwipedLeft: (eventdata) => {
@@ -36,10 +33,7 @@ export default function Home() {
   const { verificandoCookie } = authContext
   console.log("verificandoCookie", verificandoCookie)
   console.log("user:", user)
-  if (!verificandoCookie) {
-    console.log("no ha hecho la verificación de cookie")
-    return <></>
-  } else {
+  if (verificandoCookie) {
     console.log("hizo la verificación de cookie")
     if (!user) {
       console.log("pero no pazó la verificación")
@@ -48,6 +42,7 @@ export default function Home() {
       console.log("y pazó la verificación devolviendo el usuario")
       return (
         <>
+          <Navigation />
           <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
             <Chats active={active == 0} />
             <BoxChat active={active == 1} />
@@ -64,4 +59,5 @@ export default function Home() {
       )
     }
   }
+  return <></>
 }

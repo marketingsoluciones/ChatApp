@@ -28,7 +28,7 @@ type Context = {
   setUser: Dispatch<SetStateAction<Partial<UserMax | null>>>;
   verificandoCookie: Partial<boolean | null>;
   setVerificandoCookie: Dispatch<SetStateAction<Partial<boolean | null>>>;
-};
+  };
 
 const initialContext: Context = {
   user: null,
@@ -76,7 +76,6 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
           console.log("asdf", asdf)
           const customToken = asdf?.customToken
           console.info("Llamo con mi sessionCookie para traerme customToken");
-          console.info("Custom token", customToken)
           customToken && signInWithCustomToken(auth, customToken);
           console.info("Hago sesion con el custom token");
         }
