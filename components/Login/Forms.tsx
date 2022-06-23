@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { LogoFullColor } from "../Icons";
+import { LogoFullColor } from "../Icons/";
 import { BusinessAccess, Providers, RegisterQuestion } from "./Components";
 import FormLogin from "./Forms/FormLogin";
 //import { FirstStep, SecondStep } from "./Forms/Register/Steps";

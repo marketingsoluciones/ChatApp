@@ -1,7 +1,7 @@
 import { FC, MouseEventHandler, useContext } from "react";
 import { GoogleProvider, FacebookProvider, auth } from "../../firebase";
 import { Icon } from "../Surface/Footer";
-import { AppleIcon, FacebookIcon, GoogleIcon } from "../Icons";
+import { AppleIcon, FacebookIcon, GoogleIcon } from "../Icons/";
 import { signInWithPopup, UserCredential } from "firebase/auth";
 import router from "next/router";
 import { GraphQL, fetchApi, queries } from "../../utils/Fetching";

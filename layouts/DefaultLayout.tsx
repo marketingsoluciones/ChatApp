@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { LoadingProvider, LoadingContextProvider, AuthContextProvider } from "../context";
+import { LoadingProvider } from "../context";
 import { FC } from "react";
 
 const DynamicAuthProvider = dynamic((): any =>
