@@ -20,7 +20,7 @@ const PageLogin: FC = () => {
   useEffect(() => {
     console.log("useEffect")
     setLoading(false);
-  }, []);
+  }, [setLoading]);
   //const { user } = AuthContextProvider();
   const [stage, setStage] = useState<keyof typeof Stages>("login");
 

@@ -5,9 +5,9 @@ import Image from 'next/image'
 import Profile from '../assets/img/profile.png'
 
 interface propsChats {
-  active : boolean
+  active: boolean
 }
-const Chats : FC <propsChats> = ({active}) => {
+const Chats: FC<propsChats> = ({ active }) => {
   return (
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex-col flex items-center justify-start `}>
@@ -22,7 +22,7 @@ const Chats : FC <propsChats> = ({active}) => {
           <CardChat />
           <CardChat />
           <CardChat />
-          
+
         </div>
       </div>
       <style jsx>
@@ -77,7 +77,7 @@ const CircleUser: FC<propsCircleUser> = memo(({ image, name }) => {
         </div>
       )}
       <span className="relative">
-        <Image src={image} alt={name} width={48} height={48} objectFit={"contain"}  className="rounded-full" />
+        <Image src={image} alt={name} width={48} height={48} objectFit={"contain"} className="rounded-full" />
         <svg className="bg-green rounded-full w-3 h-3 absolute bottom-1 right-1 border-2 border-white" />
       </span>
       <p className="text-xs text-gray-200 truncate w-full">{name}</p>
@@ -89,10 +89,10 @@ const Users: FC = () => {
   return (
     <>
       <div className="w-full overflow-y-hidden overflow-x-auto flex gap-6 ">
-       <CircleUser image={Profile} name="Francisco Montilla"/>
-       <CircleUser image={Profile} name="Francisco Montilla"/>
-       <CircleUser image={Profile} name="Francisco Montilla"/>
-       <CircleUser image={Profile} name="Francisco Montilla"/>
+        <CircleUser image={Profile} name="Francisco Montilla" />
+        <CircleUser image={Profile} name="Francisco Montilla" />
+        <CircleUser image={Profile} name="Francisco Montilla" />
+        <CircleUser image={Profile} name="Francisco Montilla" />
       </div>
       <style jsx>
         {`
@@ -108,7 +108,7 @@ const Users: FC = () => {
 const CardChat: FC = () => {
   return (
     <div className="bg-white shadow w-full rounded-lg h-max transition duration-800 hover:bg-secondary grid grid-cols-4 items-center p-4 cursor-pointer">
-      <Image src={Profile} width={48} height={48} objectFit={"contain"} className="rounded-full col-span-1" />
+      <Image src={Profile} width={48} height={48} objectFit={"contain"} className="rounded-full col-span-1" alt="" />
       <div className="col-span-3">
         <h3 className="font-semibold text-gray-300 text-sm">Jhon Travolta</h3>
         <p className="font-regular text-gray-200 text-xs w-full truncate">
