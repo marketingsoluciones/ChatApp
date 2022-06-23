@@ -1,11 +1,20 @@
-import { FC } from "react";
+import { FC, MouseEventHandler } from "react";
 import { BellIcon } from "./icons";
+import { LedIndicator } from "./LedIndicator"
 
-export const Notification: FC = () => (
-  <div className="flex items-center px-4 md:border-l md:border-r md:border-base h-full cursor-pointer">
-    <span className="relative">
-      <BellIcon className="w-6 h-6 text-gray-100" />
-      <svg className="rounded-full bg-primary w-2 h-2 absolute top-0 right-0" />
-    </span>
-  </div>
+interface propsNotication {
+  valir?: boolean;
+  value?: number | undefined | null
+  onClick: MouseEventHandler<HTMLDivElement> | undefined
+}
+
+export const Notification: FC<propsNotication> = ({ valir, value, onClick }) => (
+  <>
+    <div className="flex items-center px-4 md:border-l md:border-r md:border-base h-full cursor-pointer" onClick={onClick}>
+      <span className="relative">
+        <BellIcon className="w-6 h-6 text-gray-100" />
+        <LedIndicator valir={valir} value={value} />
+      </span>
+    </div>
+  </>
 );
