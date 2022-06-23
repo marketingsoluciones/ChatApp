@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import Cookies from 'js-cookie';
-//import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 //import { getCookie } from './utils/Cookies';
 
 
@@ -8,7 +8,7 @@ type Fetching = {
     graphql: CallableFunction
     youtube: CallableFunction
     restCountries: CallableFunction
-    //socketIO: CallableFunction
+    socketIO: CallableFunction
 }
 
 
@@ -39,15 +39,15 @@ export const api: Fetching = {
         return await axios.get('https://restcountries.com/v3.1/all')
     },
 
-    /*socketIO : ({token} : {token: string}) => {
+    socketIO: ({ token }: { token: string }) => {
         const socket = io(`https://api.bodasdehoy.com`, {
-            auth:{
+            auth: {
                 token: `Bearer ${token}`
             }
         })
 
         return socket
-    }*/
+    }
 }
 
 

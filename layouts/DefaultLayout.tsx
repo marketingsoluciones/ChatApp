@@ -5,6 +5,9 @@ import { FC } from "react";
 const DynamicAuthProvider = dynamic((): any =>
   import("../context").then((mod) => mod.AuthProvider)
 );
+const DynamicSocketProvider = dynamic((): any =>
+  import("../context").then((mod) => mod.SocketProvider)
+);
 
 
 const DefaultLayout: FC = ({ children }) => {
@@ -13,11 +16,13 @@ const DefaultLayout: FC = ({ children }) => {
 
   return (
     <DynamicAuthProvider>
-      <LoadingProvider>
-        <main className="h-auto bg-base">
-          {children}
-        </main>
-      </LoadingProvider>
+      <DynamicSocketProvider >
+        <LoadingProvider>
+          <main className="h-auto bg-base">
+            {children}
+          </main>
+        </LoadingProvider>
+      </DynamicSocketProvider >
     </DynamicAuthProvider>
   );
 
