@@ -1,10 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useReducer } from "react";
 import { DotsIcon, FileIcon } from "./icons";
+import { AuthContextProvider } from '../context';
 
 interface propsContact {
   active: boolean
 }
 const ContactInfo : FC <propsContact> = ({active}) => {
+  
   return (
     <>
       <div className={`lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex flex-col items-center justify-start overflow-auto ${active ? "" : "hidden"} `}>
@@ -17,11 +19,8 @@ const ContactInfo : FC <propsContact> = ({active}) => {
       .chats {
         height: calc(100vh - 4rem);
       }
-
       ::-webkit-scrollbar {
         display: none;
-      
-
     `}
       </style>
     </>
@@ -31,18 +30,22 @@ const ContactInfo : FC <propsContact> = ({active}) => {
 export default ContactInfo;
 
 const Profile = () => {
+  const {user} = AuthContextProvider()
   return (
     <div className="bg-white h-max w-full rounded-lg p-10 flex flex-col items-center justify-center">
       <div className="bg-tertiary w-28 h-28 rounded-full" />
+      {/* <img src={user?.photoURL?user?.photoURL:"error"} alt="" className="bg-tertiary w-28 h-28 rounded-full" /> */}
+      
       <h2 className="text-md font-semibold text-gray-300 pt-3">
-        Francisco Montilla
+        {user?.displayName}
       </h2>
-      <p className="text-sm text-gray-200 leading-4">Software Enginner</p>
+      <p className="text-sm text-gray-200 leading-4">{user?.role}</p>
     </div>
   );
 };
 
 const Information = () => {
+  const {user} = AuthContextProvider()
   interface propsInfo {
     title: string;
     contain: string;
@@ -50,6 +53,7 @@ const Information = () => {
   }
 
   const Info: FC<propsInfo> = ({ title, contain, border = true }) => {
+    
     return (
       <div
         className={`flex flex-col items-start justify-center py-2 ${
@@ -62,13 +66,14 @@ const Information = () => {
     );
   };
   return (
+  
     <div className="bg-white h-max w-full rounded-lg p-4">
       <h2 className="text-gray-200 text-md pb-2">Informacion personal</h2>
-      <Info title="Pais" contain="Venezuela" />
-      <Info title="Phone" contain="+32 19 23 62 24 34" />
+      <Info title="Pais" contain={user?.country?user.country:"error"} />
+      <Info title="Phone" contain="yo lo quitaria" />
       <Info
         title="Correo electronico"
-        contain="johntravolta@left4code.com"
+        contain={user?.email?user?.email:"error"}
         border={false}
       />
     </div>

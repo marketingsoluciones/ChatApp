@@ -5,7 +5,7 @@ import {
   InstagramIcon,
   PinterestIcon,
   YoutubeIcon,
-} from "../Icons";
+} from "../Icons/index";
 
 type Item = {
   title: string;

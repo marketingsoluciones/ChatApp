@@ -7,7 +7,7 @@ export interface PropsIcon {
   fill?: string;
 }
 // Iconos de sistema
-/*export const UserIcon: FC<PropsIcon> = (props) => {
+export const UserIcon: FC<PropsIcon> = (props) => {
   return (
     <svg
       width={24}
@@ -195,7 +195,7 @@ export const ArrowIcon: FC<PropsIcon> = (props) => {
     </svg>
   )
 }
-*/
+
 export const EmailIcon: FC<PropsIcon> = (props) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
