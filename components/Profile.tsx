@@ -1,7 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import { FC, MouseEventHandler, useState } from "react";
 import { AuthContextProvider } from "../context";
 import { useAuthentication } from "../utils/Authentication";
 import {UserIcon} from "../components/Icons/index"
+import image from "next/image";
 
 export const Profile: FC = () => {
   const {user}  = AuthContextProvider()
