@@ -100,31 +100,42 @@ const Users: FC = () => {
           pagination={{clickable: true}}
           navigation
           spaceBetween={20}
-          breakpoints={{
+          slidesPerView= {5}
+          
+          /* breakpoints={{
             0: {
               "slidesPerView": 1,
             },
             1024: {
               "slidesPerView": 3,
             }
-          }}
+          }} */
           className =" w-full "
         >
           <SwiperSlide className=" py-8 w-full  flex gap-8 ">
             <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
-            <CircleUser image={Profile} name="Francisco Montilla" />
+          </SwiperSlide>
+          <SwiperSlide className=" py-8 w-full  flex gap-8 ">
             <CircleUser image={Profile} name="Francisco Montilla" />
           </SwiperSlide>
-          
+          <SwiperSlide className=" py-8 w-full  flex gap-8 ">
+            <CircleUser image={Profile} name="Francisco Montilla" />
+          </SwiperSlide>
+          <SwiperSlide className=" py-8 w-full  flex gap-8 ">
+            <CircleUser image={Profile} name="Francisco Montilla" />
+          </SwiperSlide>
+          <SwiperSlide className=" py-8 w-full  flex gap-8 ">
+            <CircleUser image={Profile} name="Francisco Montilla" />
+          </SwiperSlide>
+          <SwiperSlide className=" py-8 w-full  flex gap-8 ">
+            <CircleUser image={Profile} name="Francisco Montilla" />
+          </SwiperSlide>
+          <SwiperSlide className=" py-8 w-full  flex gap-8 ">
+            <CircleUser image={Profile} name="Francisco Montilla" />
+          </SwiperSlide>
+          <SwiperSlide className=" py-8 w-full  flex gap-8 ">
+            <CircleUser image={Profile} name="Francisco Montilla" />
+          </SwiperSlide>
       </Swiper>
     </div>
       
