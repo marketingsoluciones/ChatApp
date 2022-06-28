@@ -2,7 +2,14 @@ import { FC, memo } from "react";
 import useHover from "../hooks/useHover";
 import { SearchIcon } from "./icons";
 import Image from 'next/image'
-import Profile from '../assets/img/profile.png'
+import Profile from '../assets/img/profile.png';
+
+import  SwiperCore , {Pagination, Navigation} from 'swiper';
+import {Swiper, SwiperSlide} from "swiper/react";
+
+
+//install Swiper modules
+SwiperCore.use([Pagination,Navigation]);
 
 interface propsChats {
   active: boolean
@@ -16,13 +23,12 @@ const Chats: FC<propsChats> = ({ active }) => {
           <Buscador />
           <Users />
         </div>
-        <div className="grid gap-6 overflow-auto ">
-          <h3 className="font-medium text-md pt-4">Mis conversaciones</h3>
+        <div className="grid gap-5 overflow-auto ">
+          <h3 className="font-medium text-md ">Mis conversaciones</h3>
           <CardChat />
           <CardChat />
           <CardChat />
           <CardChat />
-
         </div>
       </div>
       <style jsx>
@@ -71,9 +77,10 @@ const CircleUser: FC<propsCircleUser> = memo(({ image, name }) => {
     >
       {isHovered && (
         <div className="absolute transform mb-12 -translate-y-full bg-black w-max h-max text-white opacity-70 visibility-none px-2 py-1 rounded-lg ">
-          <p className="text-white font-medium text-xs text-center">
+          {/* esta comentado porque al hacer hover el contenedor del swiper no deja mostrar la burbuja desplegada */}
+          {/* <p className="text-white font-medium text-xs text-center">
             Francisco Montilla
-          </p>
+          </p> */}
         </div>
       )}
       <span className="relative">
@@ -88,12 +95,45 @@ const CircleUser: FC<propsCircleUser> = memo(({ image, name }) => {
 const Users: FC = () => {
   return (
     <>
-      <div className="w-full overflow-y-hidden overflow-x-auto flex gap-6 ">
+    <div className="flex items-center justify-center w-full">
+      <Swiper
+          pagination={{clickable: true}}
+          navigation
+          spaceBetween={20}
+          breakpoints={{
+            0: {
+              "slidesPerView": 1,
+            },
+            1024: {
+              "slidesPerView": 3,
+            }
+          }}
+          className =" w-full "
+        >
+          <SwiperSlide className=" py-8 w-full  flex gap-8 ">
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+            <CircleUser image={Profile} name="Francisco Montilla" />
+          </SwiperSlide>
+          
+      </Swiper>
+    </div>
+      
+      {/* <div className="w-full overflow-y-hidden overflow-x-auto flex gap-6 ">
         <CircleUser image={Profile} name="Francisco Montilla" />
         <CircleUser image={Profile} name="Francisco Montilla" />
         <CircleUser image={Profile} name="Francisco Montilla" />
         <CircleUser image={Profile} name="Francisco Montilla" />
-      </div>
+      </div> */}
       <style jsx>
         {`
           ::-webkit-scrollbar {

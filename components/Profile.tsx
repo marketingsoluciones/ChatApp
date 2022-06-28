@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+
 import { FC, MouseEventHandler, useState } from "react";
 import { AuthContextProvider } from "../context";
 import { useAuthentication } from "../utils/Authentication";
@@ -21,7 +21,7 @@ export const Profile: FC = () => {
           </p>
         </span>
       </div>
-      <span className={`${show?"hidden":"block absolute right-5 top-16"}`}>
+      <span className={`${show?"block absolute right-5 top-16":"hidden"}`}>
           <ProfileMenu />
       </span>
     </>
