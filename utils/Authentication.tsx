@@ -24,7 +24,7 @@ export const useAuthentication = () => {
       if (authResult?.sessionCookie) {
         const { sessionCookie } = authResult;
         // Setear en localStorage token JWT
-        Cookies.set("sessionBodas", sessionCookie);
+        Cookies.set("sessionBodas", sessionCookie, { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
         return sessionCookie
       } else {
         console.warn("No se pudo cargar la cookie de sesión por que hubo un problema")
