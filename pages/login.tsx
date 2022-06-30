@@ -1,12 +1,8 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { ButtonClose } from "../components/Inputs";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import { Login, Register } from '../components/Login/Forms';
 import { LoadingContextProvider } from '../context';
-
-
-
-
 //import { AuthContextProvider } from "../context";
 
 // Tipos de datos personalizados
@@ -16,6 +12,8 @@ type Forms = {
 };
 
 const PageLogin: FC = () => {
+  const r = useRouter()
+  console.log(r.query)
   const { setLoading } = LoadingContextProvider()
   useEffect(() => {
     console.log("useEffect")

@@ -8,7 +8,9 @@ const DynamicAuthProvider = dynamic((): any =>
 const DynamicSocketProvider = dynamic((): any =>
   import("../context").then((mod) => mod.SocketProvider)
 );
-
+const DynamicChatsProvider = dynamic((): any =>
+  import("../context").then((mod) => mod.ChatProvider)
+);
 
 const DefaultLayout: FC = ({ children }) => {
 
@@ -16,13 +18,15 @@ const DefaultLayout: FC = ({ children }) => {
 
   return (
     <DynamicAuthProvider>
-      <DynamicSocketProvider >
-        <LoadingProvider>
-          <main className="h-auto bg-base">
-            {children}
-          </main>
-        </LoadingProvider>
-      </DynamicSocketProvider >
+      <DynamicSocketProvider>
+        <DynamicChatsProvider>
+          <LoadingProvider>
+            <main className="h-auto bg-base">
+              {children}
+            </main>
+          </LoadingProvider>
+        </DynamicChatsProvider>
+      </DynamicSocketProvider>
     </DynamicAuthProvider>
   );
 
