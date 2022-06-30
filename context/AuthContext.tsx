@@ -28,7 +28,7 @@ type Context = {
   setUser: Dispatch<SetStateAction<Partial<UserMax | null>>>;
   verificandoCookie: Partial<boolean | null>;
   setVerificandoCookie: Dispatch<SetStateAction<Partial<boolean | null>>>;
-  };
+};
 
 const initialContext: Context = {
   user: null,
@@ -88,7 +88,7 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
   useEffect(() => {
     auth.onIdTokenChanged(async user => {
       if (user) {
-        Cookies.set("idToken", await user.getIdToken(), { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" })
+        Cookies.set("idToken", await user.getIdToken())
       }
     })
   }, [])
