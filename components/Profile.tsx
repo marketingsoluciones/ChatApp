@@ -3,7 +3,7 @@ import { FC, MouseEventHandler, useState } from "react";
 import { AuthContextProvider } from "../context";
 import { useAuthentication } from "../utils/Authentication";
 import {UserIcon} from "../components/Icons/index"
-import image from "next/image";
+import logout from "logout.png"
 
 export const Profile: FC = () => {
   const {user}  = AuthContextProvider()
@@ -34,7 +34,7 @@ const ProfileMenu = () => {
     <>
       <div className={`w-40 h-10 rounded-xl h-max bg-white shadow-md absolute  right-2 inset-y-full overflow-hidden z-50  }`}>
         <div className=" flex text-xs gap-2 justify-center pt-2 ">
-          <UserIcon/>
+          <img src="/logout.png" alt="salir" className="w-6 h-6"/>
           <button onClick={async()=>{_signOut()}}>cerrar sesion</button>
         </div>
       </div>

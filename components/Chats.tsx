@@ -100,7 +100,7 @@ const Users: FC = () => {
           pagination={{clickable: true}}
           navigation
           spaceBetween={20}
-          slidesPerView= {5}
+          slidesPerView= {4}
           
           /* breakpoints={{
             0: {
