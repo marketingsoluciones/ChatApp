@@ -124,6 +124,7 @@ type queries = {
   authStatus: string
   signOut: string
   singleUpload: string;
+  getInvitados: string;
 };
 
 export const queries: queries = {
@@ -1051,6 +1052,21 @@ export const queries: queries = {
       }
     }
   }`,
+  getInvitados:`query($uid: String){
+    queryenInvitados(uid:$uid){
+      total
+      results{
+        _id
+        uid
+        nickName
+        correo
+        eventos{
+          _id
+          nombre
+        }
+      }
+    }
+  }`
 };
 
 export const GraphQL = {

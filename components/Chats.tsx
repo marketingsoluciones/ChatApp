@@ -3,9 +3,11 @@ import useHover from "../hooks/useHover";
 import { SearchIcon } from "./icons";
 import Image from 'next/image'
 import Profile from '../assets/img/profile.png';
-
+import { fetchApi,queries } from "../utils/Fetching";
+import { GetStaticProps, GetStaticPropsContext, NextPage, GetStaticPaths  } from "next";
 import  SwiperCore , {Pagination, Navigation} from 'swiper';
 import {Swiper, SwiperSlide} from "swiper/react";
+import {invitados} from "../interfaces"
 
 
 //install Swiper modules
@@ -13,8 +15,42 @@ SwiperCore.use([Pagination,Navigation]);
 
 interface propsChats {
   active: boolean
+  total: string
+  results: string []
 }
-const Chats: FC<propsChats> = ({ active }) => {
+
+export async function getStaticProps ({params}:GetStaticPropsContext){
+  try{
+    const data = await fetchApi({
+      query: queries.getInvitados,
+      variables: {uid: params?.uid}
+    });
+    return{
+      props:data,
+    };
+  } catch (error){
+    console.log(error);
+    return{
+      props:{},
+    }
+  }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+};
+
+
+const Chats: FC<propsChats > = ({ active }, props) => {
+const {total} = props
+
+console.log("total de invitados",total)
+ 
+  
+ 
   return (
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex-col flex items-center justify-start `}>
@@ -25,6 +61,7 @@ const Chats: FC<propsChats> = ({ active }) => {
         </div>
         <div className="grid gap-5 overflow-auto ">
           <h3 className="font-medium text-md ">Mis conversaciones</h3>
+          
           <CardChat />
           <CardChat />
           <CardChat />

@@ -6,6 +6,11 @@ export interface fetchCategory {
   subCategories: category[]
 }
 
+export interface invitados {
+  total: string
+  results: string []
+}
+
 export type subCategory = {
   _id: string
   title: string
