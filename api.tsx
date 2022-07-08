@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 
 type Fetching = {
     graphql: CallableFunction
+    graphqlApp: CallableFunction
     youtube: CallableFunction
     restCountries: CallableFunction
     socketIO: CallableFunction
@@ -14,12 +15,21 @@ type Fetching = {
 
 
 const instance: AxiosInstance = axios.create({ baseURL: process.env.NEXT_PUBLIC_BASE_URL })
+const instanceApp: AxiosInstance = axios.create({ baseURL: process.env.NEXT_PUBLIC_BASE_URL_APP })
 
 
-export const api: Fetching = {
+export const api: Fetching | any = {
     graphql: async (data: object, token: string): Promise<AxiosResponse> => {
         let tokenFinal: string | null = token || Cookies.get("idToken") || ""
         return await instance.post("/graphql", data, {
+            headers: {
+                Authorization: `Bearer ${tokenFinal}`
+            }
+        })
+    },
+    graphqlApp: async (data: object, token: string): Promise<AxiosResponse> => {
+        let tokenFinal: string | null = token || Cookies.get("idToken") || ""
+        return await instanceApp.post("/graphql", data, {
             headers: {
                 Authorization: `Bearer ${tokenFinal}`
             }
@@ -40,7 +50,7 @@ export const api: Fetching = {
     },
 
     socketIO: ({ token }: { token: string }) => {
-        const socket = io(`https://api.bodasdehoy.com`, {
+        const socket = io(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
             auth: {
                 token: `Bearer ${token}`
             }

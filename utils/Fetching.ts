@@ -10,18 +10,20 @@ interface fetchApiProps {
   variables: object;
   type: keyof typeof types;
   token?: string;
+  apiRoute?: string;
 }
 export const fetchApi: CallableFunction = async ({
   query = ``,
   variables = {},
   type = "json",
   token,
+  apiRoute = "graphql"
 }: fetchApiProps): Promise<any> => {
   try {
     if (type === "json") {
       const {
         data: { data },
-      } = await api.graphql({ query, variables }, token);
+      } = await api[`${apiRoute}`]({ query, variables }, token);
       return Object.values(data)[0];
     } else if (type === "formData") {
       const formData = new FormData();
@@ -34,7 +36,6 @@ export const fetchApi: CallableFunction = async ({
         }
         if (item[1] instanceof Object) {
           Object.entries(item[1]).forEach((el) => {
-            console.log(el)
             if (el[1] instanceof File) {
               acc[el[0]] = [`variables.${item[0]}.${el[0]}`];
             }
@@ -76,7 +77,7 @@ export const fetchApi: CallableFunction = async ({
         }
       });
 
-      const { data } = await api.graphql(formData, token);
+      const { data } = await api[`${apiRoute}`](formData, token);
 
       if (data.errors) {
         throw new Error(JSON.stringify(data.errors));
@@ -90,6 +91,8 @@ export const fetchApi: CallableFunction = async ({
 };
 
 type queries = {
+  getContacts: string;
+  // revisar cuáles se usan de aquí en adelante
   createUser: string;
   createBusiness: string;
   createReviews: string;
@@ -124,10 +127,25 @@ type queries = {
   authStatus: string
   signOut: string
   singleUpload: string;
-  getInvitados: string;
 };
 
 export const queries: queries = {
+  getContacts: `query($uid: String){
+    queryenInvitados(uid:$uid){
+      total
+      results{
+        _id
+        uid
+        nickName
+        correo
+        eventos{
+          _id
+          nombre
+        }
+      }
+    }
+  }`,
+  // revisar cuáles se usan de aquí en adelante
   signOut: `mutation ($sessionCookie :String){
     signOut(sessionCookie:$sessionCookie)
   }`,
@@ -1052,21 +1070,6 @@ export const queries: queries = {
       }
     }
   }`,
-  getInvitados:`query($uid: String){
-    queryenInvitados(uid:$uid){
-      total
-      results{
-        _id
-        uid
-        nickName
-        correo
-        eventos{
-          _id
-          nombre
-        }
-      }
-    }
-  }`
 };
 
 export const GraphQL = {

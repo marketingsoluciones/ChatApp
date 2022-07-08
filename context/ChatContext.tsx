@@ -1,6 +1,7 @@
 import { Chat } from '../interfaces/index';
 import { SetStateAction, useEffect, useState, useCallback } from 'react';
 import { queries } from '../utils/Fetching';
+
 import { AuthContextProvider, SocketContextProvider } from '.';
 import {
   createContext,
@@ -15,7 +16,10 @@ interface ResultFetchChats {
   total: number | null;
   results: Chat[];
 }
-
+interface ResultFetchContacts {
+  total: number | null;
+  results: Chat[];
+}
 type Context = {
   chats: ResultFetchChats
   setChats: Dispatch<SetStateAction<ResultFetchChats>>
@@ -26,7 +30,9 @@ type Context = {
   conversation?: stateConversation | null,
   setConversation: Dispatch<SetStateAction<stateConversation>>
   show?: boolean,
-  setShow: Dispatch<SetStateAction<boolean>>
+  setShow: Dispatch<SetStateAction<boolean>>,
+  contacts: ResultFetchContacts,
+  setContacts: Dispatch<SetStateAction<ResultFetchContacts>>
 };
 
 const initialContext: Context = {
@@ -42,8 +48,12 @@ const initialContext: Context = {
   conversation: null,
   setConversation: () => { },
   show: false,
-  setShow: () => { }
-
+  setShow: () => { },
+  contacts: {
+    total: null,
+    results: []
+  },
+  setContacts: () => null,
 };
 
 const ChatContext = createContext<Context>(initialContext);
@@ -73,12 +83,24 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
     variables: { uid: user?.uid, limit, skip },
   });
 
+  const [contacts, setContacts, loadingContacts, errorContacts, fetchyApp] = useFetch({
+    query: queries.getChats,
+    variables: { uid: user?.uid, limit, skip },
+    apiRoute: "graphqlApp"
+  });
+
+
+
+
   const fetch = () => {
     fetchy({ query: queries.getChats, variables: { uid: user?.uid, limit, skip } });
   }
 
+
   useEffect(() => {
     fetch()
+    fetchyApp({ query: queries.getContacts, variables: { uid: user?.uid }, apiRoute: "graphqlApp" })
+
   }, [user?.uid]);
 
   const handleCreateChat = useCallback((data: Chat) => {
@@ -103,7 +125,7 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
   }, [socket, handleCreateChat]);
 
   return (
-    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, fetch, conversation, setConversation, fetchy, show, setShow }}>
+    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, fetch, conversation, setConversation, fetchy, show, setShow, contacts, setContacts }}>
       {children}
     </ChatContext.Provider>
   );
