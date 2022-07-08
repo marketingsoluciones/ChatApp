@@ -3,54 +3,18 @@ import useHover from "../hooks/useHover";
 import { SearchIcon } from "./icons";
 import Image from 'next/image'
 import Profile from '../assets/img/profile.png';
-import { fetchApi,queries } from "../utils/Fetching";
-import { GetStaticProps, GetStaticPropsContext, NextPage, GetStaticPaths  } from "next";
-import  SwiperCore , {Pagination, Navigation} from 'swiper';
-import {Swiper, SwiperSlide} from "swiper/react";
-import {invitados} from "../interfaces"
+
+import SwiperCore, { Pagination, Navigation } from 'swiper';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 
 //install Swiper modules
-SwiperCore.use([Pagination,Navigation]);
+SwiperCore.use([Pagination, Navigation]);
 
 interface propsChats {
   active: boolean
-  total: string
-  results: string []
 }
-
-export async function getStaticProps ({params}:GetStaticPropsContext){
-  try{
-    const data = await fetchApi({
-      query: queries.getInvitados,
-      variables: {uid: params?.uid}
-    });
-    return{
-      props:data,
-    };
-  } catch (error){
-    console.log(error);
-    return{
-      props:{},
-    }
-  }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-};
-
-
-const Chats: FC<propsChats > = ({ active }, props) => {
-const {total} = props
-
-console.log("total de invitados",total)
- 
-  
- 
+const Chats: FC<propsChats> = ({ active }) => {
   return (
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex-col flex items-center justify-start `}>
@@ -61,7 +25,6 @@ console.log("total de invitados",total)
         </div>
         <div className="grid gap-5 overflow-auto ">
           <h3 className="font-medium text-md ">Mis conversaciones</h3>
-          
           <CardChat />
           <CardChat />
           <CardChat />
@@ -73,11 +36,9 @@ console.log("total de invitados",total)
           .chats {
             height: calc(100vh - 4rem);
           }
-
           ::-webkit-scrollbar {
             display: none;
           
-
         `}
       </style>
     </>
@@ -132,13 +93,13 @@ const CircleUser: FC<propsCircleUser> = memo(({ image, name }) => {
 const Users: FC = () => {
   return (
     <>
-    <div className="flex items-center justify-center w-full">
-      <Swiper
-          pagination={{clickable: true}}
+      <div className="flex items-center justify-center w-full">
+        <Swiper
+          pagination={{ clickable: true }}
           navigation
           spaceBetween={20}
-          slidesPerView= {4}
-          
+          slidesPerView={5}
+
           /* breakpoints={{
             0: {
               "slidesPerView": 1,
@@ -147,7 +108,7 @@ const Users: FC = () => {
               "slidesPerView": 3,
             }
           }} */
-          className =" w-full "
+          className=" w-full "
         >
           <SwiperSlide className=" py-8 w-full  flex gap-8 ">
             <CircleUser image={Profile} name="Francisco Montilla" />
@@ -173,9 +134,9 @@ const Users: FC = () => {
           <SwiperSlide className=" py-8 w-full  flex gap-8 ">
             <CircleUser image={Profile} name="Francisco Montilla" />
           </SwiperSlide>
-      </Swiper>
-    </div>
-      
+        </Swiper>
+      </div>
+
       {/* <div className="w-full overflow-y-hidden overflow-x-auto flex gap-6 ">
         <CircleUser image={Profile} name="Francisco Montilla" />
         <CircleUser image={Profile} name="Francisco Montilla" />
