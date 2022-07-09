@@ -57,7 +57,19 @@ export const api: Fetching | any = {
         })
 
         return socket
+    },
+
+    socketIOApp: ({ token }: { token: string }) => {
+        const socket = io(`${process.env.NEXT_PUBLIC_BASE_URL_APP}`, {
+            auth: {
+                token: `Bearer ${token}`
+            }
+        })
+
+        return socket
     }
+
+
 }
 
 

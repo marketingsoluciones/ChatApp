@@ -13,11 +13,13 @@ import Cookies from "js-cookie";
 
 type Context = {
   socket: Socket | null;
+  socketApp: Socket | null;
   //setSocket : Dispatch<SetStateAction<Socket | null>>
 };
 
 const initialContext: Context = {
   socket: null,
+  socketApp: null,
   //setSocket : () => {}
 };
 
@@ -26,6 +28,7 @@ const SocketContext = createContext<Context>(initialContext);
 const SocketProvider: FC = ({ children }): JSX.Element => {
   const { user } = AuthContextProvider()
   const [socket, setSocket] = useState<Socket | null>(initialContext.socket);
+  const [socketApp, setSocketApp] = useState<Socket | null>(initialContext.socket);
 
   useEffect(() => {
     console.log("setSocket", user)
@@ -36,14 +39,22 @@ const SocketProvider: FC = ({ children }): JSX.Element => {
       console.log("Conecta...")
       setSocket(api.socketIO({ token }));
     }
+    if (token && !socketApp?.connected) {
+      console.log("Conecta...App")
+      setSocketApp(api.socketIOApp({ token }));
+    }
     if (!token && socket) {
       console.log("desconecta...")
       socket.disconnect();
     }
+    if (!token && socketApp) {
+      console.log("desconecta...")
+      socketApp.disconnect();
+    }
   }, [user])
 
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ socket, socketApp }}>
       {children}
     </SocketContext.Provider>
   );
