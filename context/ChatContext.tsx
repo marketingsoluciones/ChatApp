@@ -1,4 +1,4 @@
-import { Chat } from '../interfaces/index';
+import { Chat, Contact } from '../interfaces/index';
 import { SetStateAction, useEffect, useState, useCallback } from 'react';
 import { queries } from '../utils/Fetching';
 
@@ -18,7 +18,7 @@ interface ResultFetchChats {
 }
 interface ResultFetchContacts {
   total: number | null;
-  results: Chat[];
+  results: Contact[];
 }
 type Context = {
   chats: ResultFetchChats
@@ -72,7 +72,7 @@ interface stateConversation {
 
 const ChatProvider: FC = ({ children }): JSX.Element => {
   const { user } = AuthContextProvider()
-  const { socket } = SocketContextProvider();
+  const { socket, socketApp } = SocketContextProvider();
   const [limit, setLimit] = useState(5)
   const [skip, setSkip] = useState(0)
   const [show, setShow] = useState(false);
@@ -117,12 +117,46 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
     });
   }, [])
 
+  const handleDataContacts = useCallback((contact: Contact) => {
+    setContacts((old: { total: number, results: Contact[] }) => {
+      const existContact = old?.results?.findIndex((item: Contact) => item._id === contact._id)
+      if (existContact >= 0) {
+        //handleAddEventoToContact: "${nickName} también ha sido invitada al evento: ${nombre}"
+        const nuevo = old.results.map((oldContact => {
+          if (oldContact._id === contact._id) {
+            return {
+              ...oldContact,
+              eventos: [...oldContact.eventos, contact.eventos[0]]
+            }
+          }
+          return oldContact
+        }))
+        return {
+          ...old,
+          results: nuevo
+        }
+      }
+      //handleNewContact "${nickName} ha sido invitada al evento: ${nombre} y se agregó a tu lista de contactos"
+      return {
+        total: old.total++,
+        results: [...old.results, contact]
+      }
+    });
+  }, [])
+
   useEffect(() => {
-    socket?.on("chatBusiness:create", handleCreateChat);
+    socket?.on("chatBusiness:create", handleCreateChat)
     return () => {
       socket?.off('chatBusiness:create', handleCreateChat)
     }
   }, [socket, handleCreateChat]);
+
+  useEffect(() => {
+    socketApp?.on("dataContact", handleDataContacts)
+    return () => {
+      socketApp?.off('dataContact', handleDataContacts)
+    }
+  }, [socketApp, handleDataContacts]);
 
   return (
     <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, fetch, conversation, setConversation, fetchy, show, setShow, contacts, setContacts }}>
