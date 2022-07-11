@@ -8,10 +8,16 @@ html {
 
 .swiper-pagination-bullet-active {
   background: #f7628c !important;
+  
+}
+
+.swiper-pagination{
+  position: relative !important;
 }
 
 .swiper-container-horizontal > .swiper-pagination-bullets,
 .swiper-pagination-custom,
 .swiper-pagination-fraction {
+ 
   bottom: 0 !important;
 }
