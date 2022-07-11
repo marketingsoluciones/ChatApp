@@ -1,8 +1,8 @@
-import { Chat, Contact } from '../interfaces/index';
+import { Chat, Contact, Notification } from '../interfaces/';
 import { SetStateAction, useEffect, useState, useCallback } from 'react';
 import { queries } from '../utils/Fetching';
 
-import { AuthContextProvider, SocketContextProvider } from '.';
+import { AuthContextProvider, SocketContextProvider, NotificationContextProvider } from '.';
 import {
   createContext,
   FC,
@@ -10,8 +10,13 @@ import {
   useContext,
 } from "react";
 import useFetch from '../hooks/useFetch';
+import { HandleCreateChat, HandleDataContacts, HandleDataNotifications } from '../handles'
 
 
+interface stateConversation {
+  state: boolean;
+  data: Chat | null;
+}
 interface ResultFetchChats {
   total: number | null;
   results: Chat[];
@@ -20,6 +25,11 @@ interface ResultFetchContacts {
   total: number | null;
   results: Contact[];
 }
+interface ResultFetchNotifification {
+  total: number | null;
+  results: Notification[];
+}
+
 type Context = {
   chats: ResultFetchChats
   setChats: Dispatch<SetStateAction<ResultFetchChats>>
@@ -33,13 +43,12 @@ type Context = {
   setShow: Dispatch<SetStateAction<boolean>>,
   contacts: ResultFetchContacts,
   setContacts: Dispatch<SetStateAction<ResultFetchContacts>>
+  notifications: ResultFetchNotifification;
+  setNotifications: Dispatch<SetStateAction<Partial<Context | null>>>
 };
 
 const initialContext: Context = {
-  chats: {
-    total: null,
-    results: []
-  },
+  chats: { total: null, results: [] },
   setChats: () => null,
   loadingChats: false,
   errorChats: false,
@@ -49,26 +58,14 @@ const initialContext: Context = {
   setConversation: () => { },
   show: false,
   setShow: () => { },
-  contacts: {
-    total: null,
-    results: []
-  },
+  contacts: { total: null, results: [] },
   setContacts: () => null,
+  notifications: { total: null, results: [] },
+  setNotifications: () => { }
 };
 
 const ChatContext = createContext<Context>(initialContext);
-
-// Verificar si es necesario que este en contexto
-
-
 const initialState = { state: false, data: null };
-
-
-
-interface stateConversation {
-  state: boolean;
-  data: Chat | null;
-}
 
 const ChatProvider: FC = ({ children }): JSX.Element => {
   const { user } = AuthContextProvider()
@@ -82,20 +79,19 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
     query: queries.getChats,
     variables: { uid: user?.uid, limit, skip },
   });
-
   const [contacts, setContacts, loadingContacts, errorContacts, fetchyApp] = useFetch({
     query: queries.getChats,
-    variables: { uid: user?.uid, limit, skip },
+    variables: { uid: user?.uid },
     apiRoute: "graphqlApp"
   });
-
-
-
-
+  const [notifications, setNotifications, loadingNotifications, errorNotifications, fetchyNotifications] = useFetch({
+    query: queries.getChats,
+    variables: { uid: user?.uid },
+    apiRoute: "graphqlApp"
+  });
   const fetch = () => {
     fetchy({ query: queries.getChats, variables: { uid: user?.uid, limit, skip } });
   }
-
 
   useEffect(() => {
     fetch()
@@ -103,46 +99,9 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
 
   }, [user?.uid]);
 
-  const handleCreateChat = useCallback((data: Chat) => {
-    setConversation({ state: true, data })
-    setChats((old: any) => {
-      if (old?.results?.findIndex((item: any) => item._id === data._id) === -1) {
-        return {
-          ...old,
-          results: [data, ...old?.results]
-        };
-      } else {
-        return old
-      }
-    });
-  }, [])
-
-  const handleDataContacts = useCallback((contact: Contact) => {
-    setContacts((old: { total: number, results: Contact[] }) => {
-      const existContact = old?.results?.findIndex((item: Contact) => item._id === contact._id)
-      if (existContact >= 0) {
-        //handleAddEventoToContact: "${nickName} también ha sido invitada al evento: ${nombre}"
-        const nuevo = old.results.map((oldContact => {
-          if (oldContact._id === contact._id) {
-            return {
-              ...oldContact,
-              eventos: [...oldContact.eventos, contact.eventos[0]]
-            }
-          }
-          return oldContact
-        }))
-        return {
-          ...old,
-          results: nuevo
-        }
-      }
-      //handleNewContact "${nickName} ha sido invitada al evento: ${nombre} y se agregó a tu lista de contactos"
-      return {
-        total: old.total++,
-        results: [...old.results, contact]
-      }
-    });
-  }, [])
+  const handleCreateChat = HandleCreateChat(setConversation, setChats)
+  const handleDataContacts = HandleDataContacts(setContacts)
+  const handleDataNotifications = HandleDataNotifications(setNotifications)
 
   useEffect(() => {
     socket?.on("chatBusiness:create", handleCreateChat)
@@ -153,18 +112,18 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
 
   useEffect(() => {
     socketApp?.on("dataContact", handleDataContacts)
+    socketApp?.on("dataNotification", handleDataNotifications)
     return () => {
       socketApp?.off('dataContact', handleDataContacts)
     }
-  }, [socketApp, handleDataContacts]);
+  }, [socketApp, handleDataContacts, handleDataNotifications]);
 
   return (
-    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, fetch, conversation, setConversation, fetchy, show, setShow, contacts, setContacts }}>
+    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, fetch, conversation, setConversation, fetchy, show, setShow, contacts, setContacts, notifications, setNotifications }}>
       {children}
     </ChatContext.Provider>
   );
 };
 
 const ChatContextProvider = () => useContext(ChatContext);
-
 export { ChatProvider, ChatContextProvider };

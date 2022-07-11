@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { LoadingProvider } from "../context";
+import { LoadingProvider, ToastProvider } from "../context";
 import { FC } from "react";
 
 const DynamicAuthProvider = dynamic((): any =>
@@ -12,6 +12,10 @@ const DynamicChatsProvider = dynamic((): any =>
   import("../context").then((mod) => mod.ChatProvider)
 );
 
+const DynamicNotificationProvider = dynamic((): any =>
+  import("../context").then((mod) => mod.NotificationProvider)
+);
+
 const DefaultLayout: FC = ({ children }) => {
 
 
@@ -21,9 +25,11 @@ const DefaultLayout: FC = ({ children }) => {
       <DynamicSocketProvider>
         <DynamicChatsProvider>
           <LoadingProvider>
-            <main className="h-auto bg-base">
-              {children}
-            </main>
+            <ToastProvider>
+              <main className="h-auto bg-base">
+                {children}
+              </main>
+            </ToastProvider>
           </LoadingProvider>
         </DynamicChatsProvider>
       </DynamicSocketProvider>

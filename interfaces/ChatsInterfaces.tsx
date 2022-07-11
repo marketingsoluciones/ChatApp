@@ -1,7 +1,16 @@
 // @CHATS Interfaces de chats
+
+export interface Notification {
+  _id: string,
+  message: string,
+  createdAt: Date,
+  readAt?: Date
+}
+
 export interface Contact {
   _id: string,
   uid: string,
+  type: string,
   nickName: String,
   correo: String,
   eventos: evento[]
