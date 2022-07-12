@@ -5,8 +5,8 @@ import {CircleImage} from './CircleImg'
 
 interface propsItem {
     image: any | undefined | null
-    name: string
-    info: string
+    name: String
+    info: String
   }
   
  export const Item : FC<propsItem> = memo (({ image, name, info }) => {

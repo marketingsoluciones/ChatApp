@@ -20,8 +20,9 @@ interface propsChats {
 }
 
 const OptionList: FC<propsChats> = ({ active }) => {
-  const {contacts} = ChatContextProvider()
-  console.log("contacts info",contacts)
+  const { contacts } = ChatContextProvider()
+  const resultados = contacts?.results
+  console.log(resultados)
   return (
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex-col flex items-center justify-start overflow-auto `}>
@@ -34,13 +35,33 @@ const OptionList: FC<propsChats> = ({ active }) => {
             className="w-full h-full pb-10"
           >
             <SwiperSlide>
-              <Section image={Profile} name={"Francisco"} info={"Chat chat chat chat chat"} />
+              <h3>Contactos</h3>
+              {
+                resultados?.map((item, idx) => (
+                  <Section key={idx} image={Profile} name={item.nickName} info={item.correo} />
+                ))
+              }
             </SwiperSlide>
             <SwiperSlide >
+              <h3>Chats</h3>
               <Section image={Profile} name={"Francisco"} info={"contacto contacto contaco"} />
             </SwiperSlide>
             <SwiperSlide >
-              <Section image={Profile} name={"Bodas"} info={"evento evento eventp"} />
+              <h3>Eventos</h3>
+              {
+                resultados?.map((item) => {
+                  const nombres = item.eventos
+                  return (
+                    <>
+                      {
+                        nombres.map((item, idx) => (
+                        <Section image={Profile} key={idx} name={item.nombre} info={"ID: "+item._id} />
+                      ))}
+                    </>
+                  )
+                })
+              }
+
             </SwiperSlide>
           </Swiper>
         </div>
