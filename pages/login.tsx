@@ -13,12 +13,15 @@ type Forms = {
 
 const PageLogin: FC = () => {
   const r = useRouter()
-  console.log(r.query)
   const { setLoading } = LoadingContextProvider()
+
+
+
   useEffect(() => {
     console.log("useEffect")
     setLoading(false);
   }, [setLoading]);
+
   //const { user } = AuthContextProvider();
   const [stage, setStage] = useState<keyof typeof Stages>("login");
 

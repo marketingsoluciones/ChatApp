@@ -2,6 +2,7 @@ import { useField } from "formik";
 import { FC, ReactNode } from "react";
 
 interface propsField {
+  value?: string;
   name?: string;
   placeholder?: string;
   type: string;
@@ -15,8 +16,7 @@ export const InputField: FC<propsField> = ({
   label,
   ...props
 }) => {
-  //@ts-ignore
-  const [field, meta, { setValue }] = useField({ ...props });
+  const [field, meta] = useField({ name: props?.name ?? '' });
 
   const className: string = `bg-color-base text-sm focus:border focus:border-primary border-transparent focus:ring-transparent pr-3 py-2 rounded-lg w-full focus:outline-none placeholder-gray-400 text-gray-700 transition ${icon ? "pl-12" : "pl-3"
     }`;

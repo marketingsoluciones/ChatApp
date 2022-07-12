@@ -92,6 +92,7 @@ export const fetchApi: CallableFunction = async ({
 
 type queries = {
   getContacts: string;
+  getSignInStatus: string
   // revisar cuáles se usan de aquí en adelante
   signOut: string
   auth: string
@@ -120,6 +121,9 @@ export const queries: queries = {
         }
       }
     }
+  }`,
+  getSignInStatus: `query($uid: ID){
+    getSignInStatus(uid:$uid)
   }`,
   // revisar cuáles se usan de aquí en adelante
   signOut: `mutation ($sessionCookie :String){

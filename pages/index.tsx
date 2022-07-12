@@ -4,10 +4,26 @@ import Chats from '../components/Chats'
 import ContactInfo from "../components/ContactInfo"
 import { useSwipeable } from 'react-swipeable'
 import PageLogin from './login'
-import { AuthContextProvider } from '../context';
+import { AuthContextProvider, LoadingContextProvider } from '../context';
 import { Navigation } from "../components/Surface/Navigation";
+import { useRouter } from "next/router"
+import { fetchApi, queries } from "../utils/Fetching";
+
 
 export default function Home() {
+  const r = useRouter()
+  const { setEmailPassword } = AuthContextProvider()
+  useEffect(() => {
+    console.log(123, r.query)
+    fetchApi({
+      query: queries.getSignInStatus,
+      variables: { uid: r?.query?.uid },
+    }).then((value: any) => {
+      console.log(456, value)
+      !value && setEmailPassword(r?.query)
+    })
+  }, [r?.query, setEmailPassword]);
+
   const [active, setActive] = useState(0)
   const handler = useSwipeable({
     onSwipedLeft: (eventdata) => {

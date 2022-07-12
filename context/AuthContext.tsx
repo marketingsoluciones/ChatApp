@@ -22,12 +22,17 @@ export interface UserMax extends User {
   accessToken?: string;
   _id?: string;
 }
-
+type EmailPassword = {
+  email: string | undefined,
+  password: string | undefined
+}
 type Context = {
   user: Partial<UserMax | null>;
   setUser: Dispatch<SetStateAction<Partial<UserMax | null>>>;
   verificandoCookie: Partial<boolean | null>;
   setVerificandoCookie: Dispatch<SetStateAction<Partial<boolean | null>>>;
+  emailPassword?: EmailPassword,
+  setEmailPassword?: any
 };
 
 const initialContext: Context = {
@@ -35,6 +40,8 @@ const initialContext: Context = {
   setUser: (user) => { },
   verificandoCookie: null,
   setVerificandoCookie: (user) => { },
+  emailPassword: { email: undefined, password: undefined },
+  setEmailPassword: () => { }
 };
 
 const AuthContext = createContext<Context>(initialContext);
@@ -43,6 +50,7 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
   //const { loading, setLoading } = LoadingContextProvider()
   const [user, setUser] = useState<Partial<UserMax | null>>(null);
   const [verificandoCookie, setVerificandoCookie] = useState<Partial<boolean | null>>(null);
+  const [emailPassword, setEmailPassword] = useState();
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user: any) => {
@@ -94,7 +102,7 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, setUser, verificandoCookie, setVerificandoCookie }}>
+    <AuthContext.Provider value={{ user, setUser, verificandoCookie, setVerificandoCookie, emailPassword, setEmailPassword }}>
       {children}
     </AuthContext.Provider>
   );

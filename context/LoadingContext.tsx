@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 const DynamicLoading = dynamic((): any => import('../components/Loading'))
 
 
-
 type Context = {
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>
@@ -18,7 +17,6 @@ const LoadingContext = createContext<Context>(initialContext);
 
 const LoadingProvider: FC = ({ children }): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(initialContext.loading);
-
 
 
   return (

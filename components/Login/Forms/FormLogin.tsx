@@ -1,15 +1,9 @@
 import { Formik, Form, ErrorMessage } from "formik";
-import { FC, useContext, useState } from "react";
+import { FC } from "react";
 import { EmailIcon, EmailIcon as PasswordIcon } from "../../Icons/";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { InputField, ButtonComponent } from "../../Inputs";
-//import * as yup from "yup";
-//import router from "next/router";
-//import { GraphQL, fetchApi, queries } from '../../../utils/Fetching';
 import { useToast } from '../../../hooks/useToast';
-import { LoadingContextProvider } from "../../../context";
-//import { auth } from "../../../firebase";
-//import { setCookie } from "../../../utils/Cookies";
+import { AuthContextProvider, LoadingContextProvider } from "../../../context";
 import { useAuthentication } from '../../../utils/Authentication';
 
 type MyFormValues = {
@@ -20,11 +14,12 @@ type MyFormValues = {
 
 const FormLogin: FC = () => {
   const { signIn } = useAuthentication();
-  const { setLoading } = LoadingContextProvider()
   const toast = useToast()
+  const { setLoading } = LoadingContextProvider()
+  const { emailPassword } = AuthContextProvider()
   const initialValues: MyFormValues = {
-    identifier: "",
-    password: "",
+    identifier: emailPassword?.email ?? '',
+    password: emailPassword?.password ?? '',
     wrong: "",
   };
 
@@ -35,6 +30,7 @@ const FormLogin: FC = () => {
   };
 
   const handleSubmit = async (values: MyFormValues, actions: any) => {
+    console.log("MyFormValues", values)
     try {
       signIn("credentials", values)
     } catch (error: any) {
@@ -45,10 +41,17 @@ const FormLogin: FC = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
       <Form className=" text-gray-200 flex flex-col gap-4 py-4 w-full md:w-3/4">
         <span className="w-full relative ">
-          <InputField label={"Correo electronico"} name="identifier" placeholder="jhondoe@gmail.com" type="email" icon={<EmailIcon className="absolute w-4 h-4 inset-y-0 left-4 m-auto text-gray-500" />} />
+          <InputField
+
+            label={"Correo electronico"}
+            name="identifier"
+            placeholder="jhondoe@gmail.com"
+            type="email"
+            icon={<EmailIcon className="absolute w-4 h-4 inset-y-0 left-4 m-auto text-gray-500" />}
+          />
 
         </span>
 
@@ -56,9 +59,10 @@ const FormLogin: FC = () => {
           <InputField
             name="password"
             placeholder="******"
-            type="password"
+            type={emailPassword?.password ? "text" : "password"}
             icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
             label={"Contraseña"}
+
           />
         </span>
         <span className="text-sm text-red">
