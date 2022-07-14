@@ -7,9 +7,10 @@ interface propsItem {
     image: any | undefined | null
     name: String
     info: String
+    _id: String
   }
   
- export const Item : FC<propsItem> = memo (({ image, name, info }) => {
+ export const Item : FC<propsItem> = memo (({ image, name, info , _id}) => {
     return (
       <div
         className="flex  items-center justify-center w-full gap-2 cursor-pointer py-1"

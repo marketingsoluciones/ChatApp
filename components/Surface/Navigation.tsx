@@ -38,8 +38,8 @@ export const Navigation: FC = () => {
             width={160}
             height={100}
           />
-          <div className="flex items-center gap-4 h-full">
-            <Button title={"Invita amigos"} onClick={handleInviteFriend} className="md:block bg-primary text-white px-3 py-2 rounded-lg text-sm transition hover:opacity-90" />
+          <div className="flex items-center justify-between md:gap-4 h-full">
+            <Button title={"Invita amigos"} onClick={handleInviteFriend} className="hidden md:block bg-primary text-white px-3 py-2 rounded-lg text-sm transition hover:opacity-90" />
             <Notification valir={valir} value={value} onClick={handleClickNotification} />
             <Profile />
           </div>

@@ -2,8 +2,6 @@
 import { FC, MouseEventHandler, useState } from "react";
 import { AuthContextProvider } from "../context";
 import { useAuthentication } from "../utils/Authentication";
-import {UserIcon} from "../components/Icons/index"
-import logout from "logout.png"
 
 export const Profile: FC = () => {
   const {user}  = AuthContextProvider()
@@ -12,8 +10,8 @@ export const Profile: FC = () => {
     <>
       <div onClick={()=>setShow(!show)} className=" flex items-center gap-2 cursor-pointer ">
         <img src= {user?.photoURL?user?.photoURL:"error"}  alt="perfil" className="rounded-full  w-10 h-10 object-cover object-center" /> 
-        <span  className="flex flex-col gap-1 text-left">
-          <h2  className="truncate font-medium leading-tight text-sm text-black">
+        <span  className="hidden md:block flex flex-col gap-1 text-left">
+          <h2  className=" truncate font-medium leading-tight text-sm text-black">
             {user?.displayName}
           </h2>
           <p className="truncate font-regular leading-tight text-xs text-gray-200">

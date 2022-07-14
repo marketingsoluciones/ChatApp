@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, useState } from "react";
 import useHover from "../hooks/useHover";
 import { SearchIcon } from "./icons";
 import Image from 'next/image'
@@ -23,6 +23,10 @@ const OptionList: FC<propsChats> = ({ active }) => {
   const { contacts } = ChatContextProvider()
   const resultados = contacts?.results
   console.log(resultados)
+
+ 
+
+
   return (
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex-col flex items-center justify-start overflow-auto `}>
@@ -38,24 +42,29 @@ const OptionList: FC<propsChats> = ({ active }) => {
               <h3>Contactos</h3>
               {
                 resultados?.map((item, idx) => (
-                  <Section key={idx} image={Profile} name={item.nickName} info={item.correo} />
+                  
+                    <Section key={idx} image={Profile} name={item.nickName} info={item.correo} _id= {item._id}  />
+               
+                  
                 ))
               }
             </SwiperSlide>
             <SwiperSlide >
               <h3>Chats</h3>
-              <Section image={Profile} name={"Francisco"} info={"contacto contacto contaco"} />
+              <Section image={Profile} name={"Francisco"} info={"contacto contacto contaco"} _id={"dsddfasdfasd"} />
             </SwiperSlide>
             <SwiperSlide >
               <h3>Eventos</h3>
               {
                 resultados?.map((item) => {
                   const nombres = item.eventos
+                  console.log(nombres)
                   return (
                     <>
                       {
                         nombres.map((item, idx) => (
-                        <Section image={Profile} key={idx} name={item.nombre} info={"ID: "+item._id} />
+                        <Section image={Profile} key={idx} name={item.nombre} info={"ID: "+item._id}  _id={"dfasdfa"}/>
+                        
                       ))}
                     </>
                   )
