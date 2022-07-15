@@ -12,7 +12,7 @@ type MyFormValues = {
   wrong: any;
 };
 
-const FormLogin: FC = () => {
+const FormLogin: FC <any>= ({setStage}) => {
   const { signIn } = useAuthentication();
   const toast = useToast()
   const { setLoading } = LoadingContextProvider()
@@ -68,9 +68,9 @@ const FormLogin: FC = () => {
         <span className="text-sm text-red">
           <ErrorMessage name="wrong" />
         </span>
-        <span className="text-sm text-primary w-full text-left hover:text-gray-300 transition cursor-pointer">
+        <button onClick={() => setStage("resetPassword")} className="text-sm text-primary w-full text-left hover:text-gray-300 transition cursor-pointer">
           Olvidé mi contraseña
-        </span>
+        </button >
 
         <ButtonComponent
           onClick={() => { }}

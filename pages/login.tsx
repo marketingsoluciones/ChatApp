@@ -1,7 +1,7 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { ButtonClose } from "../components/Inputs";
 import router, { useRouter } from "next/router";
-import { Login, Register } from '../components/Login/Forms';
+import { Login, Register,ResetPass } from '../components/Login/Forms';
 import { LoadingContextProvider } from '../context';
 //import { AuthContextProvider } from "../context";
 
@@ -9,6 +9,7 @@ import { LoadingContextProvider } from '../context';
 type Forms = {
   login?: ReactNode;
   ForgetPassword?: ReactNode;
+  resetPassword?: ReactNode;
 };
 
 const PageLogin: FC = () => {
@@ -24,17 +25,31 @@ const PageLogin: FC = () => {
 
   //const { user } = AuthContextProvider();
   const [stage, setStage] = useState<keyof typeof Stages>("login");
-
+  //const { user, userTemp, setUserTemp } = AuthContextProvider();
 
 
   const Stages: Forms = {
     login: <Login setStage={setStage} />,
+    resetPassword: <ResetPass setStage={setStage} />
   };
 
   const keyDown: any = (event: KeyboardEvent) => {
     const keyName: string = event.key;
     keyName?.toLowerCase() === "escape" && router.push("/");
   };
+
+   /* //al desmontar componente
+   useEffect(() => {
+    return () => {
+      setUserTemp(null)
+    }
+  }, []);
+  // al entrar a login
+  useEffect(() => {
+    if (stage == "login") {
+      setUserTemp(null)
+    }
+  }, [stage]); */
 
   /*useEffect(() => {
     user?.uid && !user.city && setStage("register");

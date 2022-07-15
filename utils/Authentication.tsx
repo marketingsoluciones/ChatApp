@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { signInWithPopup, UserCredential, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithPopup, UserCredential, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from "next/router";
 import Cookies from 'js-cookie';
 
@@ -99,5 +99,26 @@ export const useAuthentication = () => {
     toast("success", "Gracias por visitarnos, te esperamos luego 😀");
   }, [router, setUser, toast])
 
-  return { signIn, getSessionCookie, _signOut };
+  
+
+
+  const resetPassword = async (values: any, setStage: any) => {// funcion para conectar con con firebase para enviar el correo 
+    if (values?.identifier !== "") {
+      try {
+        await sendPasswordResetEmail(auth, values?.identifier);
+        setStage("login")
+        toast("success", "Email enviado correctamente")
+      } catch (error) {
+        toast("error", "Error, email no encontrado")
+        console.log(error);
+      }
+    } else {
+      toast("error", "introduce un correo")
+    }
+  };
+  
+  
+  return { signIn, getSessionCookie, _signOut, resetPassword };
+
 };
+
