@@ -8,6 +8,7 @@ import { AuthContextProvider, LoadingContextProvider } from '../context';
 import { Navigation } from "../components/Surface/Navigation";
 import { useRouter } from "next/router"
 import { fetchApi, queries } from "../utils/Fetching";
+import { BackButtonListener } from "../components/BackButtonListener"
 
 
 export default function Home() {
@@ -25,12 +26,9 @@ export default function Home() {
   }, [r?.query, setEmailPassword]);
 
   const [active, setActive] = useState(0)
-  const [active2, setActive2] = useState(false)
   const handler = useSwipeable({
     onSwipedLeft: (eventdata) => {
-      if (active == 0) {
-        setActive(active)
-      }else if(active >= 1 && active < 2 ){
+      if (active >= 0 && active < 2) {
         setActive(active + 1)
       }
     },
@@ -38,12 +36,7 @@ export default function Home() {
       if (active <= 2 && active > 0) {
         setActive(active - 1)
       }
-    },
-   onTap: (eventdata) =>{
-    if(active == 0 ){
-      setActive(active +1)
     }
-   }
   })
 
   const myRef = useRef();
@@ -67,8 +60,10 @@ export default function Home() {
       return (
         <>
           <Navigation />
-          <section {...handler}  ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
-            <Chats active={active == 0}  />
+          <BackButtonListener />
+
+          <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
+            <Chats active={active == 0} />
             <BoxChat active={active == 1} />
             <ContactInfo active={active == 2} />
           </section>

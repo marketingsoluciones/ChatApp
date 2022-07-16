@@ -4,16 +4,20 @@ import { SearchIcon } from "./icons";
 import Image from 'next/image'
 import Profile from '../assets/img/profile.png';
 import { ChatContextProvider } from '../context'
-import SwiperCore, { Pagination, Navigation } from 'swiper';
-import { Swiper, SwiperSlide } from "swiper/react";
 import { CircleImage } from "./CircleImg"
 import { Item } from './Item'
 import { Section } from './Section'
 import { Buscador } from './Buscador'
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Scrollbar, Navigation, Pagination } from "swiper";
+
+// Import Swiper styles
+import 'swiper/css';
+import "swiper/css/bundle";
+import Button from "./Button";
 
 
-//install Swiper modules
-SwiperCore.use([Pagination, Navigation]);
 
 interface propsChats {
   active: boolean
@@ -24,28 +28,51 @@ const OptionList: FC<propsChats> = ({ active }) => {
   const resultados = contacts?.results
   console.log(resultados)
 
- 
+
 
 
   return (
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex-col flex items-center justify-start overflow-auto `}>
         <Buscador />
+        <div className="flex w-full">
+          <Button className="md:block bg-primary text-white w-1/3 py-1 text-sm transition hover:opacity-90" onClick={() => { }} title="Chats" />
+          <Button className="md:block bg-primary text-white w-1/3 py-1 text-sm transition hover:opacity-90" onClick={() => { }} title="Constactos" />
+          <Button className="md:block bg-primary text-white w-1/3 py-1 text-sm transition hover:opacity-90" onClick={() => { }} title="Eventos" />
+        </div>
         <div className="flex gap-4 flex-col w-full">
+          {/* <Swiper
+            scrollbar={{
+              hide: false
+            }}
+            modules={[Scrollbar]}
+          >
+            <SwiperSlide>Slide 1</SwiperSlide>
+            <SwiperSlide>Slide 2</SwiperSlide>
+            <SwiperSlide>Slide 3</SwiperSlide>
+            <SwiperSlide>Slide 4</SwiperSlide>
+            <SwiperSlide>Slide 5</SwiperSlide>
+            <SwiperSlide>Slide 6</SwiperSlide>
+            <SwiperSlide>Slide 7</SwiperSlide>
+            <SwiperSlide>Slide 8</SwiperSlide>
+            <SwiperSlide>Slide 9</SwiperSlide>
+          </Swiper> */}
           <Swiper
-            pagination={{ clickable: true }}
-            navigation
             slidesPerView={1}
             className="w-full h-full pb-10"
+            scrollbar={{
+              hide: false
+            }}
+            modules={[Navigation, Pagination, Scrollbar]}
           >
             <SwiperSlide>
               <h3>Contactos</h3>
               {
                 resultados?.map((item, idx) => (
-                  
-                    <Section key={idx} image={Profile} name={item.nickName} info={item.correo} _id= {item._id}  />
-               
-                  
+
+                  <Section key={idx} image={Profile} name={item.nickName} info={item.correo} _id={item._id} />
+
+
                 ))
               }
             </SwiperSlide>
@@ -63,9 +90,9 @@ const OptionList: FC<propsChats> = ({ active }) => {
                     <>
                       {
                         nombres.map((item, idx) => (
-                        <Section image={Profile} key={idx} name={item.nombre} info={"ID: "+item._id}  _id={"dfasdfa"}/>
-                        
-                      ))}
+                          <Section image={Profile} key={idx} name={item.nombre} info={"ID: " + item._id} _id={"dfasdfa"} />
+
+                        ))}
                     </>
                   )
                 })
