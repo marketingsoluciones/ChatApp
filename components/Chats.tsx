@@ -1,15 +1,10 @@
-import { FC, memo, useState } from "react";
-import useHover from "../hooks/useHover";
-import { SearchIcon } from "./icons";
-import Image from 'next/image'
+import { FC, useEffect, useState } from "react";
 import Profile from '../assets/img/profile.png';
 import { ChatContextProvider } from '../context'
-import { CircleImage } from "./CircleImg"
-import { Item } from './Item'
 import { Section } from './Section'
 import { Buscador } from './Buscador'
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Scrollbar, Navigation, Pagination } from "swiper";
 
 // Import Swiper styles
@@ -22,66 +17,51 @@ import Button from "./Button";
 interface propsChats {
   active: boolean
 }
-
+interface propsSlideto {
+  page: number
+}
+const SlideTo: FC<propsSlideto> = ({ page }) => {
+  const swiper = useSwiper();
+  useEffect(() => {
+    swiper.slideTo(page)
+  }, [page, swiper])
+  return <></>
+}
 const OptionList: FC<propsChats> = ({ active }) => {
+  const [page, setPage] = useState(0)
   const { contacts } = ChatContextProvider()
-  const resultados = contacts?.results
+  const resultados = [...contacts?.results, ...contacts?.results, ...contacts?.results]
+
   console.log(resultados)
-
-
-
-
+  const className = "block bg-primary text-white w-1/3 text-sm transition hover:opacity-90"
   return (
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex-col flex items-center justify-start overflow-auto `}>
         <Buscador />
         <div className="flex w-full">
-          <Button className="md:block bg-primary text-white w-1/3 py-1 text-sm transition hover:opacity-90" onClick={() => { }} title="Chats" />
-          <Button className="md:block bg-primary text-white w-1/3 py-1 text-sm transition hover:opacity-90" onClick={() => { }} title="Constactos" />
-          <Button className="md:block bg-primary text-white w-1/3 py-1 text-sm transition hover:opacity-90" onClick={() => { }} title="Eventos" />
+          <Button className={className} onClick={() => { setPage(0) }} title="Chats" />
+          <Button className={className} onClick={() => { setPage(1) }} title="Contactos" />
+          <Button className={className} onClick={() => { setPage(2) }} title="Eventos" />
         </div>
-        <div className="flex gap-4 flex-col w-full">
-          {/* <Swiper
-            scrollbar={{
-              hide: false
-            }}
-            modules={[Scrollbar]}
-          >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            <SwiperSlide>Slide 5</SwiperSlide>
-            <SwiperSlide>Slide 6</SwiperSlide>
-            <SwiperSlide>Slide 7</SwiperSlide>
-            <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide>
-          </Swiper> */}
+        <div className="w-full">
           <Swiper
-            slidesPerView={1}
-            className="w-full h-full pb-10"
-            scrollbar={{
-              hide: false
-            }}
-            modules={[Navigation, Pagination, Scrollbar]}
+            // pagination={{ dynamicBullets: true, type: 'bullets', clickable: true }}
+            scrollbar={{ hide: false, dragClass: 'swiper-scrollbar-drag-modified', horizontalClass: 'swiper-scrollbar-horizontal-modified' }}
+            modules={[Pagination, Scrollbar]}
           >
-            <SwiperSlide>
-              <h3>Contactos</h3>
+            <SlideTo page={page} />
+
+            <SwiperSlide className="absolute top-0 left-0 w-full">
               {
                 resultados?.map((item, idx) => (
-
                   <Section key={idx} image={Profile} name={item.nickName} info={item.correo} _id={item._id} />
-
-
                 ))
               }
             </SwiperSlide>
-            <SwiperSlide >
-              <h3>Chats</h3>
+            <SwiperSlide className="absolute top-0 left-0 w-full">
               <Section image={Profile} name={"Francisco"} info={"contacto contacto contaco"} _id={"dsddfasdfasd"} />
             </SwiperSlide>
-            <SwiperSlide >
-              <h3>Eventos</h3>
+            <SwiperSlide className="absolute top-0 left-0 w-full">
               {
                 resultados?.map((item) => {
                   const nombres = item.eventos
@@ -91,25 +71,44 @@ const OptionList: FC<propsChats> = ({ active }) => {
                       {
                         nombres.map((item, idx) => (
                           <Section image={Profile} key={idx} name={item.nombre} info={"ID: " + item._id} _id={"dfasdfa"} />
-
                         ))}
                     </>
                   )
                 })
               }
-
             </SwiperSlide>
           </Swiper>
         </div>
       </div>
-      <style jsx>
+      <style>
         {`
+          .swiper-scrollbar-horizontal-modified {
+            position: absolute;
+            left: 0%;
+            bottom: 0px;
+            z-index: 50;
+            height: 5px;
+            width: 393.5px;
+            lef: 0;
+            top: 0;
+            background: #f7628c;
+            border-radius: 0px;
+          }
+          .swiper-scrollbar-drag-modified {
+            height: 100%;
+            width: 50%;
+            position: relative;
+            background: hwb(343deg 64% 2%);
+            border-radius: 0px;
+            left: 0;
+            top: 0;
+          }
           .chats {
             height: calc(100vh - 4rem);
           }
           ::-webkit-scrollbar {
             display: none;
-          
+
         `}
       </style>
     </>
