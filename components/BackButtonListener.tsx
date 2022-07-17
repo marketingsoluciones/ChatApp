@@ -20,6 +20,8 @@ export const BackButtonListener: FC = ({ children }) => {
   });
 
   return (
-    <h3>Back button: {pressed.toString()} - Count: {pressedCount}</h3>
+    <>
+      {/* <h3>Back button: {pressed.toString()} - Count: {pressedCount}</h3> */}
+    </>
   );
 };

@@ -37,6 +37,13 @@ export const HandleDataNotifications = (setNotifications: any) => {
   return handleDataNotifications
 }
 
+export const HandleDataEvents = (setEvents: any) => {
+  const handleDataEvents = useCallback((data: Event) => {
+    console.log(123, data)
+    setEvents(data);
+  }, [setEvents])
+  return handleDataEvents
+}
 export const HandleCreateChat = (setConversation: any, setChats: any) => {
   const handleCreateChat = useCallback((data: Chat) => {
     setConversation({ state: true, data })

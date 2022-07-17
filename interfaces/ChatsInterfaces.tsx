@@ -13,9 +13,9 @@ export interface Contact {
   type: string,
   nickName: String,
   correo: String,
-  eventos: evento[]
+  eventos: Event[]
 }
-interface evento {
+export interface Event {
   _id: string,
   nombre: string
 }

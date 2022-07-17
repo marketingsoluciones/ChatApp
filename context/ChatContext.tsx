@@ -1,4 +1,4 @@
-import { Chat, Contact, Notification } from '../interfaces/';
+import { Chat, Contact, Notification, Event } from '../interfaces/';
 import { SetStateAction, useEffect, useState, useCallback } from 'react';
 import { queries } from '../utils/Fetching';
 
@@ -10,7 +10,7 @@ import {
   useContext,
 } from "react";
 import useFetch from '../hooks/useFetch';
-import { HandleCreateChat, HandleDataContacts, HandleDataNotifications } from '../handles'
+import { HandleCreateChat, HandleDataContacts, HandleDataNotifications, HandleDataEvents } from '../handles'
 
 
 interface stateConversation {
@@ -29,6 +29,10 @@ interface ResultFetchNotifification {
   total: number | null;
   results: Notification[];
 }
+interface ResultFetchEvent {
+  total: number | null;
+  results: Event[];
+}
 
 type Context = {
   chats: ResultFetchChats
@@ -45,6 +49,8 @@ type Context = {
   setContacts: Dispatch<SetStateAction<ResultFetchContacts>>
   notifications: ResultFetchNotifification;
   setNotifications: Dispatch<SetStateAction<Partial<Context | null>>>
+  events: ResultFetchEvent;
+  setEvents: Dispatch<SetStateAction<Partial<Context | null>>>
 };
 
 const initialContext: Context = {
@@ -61,7 +67,9 @@ const initialContext: Context = {
   contacts: { total: null, results: [] },
   setContacts: () => null,
   notifications: { total: null, results: [] },
-  setNotifications: () => { }
+  setNotifications: () => { },
+  events: { total: null, results: [] },
+  setEvents: () => { }
 };
 
 const ChatContext = createContext<Context>(initialContext);
@@ -89,6 +97,11 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
     variables: { uid: user?.uid },
     apiRoute: "graphqlApp"
   });
+  const [events, setEvents, loadingEvents, errorEvents, fetchyEvents] = useFetch({
+    query: queries.getEventsGuess,
+    variables: { uid: user?.uid },
+    apiRoute: "graphqlApp"
+  });
   const fetch = () => {
     fetchy({ query: queries.getChats, variables: { uid: user?.uid, limit, skip } });
   }
@@ -96,12 +109,16 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
   useEffect(() => {
     fetch()
     fetchyApp({ query: queries.getContacts, variables: { uid: user?.uid }, apiRoute: "graphqlApp" })
+    fetchyEvents({ query: queries.getEventsGuess, variables: { uid: user?.uid }, apiRoute: "graphqlApp" })
+
+
 
   }, [user?.uid]);
 
   const handleCreateChat = HandleCreateChat(setConversation, setChats)
   const handleDataContacts = HandleDataContacts(setContacts)
   const handleDataNotifications = HandleDataNotifications(setNotifications)
+  const handleDataEvents = HandleDataEvents(setEvents)
 
   useEffect(() => {
     socket?.on("chatBusiness:create", handleCreateChat)
@@ -113,13 +130,14 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
   useEffect(() => {
     socketApp?.on("dataContact", handleDataContacts)
     socketApp?.on("dataNotification", handleDataNotifications)
+    socketApp?.on("dataEvents", handleDataEvents)
     return () => {
       socketApp?.off('dataContact', handleDataContacts)
     }
-  }, [socketApp, handleDataContacts, handleDataNotifications]);
+  }, [socketApp, handleDataContacts, handleDataNotifications, handleDataEvents]);
 
   return (
-    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, fetch, conversation, setConversation, fetchy, show, setShow, contacts, setContacts, notifications, setNotifications }}>
+    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, fetch, conversation, setConversation, fetchy, show, setShow, contacts, setContacts, notifications, setNotifications, events, setEvents }}>
       {children}
     </ChatContext.Provider>
   );

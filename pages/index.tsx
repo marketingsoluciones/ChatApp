@@ -60,17 +60,65 @@ export default function Home() {
       return (
         <>
           <Navigation />
-          <BackButtonListener />
-
-          <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
-            <Chats active={active == 0} />
-            <BoxChat active={active == 1} />
-            <ContactInfo active={active == 2} />
-          </section>
-          <style jsx>
+          <div>
+            <BackButtonListener />
+            <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
+              {/* <div className="bg-red col-span-12 lg:col-span-3 h-max-1 calHeight1">
+                asdinici<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asd<br />
+                asdfin<br />
+              </div> */}
+              <Chats active={active == 0} />
+              <BoxChat active={active == 1} />
+              <ContactInfo active={active == 2} />
+            </section>
+          </div>
+          <style >
             {`
             section {
               height: cal(100vh - 4rem);
+            }
+            .calHeight1 {
+              height: calc(100vh - 8rem);
+              overflow: scroll;
             }
             `}
           </style>
