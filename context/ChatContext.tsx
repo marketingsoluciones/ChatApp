@@ -110,15 +110,16 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
       setIsMounted(true)
       const resultsReduce = chats.results.reduce((acc: any, item: any) => {
         const itemNew = {
-          ...item, title: contacts.results.filter((elem: any) => elem.uid == item.addedes[0].userUid)[0].nickName
+          ...item, title: contacts.results.filter((elem: any) => elem.uid == item.addedes[0]?.userUid)[0]?.nickName
         }
         acc.push(itemNew)
         console.log(2345678902345678)
         return acc
       }, [])
+      const resultsOrder = resultsReduce.sort((a: any, b: any) => a.updateAt - b.updateAt)
       const chatsNew = {
         total: chats.total,
-        results: resultsReduce
+        results: resultsOrder
       }
       setChats(chatsNew)
     }
