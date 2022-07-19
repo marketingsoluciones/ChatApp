@@ -103,7 +103,7 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
     apiRoute: "graphqlApp"
   });
   const fetch = () => {
-    fetchy({ query: queries.getChats, variables: { uid: user?.uid, limit, skip } });
+    fetchy({ query: queries.getChats, variables: { uid: user?.uid, origin: "chatevents", limit, skip } });
   }
 
   useEffect(() => {

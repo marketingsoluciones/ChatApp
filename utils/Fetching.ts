@@ -9,7 +9,7 @@ interface fetchApiProps {
   query: string;
   variables: object;
   type: keyof typeof types;
-  token?: string;
+  token: string;
   apiRoute?: string;
 }
 export const fetchApi: CallableFunction = async ({
@@ -99,7 +99,7 @@ type queries = {
   auth: string
   authStatus: string
   getChatIdForBusiness: string;
-  getChats: string;
+  getChats: string; //usado
   createUser: string;
   getOneChat: string;
   getUser: string;
@@ -152,8 +152,8 @@ export const queries: queries = {
   getChatIdForBusiness: `query ($businessID : ID){
     getChatIdForBusiness(_id: $businessID)
   }`,
-  getChats: `query ($uid: [ID], $skip :Int!, $limit : Int!, $text : String) {
-    getChats(uid :$uid, skip: $skip, limit: $limit, include: $text){
+  getChats: `query ($uid: [ID], $origin: String, $skip :Int!, $limit : Int!, $text : String) {
+    getChats(uid :$uid, origin: $origin, skip: $skip, limit: $limit, include: $text){
       total
       results{
         _id
