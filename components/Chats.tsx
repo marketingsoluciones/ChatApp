@@ -63,7 +63,7 @@ const OptionList: FC<propsChats> = ({ active }) => {
                 <SlideTo page={page} />
                 <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
                   {
-                    chats.results?.map((item, idx) => (
+                    chats?.results?.map((item, idx) => (
                       <Section key={idx} image={Profile} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
                     ))
                   }
