@@ -11,6 +11,7 @@ import { Scrollbar, Navigation, Pagination } from "swiper";
 import 'swiper/css';
 import "swiper/css/bundle";
 import Button from "./Button";
+import { getRelativeTime } from "../utils/FormatTime";
 
 import { data } from '../utils/data'
 
@@ -31,7 +32,7 @@ const SlideTo: FC<propsSlideto> = ({ page }) => {
 }
 const OptionList: FC<propsChats> = ({ active }) => {
   const [page, setPage] = useState(0)
-  const { contacts, events } = ChatContextProvider()
+  const { chats, contacts, events } = ChatContextProvider()
   const resultsContact = contacts?.results
   const resultsEvents = events?.results
   console.log(resultsEvents)
@@ -62,8 +63,8 @@ const OptionList: FC<propsChats> = ({ active }) => {
                 <SlideTo page={page} />
                 <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
                   {
-                    data?.map((item, idx) => (
-                      <Section key={idx} image={Profile} name={item.nickName} info={item.correo} _id={item._id} />
+                    chats.results?.map((item, idx) => (
+                      <Section key={idx} image={Profile} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>
@@ -90,7 +91,7 @@ const OptionList: FC<propsChats> = ({ active }) => {
         {`
           .calHeight {
             height: calc(100vh - 4rem);
-            background: #f7628c;
+            //background: #f7628c; // color rojo
           }
           .calHeight2 {
             height: calc(100vh - 12rem);
