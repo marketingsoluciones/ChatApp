@@ -6,15 +6,11 @@ import { Buscador } from './Buscador'
 // Import Swiper React components
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Scrollbar, Navigation, Pagination } from "swiper";
-
 // Import Swiper styles
 import 'swiper/css';
 import "swiper/css/bundle";
 import Button from "./Button";
-
 import { data } from '../utils/data'
-
-
 
 interface propsChats {
   active: boolean
@@ -22,26 +18,29 @@ interface propsChats {
 interface propsSlideto {
   page: number
 }
+
 const SlideTo: FC<propsSlideto> = ({ page }) => {
   const swiper = useSwiper();
   useEffect(() => {
     swiper.slideTo(page)
   }, [page, swiper])
-  return <></>
+  return <>
+  
+  </>
 }
-const OptionList: FC<propsChats> = ({ active }) => {
+
+const A: FC<propsChats> = ({ active }) => {
   const [page, setPage] = useState(0)
   const { contacts, events } = ChatContextProvider()
   const resultsContact = contacts?.results
   const resultsEvents = events?.results
   console.log(resultsEvents)
-
-
   const handleScroll = (event: any) => {
     console.log('scrollTop: ', event.currentTarget.scrollTop);
     console.log('offsetHeight: ', event.currentTarget.offsetHeight);
   };
   const className = "block bg-primary text-white w-1/3 text-sm p-1 transition hover:opacity-90"
+  
   return (
     <>
       <div className="container col-span-12 lg:col-span-3 h-max-1 calHeight ">
@@ -135,7 +134,7 @@ const OptionList: FC<propsChats> = ({ active }) => {
   );
 };
 
-export default OptionList;
+export default A;
 
 
 

@@ -1,4 +1,5 @@
-
+import {  UserIcon  } from "../components/Icons/";
+import Link from "next/link";
 import { FC, MouseEventHandler, useState } from "react";
 import { AuthContextProvider } from "../context";
 import { useAuthentication } from "../utils/Authentication";
@@ -30,10 +31,20 @@ const ProfileMenu = () => {
   const { _signOut } = useAuthentication()
   return (
     <>
-      <div className={`w-40 h-10 rounded-xl h-max bg-white shadow-md absolute  right-2 inset-y-full overflow-hidden z-50  }`}>
-        <div className=" flex text-xs gap-2 justify-center pt-2 ">
-          <img src="/logout.png" alt="salir" className="w-6 h-6"/>
-          <button onClick={async()=>{_signOut()}}>cerrar sesion</button>
+      <div className={`w-40 h-20 rounded-xl h-max  bg-white shadow-md absolute right-2 inset-y-full overflow-hidden z-50 `}>
+        <div className=" grid gap-2 text-xs place-items-center p-2 ">
+          <span className="flex gap-2">
+            <img src="/logout.png" alt="salir" className="w-6 h-6"/>
+            <button onClick={async()=>{_signOut()}}>cerrar sesion</button>
+          </span>
+          <span >
+            <Link href={"/configuracion"}>
+              <a className="flex gap-2 place-items-center">
+                <UserIcon/>
+                perfil
+              </a>
+            </Link>
+          </span>
         </div>
       </div>
     </>

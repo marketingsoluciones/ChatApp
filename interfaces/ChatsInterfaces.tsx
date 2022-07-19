@@ -53,3 +53,11 @@ interface online {
   status: boolean
   dateConection: number
 }
+
+export interface image {
+  _id: string
+  i1024: string
+  i800: string
+  i640: string
+  i320: string
+}
