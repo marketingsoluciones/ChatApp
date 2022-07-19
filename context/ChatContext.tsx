@@ -78,14 +78,14 @@ const initialState = { state: false, data: null };
 const ChatProvider: FC = ({ children }): JSX.Element => {
   const { user } = AuthContextProvider()
   const { socket, socketApp } = SocketContextProvider();
-  const [limit, setLimit] = useState(5)
+  const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
-  const [show, setShow] = useState(false);
-  const [conversation, setConversation] =
-    useState<stateConversation>(initialState);
+  const [show, setShow] = useState(false)
+  const [conversation, setConversation] = useState<stateConversation>(initialState);
+  const [isMounted, setIsMounted] = useState(false)
   const [chats, setChats, loadingChats, errorChats, fetchy] = useFetch({
     query: queries.getChats,
-    variables: { uid: user?.uid, limit, skip },
+    variables: { uid: user?.uid },
   });
   const [contacts, setContacts, loadingContacts, errorContacts, fetchyApp] = useFetch({
     query: queries.getChats,
@@ -103,16 +103,31 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
     apiRoute: "graphqlApp"
   });
   const fetch = () => {
-    fetchy({ query: queries.getChats, variables: { uid: user?.uid, limit, skip } });
+    fetchy({ query: queries.getChats, variables: { uid: user?.uid, origin: "chatevents", limit, skip } });
   }
+  useEffect(() => {
+    if (!isMounted && chats?.total > 0 && contacts?.total > 0) {
+      setIsMounted(true)
+      const resultsReduce = chats.results.reduce((acc: any, item: any) => {
+        const itemNew = {
+          ...item, title: contacts.results.filter((elem: any) => elem.uid == item.addedes[0].userUid)[0].nickName
+        }
+        acc.push(itemNew)
+        console.log(2345678902345678)
+        return acc
+      }, [])
+      const chatsNew = {
+        total: chats.total,
+        results: resultsReduce
+      }
+      setChats(chatsNew)
+    }
+  }, [chats, contacts, isMounted, setChats]);
 
   useEffect(() => {
-    fetch()
+    fetchy({ query: queries.getChats, variables: { uid: user?.uid, origin: "chatevents", limit, skip } });
     fetchyApp({ query: queries.getContacts, variables: { uid: user?.uid }, apiRoute: "graphqlApp" })
     fetchyEvents({ query: queries.getEventsGuess, variables: { uid: user?.uid }, apiRoute: "graphqlApp" })
-
-
-
   }, [user?.uid]);
 
   const handleCreateChat = HandleCreateChat(setConversation, setChats)
@@ -137,7 +152,7 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
   }, [socketApp, handleDataContacts, handleDataNotifications, handleDataEvents]);
 
   return (
-    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, fetch, conversation, setConversation, fetchy, show, setShow, contacts, setContacts, notifications, setNotifications, events, setEvents }}>
+    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, conversation, setConversation, fetchy, show, setShow, contacts, setContacts, notifications, setNotifications, events, setEvents }}>
       {children}
     </ChatContext.Provider>
   );
