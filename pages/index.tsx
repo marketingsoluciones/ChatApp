@@ -9,7 +9,7 @@ import { Navigation } from "../components/Surface/Navigation";
 import { useRouter } from "next/router"
 import { fetchApi, queries } from "../utils/Fetching";
 import { BackButtonListener } from "../components/BackButtonListener"
-
+import Configuration from './configuracion'
 
 export default function Home() {
   const r = useRouter()
@@ -55,75 +55,81 @@ export default function Home() {
     if (!user) {
       console.log("pero no pazó la verificación")
       return <PageLogin />
-    } else {
-      console.log("y pazó la verificación devolviendo el usuario")
-      return (
-        <>
-          <Navigation />
-          <div>
-            <BackButtonListener />
-            <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
-              {/* <div className="bg-red col-span-12 lg:col-span-3 h-max-1 calHeight1">
-                asdinici<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asd<br />
-                asdfin<br />
-              </div> */}
-              <Chats active={active == 0} />
-              <BoxChat active={active == 1} />
-              <ContactInfo active={active == 2} />
-            </section>
-          </div>
-          <style >
-            {`
-            section {
-              height: cal(100vh - 4rem);
-            }
-            .calHeight1 {
-              height: calc(100vh - 8rem);
-              overflow: scroll;
-            }
-            `}
-          </style>
-        </>
-      )
+    } 
+    else {
+      if(!user.displayName){
+       return <Configuration/>
+      }else {
+        console.log("y pazó la verificación devolviendo el usuario")
+        return (
+          <>
+            <Navigation />
+            <div>
+              <BackButtonListener />
+              <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
+                {/* <div className="bg-red col-span-12 lg:col-span-3 h-max-1 calHeight1">
+                  asdinici<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asd<br />
+                  asdfin<br />
+                </div> */}
+                <Chats active={active == 0} />
+                <BoxChat active={active == 1} />
+                <ContactInfo active={active == 2} />
+              </section>
+            </div>
+            <style >
+              {`
+              section {
+                height: cal(100vh - 4rem);
+              }
+              .calHeight1 {
+                height: calc(100vh - 8rem);
+                overflow: scroll;
+              }
+              `}
+            </style>
+          </>
+        )
+      }
+      
     }
   }
   return <></>

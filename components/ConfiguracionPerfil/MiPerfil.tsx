@@ -106,6 +106,20 @@ const DatosAcceso = () => {
   return (
     <BlockConfiguration title={"Datos de acceso"}>
       <Form className="w-full flex flex-col gap-4">
+        <div className="w-full grid flex items-center gap-2 relative">
+            <InputField
+              disabled={!canEditEmail}
+              label={"Correo electronico"}
+              name={"email"}
+              type={"text"}
+            />
+          {/*  <button
+              onClick={handleEditEmail}
+              className="absolute bg-primary px-2 py-1 text-white text-xs rounded-lg w-fit right-2 top-1/2"
+            >
+              {canEditEmail ? "Guardar" : "Editar"}
+            </button> */}
+        </div>
         <div className="w-full grid  flex items-center gap-2 relative">
           <InputField
             disabled={!canDisplayName}
@@ -118,20 +132,6 @@ const DatosAcceso = () => {
             className="absolute bg-primary px-2 py-1 text-white text-xs rounded-lg w-fit right-2 top-1/2"
           >
             {canDisplayName ? "Guardar" : "Editar"}
-          </button>
-        </div>
-        <div className="w-full grid flex items-center gap-2 relative">
-          <InputField
-            disabled={!canEditEmail}
-            label={"Correo electronico"}
-            name={"email"}
-            type={"text"}
-          />
-          <button
-            onClick={handleEditEmail}
-            className="absolute bg-primary px-2 py-1 text-white text-xs rounded-lg w-fit right-2 top-1/2"
-          >
-            {canEditEmail ? "Guardar" : "Editar"}
           </button>
         </div>
         <div className="w-full grid  flex items-center gap-2 relative">

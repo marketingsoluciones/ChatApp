@@ -15,12 +15,11 @@ const BoxChat: FC <propsBoxChat>= ({active}) => {
       <Conversation />
       <SendMessage />
     </div>
-    <style jsx>
+    <style>
       {`
       .chats {
         height: calc(100vh - 4rem);
       }
-      
       `}
     </style>
     </>
