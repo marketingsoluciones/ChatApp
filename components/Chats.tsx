@@ -27,7 +27,7 @@ const SlideTo: FC<propsSlideto> = ({ page }) => {
     swiper.slideTo(page)
   }, [page, swiper])
   return <>
-  
+
   </>
 }
 
@@ -42,7 +42,7 @@ const A: FC<propsChats> = ({ active }) => {
     console.log('offsetHeight: ', event.currentTarget.offsetHeight);
   };
   const className = "block bg-primary text-white w-1/3 text-sm p-1 transition hover:opacity-90"
-  
+
   return (
     <>
       <div className="container col-span-12 lg:col-span-3 h-max-1 calHeight ">
@@ -71,7 +71,7 @@ const A: FC<propsChats> = ({ active }) => {
                 <SwiperSlide className="w-full calHeight3">
                   {
                     resultsContact?.map((item, idx) => (
-                      <Section key={idx} image={Profile} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
+                      <Section key={idx} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>
