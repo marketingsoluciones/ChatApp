@@ -13,9 +13,11 @@ import Button from "./Button";
 import { getRelativeTime } from "../utils/FormatTime";
 
 import { data } from '../utils/data'
+import { HandleChats, HandleContacts, HandleEvents } from "../handles";
 
 interface propsChats {
   active: boolean
+  setActive: any
 }
 interface propsSlideto {
   page: number
@@ -31,7 +33,7 @@ const SlideTo: FC<propsSlideto> = ({ page }) => {
   </>
 }
 
-const A: FC<propsChats> = ({ active }) => {
+const A: FC<propsChats> = ({ active, setActive }) => {
   const [page, setPage] = useState(0)
   const { chats, contacts, events } = ChatContextProvider()
   const resultsContact = contacts?.results
@@ -64,21 +66,21 @@ const A: FC<propsChats> = ({ active }) => {
                 <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
                   {
                     chats?.results?.map((item, idx) => (
-                      <Section key={idx} image={Profile} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
+                      <Section key={idx} onClick={() => { HandleChats(setActive) }} image={Profile} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>
                 <SwiperSlide className="w-full calHeight3">
                   {
                     resultsContact?.map((item, idx) => (
-                      <Section key={idx} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
+                      <Section key={idx} onClick={() => { HandleContacts(setPage) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>
                 <SwiperSlide className="w-full calHeight3">
                   {
                     resultsEvents?.map((item, idx) => (
-                      <Section key={idx} image={Profile} name={item.nombre} info={item._id} _id={item._id} />
+                      <Section key={idx} onClick={() => { HandleEvents(setPage) }} image={Profile} name={item.nombre} info={item._id} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>

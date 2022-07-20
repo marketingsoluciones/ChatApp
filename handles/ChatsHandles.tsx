@@ -60,3 +60,16 @@ export const HandleCreateChat = (setConversation: any, setChats: any) => {
   }, [setConversation, setChats])
   return handleCreateChat
 }
+
+export const HandleChats = (setPage: any) => {
+
+
+}
+
+export const HandleContacts = (setPage: any) => {
+  setPage(0)
+}
+
+export const HandleEvents = (setPage: any) => {
+  setPage(1)
+}

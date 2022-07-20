@@ -10,6 +10,7 @@ import { useRouter } from "next/router"
 import { fetchApi, queries } from "../utils/Fetching";
 import { BackButtonListener } from "../components/BackButtonListener"
 import Configuration from './configuracion'
+import BoxChatIni from "../components/BoxChatIni"
 
 export default function Home() {
   const r = useRouter()
@@ -29,14 +30,10 @@ export default function Home() {
   const handler = useSwipeable({
     onSwipedLeft: (eventdata) => {
       if (active >= 0 && active < 2) {
-        setActive(active + 1)
+        setActive(0)
       }
     },
-    onSwipedRight: (eventdata) => {
-      if (active <= 2 && active > 0) {
-        setActive(active - 1)
-      }
-    }
+
   })
 
   const myRef = useRef();
@@ -55,11 +52,11 @@ export default function Home() {
     if (!user) {
       console.log("pero no pazó la verificación")
       return <PageLogin />
-    } 
+    }
     else {
-      if(!user.displayName){
-       return <Configuration/>
-      }else {
+      if (!user.displayName) {
+        return <Configuration />
+      } else {
         console.log("y pazó la verificación devolviendo el usuario")
         return (
           <>
@@ -67,51 +64,9 @@ export default function Home() {
             <div>
               <BackButtonListener />
               <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
-                {/* <div className="bg-red col-span-12 lg:col-span-3 h-max-1 calHeight1">
-                  asdinici<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asd<br />
-                  asdfin<br />
-                </div> */}
-                <Chats active={active == 0} />
-                <BoxChat active={active == 1} />
+                <Chats active={active == 0} setActive={setActive} />
+                <BoxChatIni active={active == 0} />
+                <BoxChat active={false} />
                 <ContactInfo active={active == 2} />
               </section>
             </div>
@@ -129,7 +84,7 @@ export default function Home() {
           </>
         )
       }
-      
+
     }
   }
   return <></>
