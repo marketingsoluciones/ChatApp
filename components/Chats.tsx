@@ -66,7 +66,7 @@ const A: FC<propsChats> = ({ active, setActive }) => {
                 <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
                   {
                     chats?.results?.map((item, idx) => (
-                      <Section key={idx} onClick={() => { HandleChats(setActive) }} image={Profile} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
+                      <Section key={idx} onClick={() => { HandleChats(setActive) }} image={item.photoURL} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>
