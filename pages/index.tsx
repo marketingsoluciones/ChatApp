@@ -10,7 +10,6 @@ import { useRouter } from "next/router"
 import { fetchApi, queries } from "../utils/Fetching";
 import { BackButtonListener } from "../components/BackButtonListener"
 import Configuration from './configuracion'
-import BoxChatIni from "../components/BoxChatIni"
 
 export default function Home() {
   const r = useRouter()
@@ -65,7 +64,6 @@ export default function Home() {
               <BackButtonListener />
               <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
                 <Chats active={active == 0} setActive={setActive} />
-                <BoxChatIni active={active == 0} />
                 <BoxChat active={false} />
                 <ContactInfo active={active == 2} />
               </section>
