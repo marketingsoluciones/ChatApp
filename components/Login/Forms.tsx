@@ -3,8 +3,7 @@ import { LogoFullColor } from "../Icons/";
 import { BusinessAccess, Providers, RegisterQuestion } from "./Components";
 import FormLogin from "./Forms/FormLogin";
 import FormResetPassword from "./Forms/FormResetPassword"
-import FormRegister from "./Forms/FristValidation/FormRegister";
-//import { FirstStep, SecondStep } from "./Forms/Register/Steps";
+
 
 interface propsLogin {
   setStage: CallableFunction;
@@ -32,7 +31,7 @@ export const Register: FC<propsLogin> = ({ setStage }) => {
     {(() => {
         switch (stageRegister) {
           case 0:
-            return <SecondStep setStageRegister={setStageRegister} stageRegister={stageRegister} whoYouAre={whoYouAre} />
+            return 
             break;
         }
       })()}
@@ -74,16 +73,3 @@ export const ResetPass: FC<propsLogin> = ({ setStage }) => {
   );
 };
 
-interface propsSecondStep {
-  whoYouAre: string;
-  stageRegister : number;
-  setStageRegister : Dispatch<SetStateAction<number>>
-}
-export const SecondStep: FC<propsSecondStep> = (props) => {
-  return (
-    <div className="gap-4 flex flex-col justify-center items-center w-full">
-      <LogoFullColor />
-      <FormRegister {...props} />
-    </div>
-  );
-};
