@@ -31,7 +31,6 @@ export const HandleDataContacts = (setContacts: any) => {
 
 export const HandleDataNotifications = (setNotifications: any) => {
   const handleDataNotifications = useCallback((data: Notification) => {
-    console.log(123, data)
     setNotifications(data);
   }, [setNotifications])
   return handleDataNotifications
@@ -39,7 +38,6 @@ export const HandleDataNotifications = (setNotifications: any) => {
 
 export const HandleDataEvents = (setEvents: any) => {
   const handleDataEvents = useCallback((data: Event) => {
-    console.log(123, data)
     setEvents(data);
   }, [setEvents])
   return handleDataEvents
@@ -59,4 +57,17 @@ export const HandleCreateChat = (setConversation: any, setChats: any) => {
     });
   }, [setConversation, setChats])
   return handleCreateChat
+}
+
+export const HandleChats = (setActive: any, setChatId: any, chatId: string) => {
+  setActive(1)
+  setChatId(chatId)
+}
+
+export const HandleContacts = (setPage: any) => {
+  setPage(0)
+}
+
+export const HandleEvents = (setPage: any) => {
+  setPage(1)
 }

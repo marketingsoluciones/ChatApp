@@ -115,6 +115,7 @@ export const queries: queries = {
         _id
         uid
         nickName
+        photoURL
         correo
         eventos{
           _id

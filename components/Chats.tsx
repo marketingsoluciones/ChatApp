@@ -13,9 +13,12 @@ import Button from "./Button";
 import { getRelativeTime } from "../utils/FormatTime";
 
 import { data } from '../utils/data'
+import { HandleChats, HandleContacts, HandleEvents } from "../handles";
 
 interface propsChats {
   active: boolean
+  setActive: any
+  setChat: any
 }
 interface propsSlideto {
   page: number
@@ -27,28 +30,32 @@ const SlideTo: FC<propsSlideto> = ({ page }) => {
     swiper.slideTo(page)
   }, [page, swiper])
   return <>
-  
+
   </>
 }
 
-const A: FC<propsChats> = ({ active }) => {
+const A: FC<propsChats> = ({ active, setActive, setChat }) => {
   const [page, setPage] = useState(0)
+  const [chatId, setChatId] = useState(null)
   const { chats, contacts, events } = ChatContextProvider()
   const resultsContact = contacts?.results
   const resultsEvents = events?.results
-  console.log(resultsEvents)
+  useEffect(() => {
+    const chat: any = chats?.results?.filter((elem: any) => elem._id == chatId)[0]
+    setChat(chat)
+  }, [active, setChat, chats, chatId])
   const handleScroll = (event: any) => {
     console.log('scrollTop: ', event.currentTarget.scrollTop);
     console.log('offsetHeight: ', event.currentTarget.offsetHeight);
   };
-  const className = "block bg-primary text-white w-1/3 text-sm p-1 transition hover:opacity-90"
-  
+  const className = "block bg-primary text-white w-1/3 text-sm p-1 transition hover:opacity-90 pt-2"
+
   return (
     <>
       <div className="container col-span-12 lg:col-span-3 h-max-1 calHeight ">
-        <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full h-full chats p-2 gap-4 flex-col flex items-center justify-start overflow-auto `}>
+        <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full h-full chats flex-col flex items-center justify-start overflow-auto pt-1`}>
           <Buscador />
-          <div className="flex w-full">
+          <div className="flex w-full pt-2">
             <Button className={className} onClick={() => { setPage(0) }} title="Chats" />
             <Button className={className} onClick={() => { setPage(1) }} title="Contactos" />
             <Button className={className} onClick={() => { setPage(2) }} title="Eventos" />
@@ -64,21 +71,21 @@ const A: FC<propsChats> = ({ active }) => {
                 <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
                   {
                     chats?.results?.map((item, idx) => (
-                      <Section key={idx} image={Profile} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
+                      <Section key={idx} onClick={() => { HandleChats(setActive, setChatId, item?._id) }} image={item.photoURL} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>
                 <SwiperSlide className="w-full calHeight3">
                   {
                     resultsContact?.map((item, idx) => (
-                      <Section key={idx} image={Profile} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
+                      <Section key={idx} onClick={() => { HandleContacts(setPage) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>
                 <SwiperSlide className="w-full calHeight3">
                   {
                     resultsEvents?.map((item, idx) => (
-                      <Section key={idx} image={Profile} name={item.nombre} info={item._id} _id={item._id} />
+                      <Section key={idx} onClick={() => { HandleEvents(setPage) }} image={Profile} name={item.nombre} info={item._id} _id={item._id} />
                     ))
                   }
                 </SwiperSlide>

@@ -7,17 +7,18 @@ interface propsSection {
   name: String
   info: String
   _id: String
+  onClick: MouseEventHandler
 
 
 }
 
 
 
-export const Section: FC<propsSection> = ({ image, name, info, _id }) => {
+export const Section: FC<propsSection> = ({ image, onClick, name, info, _id }) => {
   return (
     <>
-      <div className="w-full overflow-y-hidden gap-10 pl-5 truncate pt-3"   >
-        <button onClick={alert} className="w-full text-left flex">
+      <div className="w-full overflow-y-hidden gap-10 pl-2 pr-2 truncate pt-2"   >
+        <button onClick={onClick} className="w-full text-left flex">
           <Item image={image} name={name} info={info} _id={_id} />
         </button>
 

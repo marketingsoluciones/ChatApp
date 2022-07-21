@@ -11,8 +11,9 @@ export interface Contact {
   _id: string,
   uid: string,
   type: string,
-  nickName: String,
-  correo: String,
+  nickName: string,
+  photoURL: string
+  correo: string,
   eventos: Event[]
 }
 export interface Event {
