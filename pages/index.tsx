@@ -10,6 +10,7 @@ import { useRouter } from "next/router"
 import { fetchApi, queries } from "../utils/Fetching";
 import { BackButtonListener } from "../components/BackButtonListener"
 import Configuration from './configuracion'
+import DatosConfirmation from './Confirmation'
 
 export default function Home() {
   const r = useRouter()
@@ -58,7 +59,7 @@ export default function Home() {
     } 
     else {
       if(!user.displayName){
-       return <Configuration/>
+       return <DatosConfirmation/>
       }else {
         console.log("y pazó la verificación devolviendo el usuario")
         return (

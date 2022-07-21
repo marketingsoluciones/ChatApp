@@ -1,8 +1,9 @@
-import { FC, useState } from "react";
+import { FC, useState,SetStateAction,Dispatch } from "react";
 import { LogoFullColor } from "../Icons/";
 import { BusinessAccess, Providers, RegisterQuestion } from "./Components";
 import FormLogin from "./Forms/FormLogin";
 import FormResetPassword from "./Forms/FormResetPassword"
+import FormRegister from "./Forms/FristValidation/FormRegister";
 //import { FirstStep, SecondStep } from "./Forms/Register/Steps";
 
 interface propsLogin {
@@ -14,7 +15,7 @@ export const Login: FC<propsLogin> = ({ setStage }) => {
       <div className="flex flex-col gap-2 items-center justify-center w-full">
         <LogoFullColor className="w-auto h-10" />
       </div>
-      <Providers setStage={setStage} />
+      {/* <Providers setStage={setStage} /> */}
       <FormLogin setStage={setStage} />
       {/* <RegisterQuestion onClick={() => setStage("register")} /> */}
       {/* <BusinessAccess /> */} {/* componente que no esta terminado */}
@@ -27,18 +28,14 @@ export const Register: FC<propsLogin> = ({ setStage }) => {
   const [stageRegister, setStageRegister] = useState(0)
   return (
     <>
-      {(() => {
+    
+    {(() => {
         switch (stageRegister) {
           case 0:
-            break;
-          case 1:
-            break;
-
-          default:
+            return <SecondStep setStageRegister={setStageRegister} stageRegister={stageRegister} whoYouAre={whoYouAre} />
             break;
         }
       })()}
-
       <h2
         className={`font-light text-tertiary flex gap-2 items-center text-sm `}
       >
@@ -74,5 +71,19 @@ export const ResetPass: FC<propsLogin> = ({ setStage }) => {
       </h2>
       {/* <BusinessAccess /> */} {/* componente que no esta terminado */}
     </>
+  );
+};
+
+interface propsSecondStep {
+  whoYouAre: string;
+  stageRegister : number;
+  setStageRegister : Dispatch<SetStateAction<number>>
+}
+export const SecondStep: FC<propsSecondStep> = (props) => {
+  return (
+    <div className="gap-4 flex flex-col justify-center items-center w-full">
+      <LogoFullColor />
+      <FormRegister {...props} />
+    </div>
   );
 };

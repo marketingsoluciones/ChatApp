@@ -10,6 +10,7 @@ interface propsField {
   icon?: ReactNode;
   label?: string;
   disabled?: boolean
+  required?:boolean
 }
 export const InputField: FC<propsField> = ({
   icon = false,
@@ -34,7 +35,7 @@ export const InputField: FC<propsField> = ({
         <input className={className} {...field} {...props} />
         {icon}
       </div>
-      <style jsx>
+      <style>
         {`
           input[type="number"]::-webkit-inner-spin-button,
           input[type="number"]::-webkit-outer-spin-button {

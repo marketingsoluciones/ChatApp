@@ -70,7 +70,7 @@ const PageLogin: FC = () => {
         </div>
         <div className="hidden md:block banner w-full h-full col-span-2 " />
       </div>
-      <style jsx>
+      <style >
         {`
           .banner {
             background-image: url("/banner-login.webp");

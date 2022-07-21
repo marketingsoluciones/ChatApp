@@ -2,7 +2,7 @@ import { MiPerfil } from "../components/ConfiguracionPerfil/MiPerfil";
 import { PerfilFoto } from "../components/ConfiguracionPerfil/PerfilFoto";
 import { PerfilOpciones } from "../components/ConfiguracionPerfil/PerfilOpciones";
 import { FC, useState } from "react";
-import {  UserIcon  } from "../components/Icons/";
+import {  UserIcon  } from "../components/Icons/index";
 import PagesWithAuth from "../HOC/PagesWithAuth";
 //import { ExitIcon } from '../components/Icons/index';
 import {AuthContextProvider, LoadingContextProvider} from '../context'
@@ -74,7 +74,7 @@ export const BlockConfiguration: FC<{ title: string; subtitle?: string }> = ({
   children,
 }) => {
   return (
-    <div className="bg-white p-6 rounded-xl shadow flex flex-col gap-2">
+    <div className="bg-white p-6 rounded-xl shadow-xl flex flex-col gap-2">
       <div>
         <h2 className=" font-bold text-xl">{title}</h2>
         {subtitle && <small className="text-gray-600">{subtitle}</small>}
