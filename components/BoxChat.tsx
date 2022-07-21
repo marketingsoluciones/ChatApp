@@ -3,52 +3,43 @@ import Conversation from "./Conversation";
 import { CameraIcon, MicIcon, PlusIcon, SendIcon } from "./icons";
 import Image from 'next/image'
 import Profile from '../assets/img/profile.png'
+import { Item } from "./Item";
+import { Section } from "./Section";
+import { getRelativeTime } from "../utils/FormatTime";
+import { ChatContextProvider } from "../context";
 
 interface propsBoxChat {
-  active : boolean
+  active: boolean
+  chat?: any
 }
-const BoxChat: FC <propsBoxChat>= ({active}) => {
+const BoxChat: FC<propsBoxChat> = ({ active, chat }) => {
+
+
   return (
     <>
-    <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-6 chats bg-base w-full h-full  flex flex-col gap-3 justify-between xl:border-l xl:border-r border-gray-100 p-6`}>
-      <HeaderChat />
-      <Conversation />
-      <SendMessage />
-    </div>
-    <style>
-      {`
+      <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-6 chats bg-base w-full h-full  flex flex-col gap-3 justify-between xl:border-l xl:border-r border-gray-100`}>
+        <HeaderChat chat={chat} />
+        <Conversation />
+        <SendMessage />
+      </div>
+      <style>
+        {`
       .chats {
         height: calc(100vh - 4rem);
       }
       `}
-    </style>
+      </style>
     </>
   );
 };
 
 export default BoxChat;
 
-const HeaderChat = () => {
+const HeaderChat: FC<any> = ({ chat }) => {
+
   return (
-    <div className="bg-white w-full h-20 p-8 rounded-lg flex items-center justify-between">
-      <div className="flex gap-4 items-center ">
-        <div className="relative">
-          <Image
-            alt="Perfil"
-            src={Profile} 
-            width={48}
-            height={48}
-            className="rounded-full col-span-1"
-          />
-          <svg className="bg-green w-3 h-3 rounded-full absolute top-0 right-0 border-2 border-white" />
-        </div>
-        <div>
-          <h3 className="font-semibold text-gray-300 text-sm">Jhon Travolta</h3>
-          <p className="font-regular text-gray-200 text-xs w-full truncate">
-            Online
-          </p>
-        </div>
-      </div>
+    <div className="bg-white w-full h-20 p-6 rounded-lg flex items-center justify-between">
+      <Section key={chat?._id} onClick={() => { }} image={chat?.photoURL} name={chat?.title} info={"Online "} _id={chat?._id} />
       <div className="flex items-center gap-4">
         <CameraIcon className="w-7 h-7 text-gray-200 cursor-pointer" />
         <MicIcon className="w-7 h-7 text-gray-200 cursor-pointer" />
@@ -71,10 +62,10 @@ export const SendMessage = () => {
     return (
       <div className="flex items-center justify-center relative">
         <PlusIcon className="text-gray-100 w-7 h-7 cursor-pointer" onClick={() => setShow(!show)} />
-          <div className={`flex flex-col gap-4 absolute top-0 -mt-6 transform	-translate-y-full ${show ? "opacity-100" : "opacity-0"}`}>
-            <Circle icon={<CameraIcon />} />
-            <Circle icon={<MicIcon />} />
-          </div>
+        <div className={`flex flex-col gap-4 absolute top-0 -mt-6 transform	-translate-y-full ${show ? "opacity-100" : "opacity-0"}`}>
+          <Circle icon={<CameraIcon />} />
+          <Circle icon={<MicIcon />} />
+        </div>
       </div>
     );
   };

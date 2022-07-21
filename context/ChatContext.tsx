@@ -114,7 +114,6 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
           ...item, title: itemFilter?.nickName, photoURL: itemFilter?.photoURL
         }
         acc.push(itemNew)
-        console.log(2345678902345678)
         return acc
       }, [])
       const resultsOrder = resultsReduce.sort((a: any, b: any) => a.updateAt - b.updateAt)

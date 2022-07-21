@@ -15,24 +15,28 @@ export default function Home() {
   const r = useRouter()
   const { setEmailPassword } = AuthContextProvider()
   useEffect(() => {
-    console.log(123, r.query)
     fetchApi({
       query: queries.getSignInStatus,
       variables: { uid: r?.query?.uid },
     }).then((value: any) => {
-      console.log(456, value)
       !value && setEmailPassword(r?.query)
     })
   }, [r?.query, setEmailPassword]);
 
   const [active, setActive] = useState(0)
+  const [chatId, setChatId] = useState(null)
+  const [chat, setChat] = useState(null)
   const handler = useSwipeable({
-    onSwipedLeft: (eventdata) => {
-      if (active >= 0 && active < 2) {
-        setActive(0)
+    // onSwipedLeft: (eventdata) => {
+    //   if (active >= 0 && active < 2) {
+    //     setActive(active + 1)
+    //   }
+    // },
+    onSwipedRight: (eventdata) => {
+      if (active <= 2 && active > 0) {
+        setActive(active - 1)
       }
-    },
-
+    }
   })
 
   const myRef = useRef();
@@ -63,8 +67,8 @@ export default function Home() {
             <div>
               <BackButtonListener />
               <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
-                <Chats active={active == 0} setActive={setActive} />
-                <BoxChat active={false} />
+                <Chats active={active == 0} setActive={setActive} setChat={setChat} />
+                <BoxChat active={false} chat={chat ? chat : null} />
                 <ContactInfo active={active == 2} />
               </section>
             </div>
