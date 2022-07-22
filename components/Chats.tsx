@@ -52,48 +52,46 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
 
   return (
     <>
-      <div className="container col-span-12 lg:col-span-3 h-max-1 calHeight ">
-        <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full h-full chats flex-col flex items-center justify-start overflow-auto pt-1`}>
-          <Buscador />
-          <div className="flex w-full pt-2">
-            <Button className={className} onClick={() => { setPage(0) }} title="Chats" />
-            <Button className={className} onClick={() => { setPage(1) }} title="Contactos" />
-            <Button className={className} onClick={() => { setPage(2) }} title="Eventos" />
-          </div>
-          <div className="w-full bg-white">
-            <div className="col-span-12 lg:col-span-3 h-max-1 calHeight2">
-              <Swiper key={1} className="bg-white"
-                // pagination={{ dynamicBullets: true, type: 'bullets', clickable: true }}
-                scrollbar={{ hide: false, dragClass: 'swiper-scrollbar-drag-modified', horizontalClass: 'swiper-scrollbar-horizontal-modified' }}
-                modules={[Pagination, Scrollbar]}
-              >
-                <SlideTo page={page} />
-                <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
-                  {
-                    chats?.results?.map((item, idx) => (
-                      <Section key={idx} onClick={() => { HandleChats(setActive, setChatId, item?._id) }} image={item.photoURL} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
-                    ))
-                  }
-                </SwiperSlide>
-                <SwiperSlide className="w-full calHeight3">
-                  {
-                    resultsContact?.map((item, idx) => (
-                      <Section key={idx} onClick={() => { HandleContacts(setPage) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
-                    ))
-                  }
-                </SwiperSlide>
-                <SwiperSlide className="w-full calHeight3">
-                  {
-                    resultsEvents?.map((item, idx) => (
-                      <Section key={idx} onClick={() => { HandleEvents(setPage) }} image={Profile} name={item.nombre} info={item._id} _id={item._id} />
-                    ))
-                  }
-                </SwiperSlide>
-              </Swiper>
-            </div>
+      <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full h-full chats flex-col flex items-center justify-start overflow-auto pt-1`}>
+        <Buscador />
+        <div className="flex w-full pt-1">
+          <Button className={className} onClick={() => { setPage(0) }} title="Chats" />
+          <Button className={className} onClick={() => { setPage(1) }} title="Contactos" />
+          <Button className={className} onClick={() => { setPage(2) }} title="Eventos" />
+        </div>
+        <div className="w-full bg-white">
+          <div className="col-span-12 lg:col-span-3 h-max-1 calHeight2">
+            <Swiper key={1} className="bg-white"
+              // pagination={{ dynamicBullets: true, type: 'bullets', clickable: true }}
+              scrollbar={{ hide: false, dragClass: 'swiper-scrollbar-drag-modified', horizontalClass: 'swiper-scrollbar-horizontal-modified' }}
+              modules={[Pagination, Scrollbar]}
+            >
+              <SlideTo page={page} />
+              <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
+                {
+                  chats?.results?.map((item, idx) => (
+                    <Section key={idx} onClick={() => { HandleChats(setActive, setChatId, item?._id) }} image={item.photoURL} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
+                  ))
+                }
+              </SwiperSlide>
+              <SwiperSlide className="w-full calHeight3">
+                {
+                  resultsContact?.map((item, idx) => (
+                    <Section key={idx} onClick={() => { HandleContacts(setPage) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
+                  ))
+                }
+              </SwiperSlide>
+              <SwiperSlide className="w-full calHeight3">
+                {
+                  resultsEvents?.map((item, idx) => (
+                    <Section key={idx} onClick={() => { HandleEvents(setPage) }} image={Profile} name={item.nombre} info={item._id} _id={item._id} />
+                  ))
+                }
+              </SwiperSlide>
+            </Swiper>
           </div>
         </div>
-      </div >
+      </div>
       <style>
         {`
           .calHeight {
@@ -136,6 +134,7 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
           }
           ::-webkit-scrollbar {
             display: none;
+          }
 
         `}
       </style>

@@ -14,7 +14,9 @@ import DatosConfirmation from './Confirmation'
 
 export default function Home() {
   const r = useRouter()
-  const { setEmailPassword } = AuthContextProvider()
+  const { setEmailPassword, user, verificandoCookie } = AuthContextProvider()
+  console.log("authContext")
+  const [montado, setMontado] = useState(false)
   useEffect(() => {
     fetchApi({
       query: queries.getSignInStatus,
@@ -24,16 +26,29 @@ export default function Home() {
     })
   }, [r?.query, setEmailPassword]);
 
+  useEffect(() => {
+    console.log(11111111, "NO MONTADO")
+    if (!montado) {
+      console.log(111112222, "seteo MONTADO")
+      setMontado(true)
+    }
+  }, [montado, setMontado]);
+
+
+
+
   const [active, setActive] = useState(0)
   const [chatId, setChatId] = useState(null)
   const [chat, setChat] = useState(null)
   const handler = useSwipeable({
-    // onSwipedLeft: (eventdata) => {
-    //   if (active >= 0 && active < 2) {
-    //     setActive(active + 1)
-    //   }
-    // },
+    onSwipedLeft: (eventdata) => {
+      console.log("izquierda")
+      if (active >= 0 && active < 2) {
+        setActive(active + 1)
+      }
+    },
     onSwipedRight: (eventdata) => {
+      console.log("derecha")
       if (active <= 2 && active > 0) {
         setActive(active - 1)
       }
@@ -45,10 +60,6 @@ export default function Home() {
     handler.ref(el);
     myRef.current = el;
   }
-  const authContext = AuthContextProvider()
-  console.log("authContext", authContext)
-  const { user } = authContext
-  const { verificandoCookie } = authContext
   console.log("verificandoCookie", verificandoCookie)
   console.log("user:", user)
   if (verificandoCookie) {
@@ -66,12 +77,11 @@ export default function Home() {
           <>
             <Navigation />
             <div>
-              <BackButtonListener />
-              <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
+              <div {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
                 <Chats active={active == 0} setActive={setActive} setChat={setChat} />
-                <BoxChat active={false} chat={chat ? chat : null} />
+                <BoxChat active={active == 1} chat={chat ? chat : null} />
                 <ContactInfo active={active == 2} />
-              </section>
+              </div>
             </div>
             <style >
               {`

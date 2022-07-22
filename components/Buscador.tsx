@@ -5,7 +5,7 @@ import { SearchIcon } from "./icons";
 
 export const Buscador: FC = (props) => {
   return (
-    <span className="relative w-full">
+    <span className="relative w-full pl-1 pr-1 pt-1">
       <input
         placeholder="Search for messages or users..."
         type="text"

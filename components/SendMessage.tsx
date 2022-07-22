@@ -5,7 +5,7 @@ import { CameraIcon, MicIcon, PlusIcon, SendIcon } from "./icons";
 export const SendMessage = () => {
 
   return (
-    <div className="h-max w-full bg-white rounded-lg p-2 px-4 flex gap-4 items-center justify-between">
+    <div className="h-max w-full bg-white p-2 px-4 flex gap-4 items-center justify-between">
       <div>
         <Options />
       </div>

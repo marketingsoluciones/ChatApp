@@ -60,6 +60,7 @@ export const HandleCreateChat = (setConversation: any, setChats: any) => {
 }
 
 export const HandleChats = (setActive: any, setChatId: any, chatId: string) => {
+  console.log("setActive", setActive)
   setActive(1)
   setChatId(chatId)
 }
