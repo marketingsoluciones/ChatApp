@@ -8,7 +8,7 @@ interface propsBoxChat {
   chat?: any
 }
 const BoxChat: FC<propsBoxChat> = ({ active, chat }) => {
-
+  //${active ? "" : "hidden"} 
   return (
     <>
       <div className={`${active ? "" : "hidden"} bg-red lg:flex col-span-12 lg:col-span-6 bg-base w-full h-full  flex flex-col  justify-between border-gray-100`}>

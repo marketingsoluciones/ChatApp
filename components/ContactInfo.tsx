@@ -5,11 +5,11 @@ import { AuthContextProvider } from '../context';
 interface propsContact {
   active: boolean
 }
-const ContactInfo : FC <propsContact> = ({active}) => {
-  
+const ContactInfo: FC<propsContact> = ({ active }) => {
+
   return (
     <>
-      <div className={`lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex flex-col items-center justify-start overflow-auto ${active ? "" : "hidden"} `}>
+      <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex flex-col items-center justify-start overflow-auto `}>
         <Profile />
         <Information />
         <SharedFiles />
@@ -30,12 +30,12 @@ const ContactInfo : FC <propsContact> = ({active}) => {
 export default ContactInfo;
 
 const Profile = () => {
-  const {user} = AuthContextProvider()
+  const { user } = AuthContextProvider()
   return (
     <div className="bg-white h-max w-full rounded-lg p-10 flex flex-col items-center justify-center">
       <div className="bg-tertiary w-28 h-28 rounded-full" />
       {/* <img src={user?.photoURL?user?.photoURL:"error"} alt="" className="bg-tertiary w-28 h-28 rounded-full" /> */}
-      
+
       <h2 className="text-md font-semibold text-gray-300 pt-3">
         {user?.displayName}
       </h2>
@@ -45,7 +45,7 @@ const Profile = () => {
 };
 
 const Information = () => {
-  const {user} = AuthContextProvider()
+  const { user } = AuthContextProvider()
   interface propsInfo {
     title: string;
     contain: string;
@@ -53,12 +53,11 @@ const Information = () => {
   }
 
   const Info: FC<propsInfo> = ({ title, contain, border = true }) => {
-    
+
     return (
       <div
-        className={`flex flex-col items-start justify-center py-2 ${
-          border ? "border-b border-base" : ""
-        }`}
+        className={`flex flex-col items-start justify-center py-2 ${border ? "border-b border-base" : ""
+          }`}
       >
         <h3 className="text-sm text-gray-300">{title}</h3>
         <p className="text-sm text-gray-200">{contain}</p>
@@ -66,42 +65,42 @@ const Information = () => {
     );
   };
   return (
-  
+
     <div className="bg-white h-max w-full rounded-lg p-4">
       <h2 className="text-gray-200 text-md pb-2">Informacion personal</h2>
-      <Info title="Pais" contain={user?.country?user.country:"error"} />
+      <Info title="Pais" contain={user?.country ? user.country : "error"} />
       <Info title="Phone" contain="yo lo quitaria" />
       <Info
         title="Correo electronico"
-        contain={user?.email?user?.email:"error"}
+        contain={user?.email ? user?.email : "error"}
         border={false}
       />
     </div>
   );
 };
 
-const SharedFiles : FC = () => {
+const SharedFiles: FC = () => {
 
-    interface propsUploadFile {
-        titleFile: string,
-        sizeFile: string,
-        extensionFile: string
-    }
+  interface propsUploadFile {
+    titleFile: string,
+    sizeFile: string,
+    extensionFile: string
+  }
 
-  const UploadedFile : FC <propsUploadFile> = ({titleFile, sizeFile, extensionFile}) => {
+  const UploadedFile: FC<propsUploadFile> = ({ titleFile, sizeFile, extensionFile }) => {
     return (
-        <>
-      <div className="py-4 px-2 w-full relative flex justify-between">
-        <div className="relative flex gap-4 items-center">
-        <div className="w-12 file h-12" />
-        <span className="flex flex-col gap-1">
-            <p className="text-sm text-gray-300">{titleFile}</p>
-            <p className="text-sm text-gray-200">{sizeFile}</p>
+      <>
+        <div className="py-4 px-2 w-full relative flex justify-between">
+          <div className="relative flex gap-4 items-center">
+            <div className="w-12 file h-12" />
+            <span className="flex flex-col gap-1">
+              <p className="text-sm text-gray-300">{titleFile}</p>
+              <p className="text-sm text-gray-200">{sizeFile}</p>
             </span>
-        </div>
-        <DotsIcon className="w-4 w-4 transform rotate-90" />
+          </div>
+          <DotsIcon className="w-4 w-4 transform rotate-90" />
 
-      </div>
+        </div>
         <style jsx>
           {`
                     .file {
@@ -124,7 +123,7 @@ const SharedFiles : FC = () => {
                     }
                     `}
         </style>
-        </>
+      </>
     );
   };
   return (
