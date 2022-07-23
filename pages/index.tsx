@@ -39,7 +39,6 @@ export default function Home() {
 
 
   const [active, setActive] = useState(0)
-  const [chatId, setChatId] = useState(null)
   const [chat, setChat] = useState(null)
   const handler = useSwipeable({
     // onSwipedLeft: (eventdata) => {

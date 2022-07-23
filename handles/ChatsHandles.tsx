@@ -60,13 +60,28 @@ export const HandleCreateChat = (setConversation: any, setChats: any) => {
 }
 
 export const HandleChats = (setActive: any, setChatId: any, chatId: string) => {
-  console.log("setActive", setActive)
   setActive(1)
   setChatId(chatId)
 }
+type HandleContacts = {
+  setPage: any
+  setActive: any
+  setChatId: any
+  setContactUid: any
+  item: any
+}
+interface propsHandleContacts {
+  setPage: any
+  setActive: any
+  setChatId: any
+  item: any
+}
+export const HandleContacts = (props: HandleContacts): void => {
+  props.setPage(0)
+  props.setActive(1)
+  props.setContactUid(props?.item?.uid)
+  props.setChatId(null)
 
-export const HandleContacts = (setPage: any) => {
-  setPage(0)
 }
 
 export const HandleEvents = (setPage: any) => {

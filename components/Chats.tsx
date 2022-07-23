@@ -37,13 +37,32 @@ const SlideTo: FC<propsSlideto> = ({ page }) => {
 const A: FC<propsChats> = ({ active, setActive, setChat }) => {
   const [page, setPage] = useState(0)
   const [chatId, setChatId] = useState(null)
+  const [contactUid, setContactUid] = useState(null)
   const { chats, contacts, events } = ChatContextProvider()
   const resultsContact = contacts?.results
   const resultsEvents = events?.results
   useEffect(() => {
-    const chat: any = chats?.results?.filter((elem: any) => elem._id == chatId)[0]
-    setChat(chat)
-  }, [active, setChat, chats, chatId])
+    if (chatId) {
+      const chat: any = chats?.results?.filter((elem: any) => elem?._id == chatId)[0]
+      setChat(chat)
+      console.log("chat", chat)
+      return
+    }
+    const contact = contacts?.results?.filter((elem: any) => elem?.uid == contactUid)[0]
+    const chatFilter = chats?.results?.filter((elem: any) => elem?.title == contact?.nickName)[0]
+    const chat: any = {
+      title: contact?.nickName,
+      photoURL: contact?.photoURL,
+      type: 'chatevents',
+      addedes: {
+        type: "participante",
+        userUid: contactUid
+      }
+    }
+    setChat(chatFilter ? chatFilter : chat)
+  }, [active, setChat, chats, chatId, contactUid, contacts])
+
+
   const handleScroll = (event: any) => {
     console.log('scrollTop: ', event.currentTarget.scrollTop);
     console.log('offsetHeight: ', event.currentTarget.offsetHeight);
@@ -77,7 +96,7 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
               <SwiperSlide className="w-full calHeight3">
                 {
                   resultsContact?.map((item, idx) => (
-                    <Section key={idx} onClick={() => { HandleContacts(setPage) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
+                    <Section key={idx} onClick={() => { HandleContacts({ setPage, setActive, setContactUid, setChatId, item: item }) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
                   ))
                 }
               </SwiperSlide>
