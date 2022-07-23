@@ -48,7 +48,6 @@ export default function Home() {
     //   }
     // },
     onSwipedRight: (eventdata) => {
-      console.log("derecha")
       if (active <= 2 && active > 0) {
         setActive(active - 1)
       }
@@ -60,8 +59,6 @@ export default function Home() {
     handler.ref(el);
     myRef.current = el;
   }
-  console.log("verificandoCookie", verificandoCookie)
-  console.log("user:", user)
   if (verificandoCookie) {
     console.log("hizo la verificación de cookie")
     if (!user) {

@@ -22,16 +22,23 @@ interface propsChats {
 }
 interface propsSlideto {
   page: number
+  setResultsContact: any
+  contacts: any
 }
 
-const SlideTo: FC<propsSlideto> = ({ page }) => {
+
+
+const SlideTo: FC<propsSlideto> = ({ page, setResultsContact, contacts }) => {
   const swiper = useSwiper();
+  swiper.on('slideChange', function (idx) {
+    if (idx.activeIndex != 1) {
+      setResultsContact(contacts?.results)
+    }
+  });
   useEffect(() => {
-    console.log(swiper.slides)
     swiper.slideTo(page)
   }, [page, swiper])
   return <>
-
   </>
 }
 
@@ -52,7 +59,6 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
     if (chatId) {
       const chat: any = chats?.results?.filter((elem: any) => elem?._id == chatId)[0]
       setChat(chat)
-      console.log("chat", chat)
       return
     }
     const contact = contacts?.results?.filter((elem: any) => elem?.uid == contactUid)[0]
@@ -94,7 +100,7 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
               scrollbar={{ hide: false, dragClass: 'swiper-scrollbar-drag-modified', horizontalClass: 'swiper-scrollbar-horizontal-modified' }}
               modules={[Pagination, Scrollbar]}
             >
-              <SlideTo page={page} />
+              <SlideTo page={page} setResultsContact={setResultsContact} contacts={contacts} />
               <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
                 {
                   chats?.results?.map((item: any, idx: any) => (
