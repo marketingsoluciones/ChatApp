@@ -70,12 +70,7 @@ type HandleContacts = {
   setContactUid: any
   item: any
 }
-interface propsHandleContacts {
-  setPage: any
-  setActive: any
-  setChatId: any
-  item: any
-}
+
 export const HandleContacts = (props: HandleContacts): void => {
   props.setPage(0)
   props.setActive(1)
@@ -83,7 +78,27 @@ export const HandleContacts = (props: HandleContacts): void => {
   props.setChatId(null)
 
 }
-
-export const HandleEvents = (setPage: any) => {
-  setPage(1)
+type HandleEvents = {
+  setPage: any
+  setResultsContact: any
+  contacts: any
+  item: any
+}
+export const HandleEvents = (props: HandleEvents) => {
+  props.setPage(1)
+  const contactsReduce = props?.contacts?.results?.reduce((acc: any, iterador: any) => {
+    console.log("iterador", iterador)
+    const iteradorFilter = iterador?.eventos?.filter((elem: any) => {
+      console.log(elem._id, props?.item?._id, elem._id == props?.item?._id)
+      return elem._id == props?.item?._id
+    })
+    console.log("iteradorFilter", iteradorFilter)
+    iteradorFilter.length > 0 && acc.push(iterador)
+    return acc
+  }, [])
+  console.log("contactsReduce", contactsReduce)
+  console.log({ total: contactsReduce.length, results: contactsReduce })
+  console.log(props.item)
+  console.log(props.contacts)
+  props.setResultsContact({ total: contactsReduce.length, results: contactsReduce })
 }

@@ -39,7 +39,13 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
   const [chatId, setChatId] = useState(null)
   const [contactUid, setContactUid] = useState(null)
   const { chats, contacts, events } = ChatContextProvider()
-  const resultsContact = contacts?.results
+
+  const [resultsContact, setResultsContact]: any = useState()
+  useEffect(() => {
+    setResultsContact(contacts?.results)
+  }, [contacts])
+
+  //const resultsContact = contacts?.results
   const resultsEvents = events?.results
   useEffect(() => {
     if (chatId) {
@@ -82,28 +88,30 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
           <div className="col-span-12 lg:col-span-3 h-max-1 calHeight2">
             <Swiper key={1} className="bg-white"
               // pagination={{ dynamicBullets: true, type: 'bullets', clickable: true }}
+              preloadImages={false}
+              lazy={true}
               scrollbar={{ hide: false, dragClass: 'swiper-scrollbar-drag-modified', horizontalClass: 'swiper-scrollbar-horizontal-modified' }}
               modules={[Pagination, Scrollbar]}
             >
               <SlideTo page={page} />
               <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
                 {
-                  chats?.results?.map((item, idx) => (
+                  chats?.results?.map((item: any, idx: any) => (
                     <Section key={idx} onClick={() => { HandleChats(setActive, setChatId, item?._id) }} image={item.photoURL} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} />
                   ))
                 }
               </SwiperSlide>
               <SwiperSlide className="w-full calHeight3">
                 {
-                  resultsContact?.map((item, idx) => (
-                    <Section key={idx} onClick={() => { HandleContacts({ setPage, setActive, setContactUid, setChatId, item: item }) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map((it => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
+                  resultsContact?.length > 0 && resultsContact?.map((item: any, idx: any) => (
+                    <Section key={idx} onClick={() => { HandleContacts({ setPage, setActive, setContactUid, setChatId, item }) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map(((it: any) => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} />
                   ))
                 }
               </SwiperSlide>
               <SwiperSlide className="w-full calHeight3">
                 {
                   resultsEvents?.map((item, idx) => (
-                    <Section key={idx} onClick={() => { HandleEvents(setPage) }} image={Profile} name={item.nombre} info={item._id} _id={item._id} />
+                    <Section key={idx} onClick={() => { HandleEvents({ setPage, setResultsContact, contacts, item }) }} image={Profile} name={item.nombre} info={item._id} _id={item._id} />
                   ))
                 }
               </SwiperSlide>
