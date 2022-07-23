@@ -27,6 +27,7 @@ interface propsSlideto {
 const SlideTo: FC<propsSlideto> = ({ page }) => {
   const swiper = useSwiper();
   useEffect(() => {
+    console.log(swiper.slides)
     swiper.slideTo(page)
   }, [page, swiper])
   return <>
@@ -81,7 +82,7 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
         <Buscador />
         <div className="flex w-full pt-1">
           <Button className={className} onClick={() => { setPage(0) }} title="Chats" />
-          <Button className={className} onClick={() => { setPage(1) }} title="Contactos" />
+          <Button className={className} onClick={() => { setPage(1), setResultsContact(contacts?.results) }} title="Contactos" />
           <Button className={className} onClick={() => { setPage(2) }} title="Eventos" />
         </div>
         <div className="w-full bg-white">

@@ -97,8 +97,7 @@ export const HandleEvents = (props: HandleEvents) => {
     return acc
   }, [])
   console.log("contactsReduce", contactsReduce)
-  console.log({ total: contactsReduce.length, results: contactsReduce })
-  console.log(props.item)
-  console.log(props.contacts)
-  props.setResultsContact({ total: contactsReduce.length, results: contactsReduce })
+  console.log("props.item", props.item)
+  console.log("props.contacts", props.contacts)
+  props.setResultsContact(contactsReduce)
 }
