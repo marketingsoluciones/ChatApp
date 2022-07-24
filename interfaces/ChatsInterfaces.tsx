@@ -11,6 +11,7 @@ export interface Contact {
   _id: string,
   uid: string,
   type: string,
+  onLine: onLine,
   nickName: string,
   photoURL: string
   correo: string,
@@ -26,12 +27,15 @@ export interface Chat {
   messages: messageChat[]
   createdAt: number
   updatedAt: number
-  onLine: online
+  onLine: string
   title: string
   type: string
   photoURL: string
 }
-
+interface onLine {
+  status: Boolean
+  dateConection: number
+}
 interface addedes {
   userUid: string
   type: string

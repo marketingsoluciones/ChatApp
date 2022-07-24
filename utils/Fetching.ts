@@ -114,6 +114,10 @@ export const queries: queries = {
       results{
         _id
         uid
+        onLine{
+          status
+          dateConection
+        }
         nickName
         photoURL
         correo
