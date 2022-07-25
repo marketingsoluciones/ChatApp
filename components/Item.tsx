@@ -6,7 +6,7 @@ import { CircleImage } from './CircleImg'
 interface propsItem {
   image: any | undefined | null
   name: String
-  info: String
+  info: any
   _id: String
   onLine?: boolean
 }
