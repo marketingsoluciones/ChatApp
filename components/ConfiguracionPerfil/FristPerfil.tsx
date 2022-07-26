@@ -75,8 +75,11 @@ const DatosAcceso = () => {
     }
 
     const PostDatos = () => {
-            handleEditDisplayName(),
-            handleEditPassword()
+        if(handleEditPassword()!==null){
+            handleEditDisplayName()
+        }else{
+            console.log("error")
+        }
     }
 
 
