@@ -1,45 +1,35 @@
 import { FC, ReactNode, useState } from "react";
-import { CameraIcon, MicIcon, PlusIcon, SendIcon } from "./icons";
+import { AuthContextProvider, ChatContextProvider } from "../context";
+import { HandleSendMessage } from "../handles";
+import { SendIcon } from "./icons";
+import { OptionsSendMessage } from "./OptionsSenMessage";
 
+interface propsSendMessage {
+  chat: any
+  setChat: any
+}
 
-export const SendMessage = () => {
-
+export const SendMessage: FC<propsSendMessage> = ({ chat, setChat }) => {
+  const { user } = AuthContextProvider()
+  const { setChats } = ChatContextProvider()
+  const [value, setValue]: any = useState("")
   return (
     <div className="h-max w-full bg-white p-2 px-4 flex gap-4 items-center justify-between">
       <div>
-        <Options />
+        <OptionsSendMessage />
       </div>
-
       <input
         placeholder="Type your message ..."
         className="text-sm focus:ring transition rounded-md py-2 px-2 w-full h-full focus:outline-none"
         autoFocus
+        onChange={(e) => { setValue(e.target.value) }}
+        value={value}
       />
-      <div className="text-gray-200 hover:text-primary cursor-pointer hover:opacity-90 transition">
+      <div className="text-gray-200 hover:text-primary cursor-pointer hover:opacity-90 transition button" onClick={() => {
+        value != "" && HandleSendMessage({ chat, messageSend: value, userUid: user?.uid ?? "", setChats, setChat }), setValue("")
+      }}>
         <SendIcon className="w-5 h-5" />
       </div>
     </div>
   );
-};
-
-const Options: FC = () => {
-  const [show, setShow] = useState(false);
-  return (
-    <div className="flex items-center justify-center relative">
-      <PlusIcon className="text-gray-100 w-7 h-7 cursor-pointer" onClick={() => setShow(!show)} />
-      <div className={`flex flex-col gap-4 absolute top-0 -mt-6 transform	-translate-y-full ${show ? "opacity-100" : "opacity-0"}`}>
-        <Circle icon={<CameraIcon />} />
-        <Circle icon={<MicIcon />} />
-      </div>
-    </div>
-  );
-};
-
-
-interface propsCircle {
-  icon: ReactNode;
 }
-
-const Circle: FC<propsCircle> = ({ icon }) => {
-  return <div className="bg-red rounded-full p-1 w-12 h-12 shadow flex items-center justify-center hover:bg-primary hover:text-white transition ease-in duration-200 cursor-pointer">{icon}</div>;
-};

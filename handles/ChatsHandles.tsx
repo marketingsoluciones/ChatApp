@@ -1,5 +1,6 @@
 import { Chat, Contact, Notification } from '../interfaces/index';
 import { SetStateAction, useEffect, useState, useCallback } from 'react';
+import { ChatContextProvider } from '../context';
 
 export const HandleDataContacts = (setContacts: any) => {
   const handleDataContacts = useCallback((data: Contact) => {
@@ -72,7 +73,7 @@ type HandleContacts = {
 }
 
 export const HandleContacts = (props: HandleContacts): void => {
-  props.setPage(0)
+  //props.setPage(0)
   props.setActive(1)
   props.setContactUid(props?.item?.uid)
   props.setChatId(null)
@@ -101,3 +102,49 @@ export const HandleEvents = (props: HandleEvents) => {
   console.log("props.contacts", props.contacts)
   props.setResultsContact(contactsReduce)
 }
+
+type HandleSendMessage = {
+  messageSend?: string
+  chat: any
+  userUid: string
+  setChats: any
+  setChat: any
+}
+export const HandleSendMessage = (props: HandleSendMessage) => {
+  props.setChats((old: any) => {
+    if (props?.chat?._id) {
+      const resultsMap = old.results.map((elem: any) => {
+        if (elem._id == props.chat._id) {
+          if (!elem.messages) elem.messages = []
+          elem.messages = [...elem?.messages, {
+            type: "text",
+            emitUserUid: props.userUid,
+            message: props.messageSend,
+            //_id: "",
+            createdAt: Date.now(),
+          }]
+          props.setChat(elem)
+        }
+        return (elem)
+      })
+      return { total: old.total, results: resultsMap }
+    }
+    console.log(0, old)
+
+    return old
+  })
+  console.log(1, props?.chat, 2, props?.messageSend, 3, props.userUid)
+
+}
+// type message {
+//   _id: ID
+//   type: String
+//   emitUserUid: ID
+//   message: String
+//   fileUrl: String
+//   createdAt: Float
+//   received: Float
+//   read: Boolean
+//   deletedEmit: Boolean
+//   deletedReceiv: Boolean
+// }

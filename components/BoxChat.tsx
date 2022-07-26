@@ -6,8 +6,9 @@ import { SendMessage } from "./SendMessage";
 interface propsBoxChat {
   active: boolean
   chat?: any
+  setChat: any
 }
-const BoxChat: FC<propsBoxChat> = ({ active, chat }) => {
+const BoxChat: FC<propsBoxChat> = ({ active, chat, setChat }) => {
   //${active ? "" : "hidden"} 
   return (
     <>
@@ -16,9 +17,9 @@ const BoxChat: FC<propsBoxChat> = ({ active, chat }) => {
           <HeaderChat chat={chat} />
         </div>
         <div className="calHeight4 bg-base ">
-          <Conversation />
+          <Conversation chat={chat} />
         </div>
-        <SendMessage />
+        <SendMessage chat={chat} setChat={setChat} />
       </div>
       <style>
         {`

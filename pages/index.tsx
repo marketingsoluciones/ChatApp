@@ -16,7 +16,7 @@ import BoxChatIni from "../components/BoxChatIni"
 export default function Home() {
   const r = useRouter()
   const { setEmailPassword, user, verificandoCookie } = AuthContextProvider()
-  console.log("authContext")
+  ////console.log("authContext")
   const [montado, setMontado] = useState(false)
   useEffect(() => {
     fetchApi({
@@ -40,6 +40,9 @@ export default function Home() {
 
   const [active, setActive] = useState(0)
   const [chat, setChat] = useState(null)
+  useEffect(() => {
+    console.log(123, chat)
+  }, [chat]);
   const handler = useSwipeable({
     // onSwipedLeft: (eventdata) => {
     //   console.log("izquierda")
@@ -60,16 +63,16 @@ export default function Home() {
     myRef.current = el;
   }
   if (verificandoCookie) {
-    console.log("hizo la verificación de cookie")
+    ////console.log("hizo la verificación de cookie")
     if (!user) {
-      console.log("pero no pazó la verificación")
+      ////console.log("pero no pazó la verificación")
       return <PageLogin />
     }
     else {
       if (!user.displayName) {
         return <DatosConfirmation />
       } else {
-        console.log("y pazó la verificación devolviendo el usuario")
+        ////console.log("y pazó la verificación devolviendo el usuario")
         return (
           <>
             <Navigation />
@@ -77,7 +80,7 @@ export default function Home() {
               <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
                 {<Chats active={active == 0} setActive={setActive} setChat={setChat} />}
                 {active == 0 && <BoxChatIni active={active == 0} />}
-                {active != 0 && <BoxChat active={active == 1} chat={chat ? chat : null} />}
+                {active != 0 && <BoxChat active={active == 1} chat={chat ? chat : null} setChat={setChat} />}
                 {<ContactInfo active={active == 2} />}
               </section>
             </div>
