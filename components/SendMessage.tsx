@@ -1,5 +1,5 @@
 import { FC, ReactNode, useState } from "react";
-import { AuthContextProvider, ChatContextProvider } from "../context";
+import { ChatContextProvider, SocketContextProvider } from "../context";
 import { HandleSendMessage } from "../handles";
 import { SendIcon } from "./icons";
 import { OptionsSendMessage } from "./OptionsSenMessage";
@@ -7,10 +7,12 @@ import { OptionsSendMessage } from "./OptionsSenMessage";
 interface propsSendMessage {
   chat: any
   setChat: any
+  user: any
 }
 
-export const SendMessage: FC<propsSendMessage> = ({ chat, setChat }) => {
-  const { user } = AuthContextProvider()
+export const SendMessage: FC<propsSendMessage> = ({ chat, setChat, user }) => {
+  const { socket } = SocketContextProvider();
+
   const { setChats } = ChatContextProvider()
   const [value, setValue]: any = useState("")
   return (
@@ -26,7 +28,7 @@ export const SendMessage: FC<propsSendMessage> = ({ chat, setChat }) => {
         value={value}
       />
       <div className="text-gray-200 hover:text-primary cursor-pointer hover:opacity-90 transition button" onClick={() => {
-        value != "" && HandleSendMessage({ chat, messageSend: value, userUid: user?.uid ?? "", setChats, setChat }), setValue("")
+        value != "" && HandleSendMessage({ chat, messageSend: value, userUid: user?.uid ?? "", setChats, setChat, socket }), setValue("")
       }}>
         <SendIcon className="w-5 h-5" />
       </div>

@@ -67,10 +67,10 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
       title: contact?.nickName,
       photoURL: contact?.photoURL,
       type: 'chatevents',
-      addedes: {
+      addedes: [{
         type: "participante",
         userUid: contactUid
-      }
+      }]
     }
     setChat(chatFilter ? { ...chatFilter } : { ...chat })
   }, [active, setChat, chats, chatId, contactUid, contacts])

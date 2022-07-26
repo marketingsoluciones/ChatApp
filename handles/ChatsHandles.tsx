@@ -109,6 +109,7 @@ type HandleSendMessage = {
   userUid: string
   setChats: any
   setChat: any
+  socket: any
 }
 export const HandleSendMessage = (props: HandleSendMessage) => {
   props.setChats((old: any) => {
@@ -130,6 +131,19 @@ export const HandleSendMessage = (props: HandleSendMessage) => {
       return { total: old.total, results: resultsMap }
     }
     console.log(0, old)
+    console.log(9, props.chat.addedes)
+    const send = {
+      receiver: {
+        ids: props.chat.addedes.map((elem: any) => { return elem.userUid }),
+        userUid: props.userUid,
+      },
+      data: {
+        message: props.messageSend,
+        type: "text",
+      },
+    }
+    console.log(10, send)
+    props.socket.emit("chatEvents:create", send);
 
     return old
   })

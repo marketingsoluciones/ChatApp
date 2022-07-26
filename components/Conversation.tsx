@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { getHour, getRelativeTime } from "../utils/FormatTime"
 import { Message } from "./Conversations/ComponentsConversation"
 
-const Conversation = ({ chat }: any) => {
+const Conversation = ({ chat, user }: any) => {
     const [messages, setMessage] = useState([])
     //const messages = chat?.messages ? chat.messages : [];
     useEffect(() => {
@@ -11,17 +11,18 @@ const Conversation = ({ chat }: any) => {
 
         setMessage(chat.messages)
         console.log(`chat de ${chat.title}`, messages)
+        console.log(`chat?.messages `, chat?.messages)
+        console.log("user", user)
+
         document.getElementById('final')?.scrollIntoView(true)
-
-
-    }, [chat, messages])
+    }, [chat, messages, user])
 
 
     return (
         <div className="h-full w-full pl-3 pr-3">
             {chat?.messages?.map((elem: any, idx: number) => {
                 return (
-                    <Message key={idx} type={elem.type} emisor={elem.emisor} message={elem.message} date={getHour(elem.createdAt)} />
+                    <Message key={idx} type={elem.type} emisor={user.uid == elem.emitUserUid} message={elem.message} date={getHour(elem.createdAt)} />
                 )
             })}
             <div>
