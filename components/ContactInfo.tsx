@@ -1,20 +1,24 @@
 import React, { FC, useReducer } from "react";
 import { DotsIcon, FileIcon } from "./icons";
 import { AuthContextProvider } from '../context';
+import {Section} from '../components/Section';
+import { getRelativeTime } from "../utils/FormatTime";
+import SectionContact from '../components/DatosContacto/SectionContact'
 
 interface propsContact {
   active: boolean
+  chat?:any
 }
-const ContactInfo: FC<propsContact> = ({ active }) => {
+const ContactInfo: FC<propsContact> = ({ active,chat }) => {
 
   return (
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex flex-col items-center justify-start overflow-auto `}>
-        <Profile />
+        <Profile chat={chat} />
         <Information />
         <SharedFiles />
       </div>
-      <style jsx>
+      <style >
         {`
       .chats {
         height: calc(100vh - 4rem);
@@ -29,17 +33,17 @@ const ContactInfo: FC<propsContact> = ({ active }) => {
 
 export default ContactInfo;
 
-const Profile = () => {
+const Profile: FC<any> = ({chat}) => {
   const { user } = AuthContextProvider()
   return (
     <div className="bg-white h-max w-full rounded-lg p-10 flex flex-col items-center justify-center">
-      <div className="bg-tertiary w-28 h-28 rounded-full" />
+      
       {/* <img src={user?.photoURL?user?.photoURL:"error"} alt="" className="bg-tertiary w-28 h-28 rounded-full" /> */}
-
-      <h2 className="text-md font-semibold text-gray-300 pt-3">
+      <SectionContact key={chat?._id} onClick={() => { }} image={chat?.photoURL} name={chat?.title} info={chat?.onLine?.status ?? chat?._id ? "Online" : chat?.onLine?.status != undefined ? getRelativeTime(chat?.onLine?.dateConection) : <br />} _id={chat?._id} />
+     {/*  <h2 className="text-md font-semibold text-gray-300 pt-3">
         {user?.displayName}
       </h2>
-      <p className="text-sm text-gray-200 leading-4">{user?.role}</p>
+      <p className="text-sm text-gray-200 leading-4">{user?.role}</p> */}
     </div>
   );
 };
@@ -101,7 +105,7 @@ const SharedFiles: FC = () => {
           <DotsIcon className="w-4 w-4 transform rotate-90" />
 
         </div>
-        <style jsx>
+        <style >
           {`
                     .file {
                         background-image: url("/file.svg");
