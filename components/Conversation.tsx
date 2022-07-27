@@ -4,7 +4,7 @@ import { Message } from "./Conversations/ComponentsConversation"
 const Conversation = () => {
     const [messages, setMessages] = useState([])
     return (
-        <div className="h-full w-full pl-3 pr-3">
+        <div className="h-full w-full pl-3 pr-3 py-3 space-y-3">
             <Message type="file" emisor={false} message={"hola"} date={"10:45 pm"} />
             <Message type="text" emisor={true} message={"como estas"} date={"10:45 pm"} />
             <Message type="text" emisor={true} message={"esto es un link https://tutorial.eyehunts.com/html/html-p-tag-paragraph-break-font-size-line-space-indent/#:~:text=The%20width%20property%20sets%20the,break%20to%20the%20next%20line."} date={"10:45 pm"} />

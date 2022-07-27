@@ -12,7 +12,7 @@ export const SendMessage = () => {
 
       <input
         placeholder="Type your message ..."
-        className="text-sm focus:ring transition rounded-md py-2 px-2 w-full h-full focus:outline-none"
+        className="text-sm focus:ring transition rounded-md py-2 px-2 w-full h-full "
         autoFocus
       />
       <div className="text-gray-200 hover:text-primary cursor-pointer hover:opacity-90 transition">
