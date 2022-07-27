@@ -15,7 +15,7 @@ const ContactInfo: FC<propsContact> = ({ active,chat }) => {
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full chats p-6 gap-4 flex flex-col items-center justify-start overflow-auto `}>
         <Profile chat={chat} />
-        <Information />
+        <Information chat={chat} />
         <SharedFiles />
       </div>
       <style >
@@ -34,29 +34,25 @@ const ContactInfo: FC<propsContact> = ({ active,chat }) => {
 export default ContactInfo;
 
 const Profile: FC<any> = ({chat}) => {
-  const { user } = AuthContextProvider()
   return (
-    <div className="bg-white h-max w-full rounded-lg p-10 flex flex-col items-center justify-center">
-      
-      {/* <img src={user?.photoURL?user?.photoURL:"error"} alt="" className="bg-tertiary w-28 h-28 rounded-full" /> */}
+    <div className="bg-white h-max w-full rounded-lg  flex flex-col items-center justify-center">
       <SectionContact key={chat?._id} onClick={() => { }} image={chat?.photoURL} name={chat?.title} info={chat?.onLine?.status ?? chat?._id ? "Online" : chat?.onLine?.status != undefined ? getRelativeTime(chat?.onLine?.dateConection) : <br />} _id={chat?._id} />
-     {/*  <h2 className="text-md font-semibold text-gray-300 pt-3">
-        {user?.displayName}
-      </h2>
-      <p className="text-sm text-gray-200 leading-4">{user?.role}</p> */}
     </div>
   );
 };
 
-const Information = () => {
+const Information: FC<any> = ({chat}) => {
+  console.log("propiedades del chat",chat)
   const { user } = AuthContextProvider()
+  
   interface propsInfo {
     title: string;
     contain: string;
     border?: boolean;
+ 
   }
 
-  const Info: FC<propsInfo> = ({ title, contain, border = true }) => {
+  const Info: FC<propsInfo> = ({ title, contain, border = true, }) => {
 
     return (
       <div
@@ -72,11 +68,12 @@ const Information = () => {
 
     <div className="bg-white h-max w-full rounded-lg p-4">
       <h2 className="text-gray-200 text-md pb-2">Informacion personal</h2>
-      <Info title="Pais" contain={user?.country ? user.country : "error"} />
-      <Info title="Phone" contain="yo lo quitaria" />
+      {/* <Info title="Pais" contain={user?.country ? user.country : "error"} /> */}
+      {/* <Info title="Phone" contain="yo lo quitaria" /> */}
       <Info
+        key={chat?._id}
         title="Correo electronico"
-        contain={user?.email ? user?.email : "error"}
+        contain={chat?.email}
         border={false}
       />
     </div>

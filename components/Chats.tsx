@@ -53,7 +53,6 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
     setResultsContact(contacts?.results)
   }, [contacts])
 
-  //const resultsContact = contacts?.results
   const resultsEvents = events?.results
   useEffect(() => {
     if (chatId) {
@@ -84,15 +83,18 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
 
   return (
     <>
-      <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full h-full chats flex-col flex items-center justify-start overflow-auto pt-1`}>
-        <Buscador />
-        <div className="flex w-full pt-1">
-          <Button className={className} onClick={() => { setPage(0) }} title="Chats" />
-          <Button className={className} onClick={() => { setPage(1), setResultsContact(contacts?.results) }} title="Contactos" />
-          <Button className={className} onClick={() => { setPage(2) }} title="Eventos" />
-        </div>
-        <div className="w-full bg-white">
-          <div className="col-span-12 lg:col-span-3 h-max-1 calHeight2">
+      <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full h-full chats flex-col flex items-center justify-start overflow-auto pt-1 `}>
+        
+          <Buscador  />
+          <div className="flex w-full pt-1 ">
+            <Button className={className} onClick={() => { setPage(0) }} title="Chats" />
+            <Button className={className} onClick={() => { setPage(1), setResultsContact(contacts?.results) }} title="Contactos" />
+            <Button className={className} onClick={() => { setPage(2) }} title="Eventos" />
+          </div>
+      
+        
+        <div className="w-full h-full bg-white  ">
+          <div className="col-span-12 lg:col-span-3 calHeight2">
             <Swiper key={1} className="bg-white"
               // pagination={{ dynamicBullets: true, type: 'bullets', clickable: true }}
               preloadImages={false}
@@ -108,7 +110,7 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
                   ))
                 }
               </SwiperSlide>
-              <SwiperSlide className="w-full calHeight3">
+              <SwiperSlide className="w-full  calHeight3">
                 {
                   resultsContact?.length > 0 && resultsContact?.map((item: any, idx: any) => (
                     <Section key={idx} onClick={() => { HandleContacts({ setPage, setActive, setContactUid, setChatId, item }) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map(((it: any) => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} onLine={item.onLine.status} />
@@ -133,12 +135,12 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
             //background: #f7628c; // color rojo
           }
           .calHeight2 {
-            height: calc(100vh - 12rem);
+            height: calc(100vh - 8.5rem);
             overflow: scroll;
             //background: #ffffff;
           }
           .calHeight3 {
-            height: calc(100vh - 12rem);
+            height: calc(100vh - 8.5rem);
             overflow: scroll;
             //background: #f0f0f0;
           }

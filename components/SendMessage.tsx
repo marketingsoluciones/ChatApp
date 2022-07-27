@@ -22,7 +22,7 @@ export const SendMessage: FC<propsSendMessage> = ({ chat, setChat, user }) => {
       </div>
       <input
         placeholder="Type your message ..."
-        className="text-sm focus:ring transition rounded-md py-2 px-2 w-full h-full focus:outline-none"
+        className="text-sm focus:ring transition rounded-md py-2 px-2 w-full h-full "
         autoFocus
         onChange={(e) => { setValue(e.target.value) }}
         value={value}
