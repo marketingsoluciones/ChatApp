@@ -13,7 +13,7 @@ interface propsSendMessage {
 export const SendMessage: FC<propsSendMessage> = ({ chat, setChat, user }) => {
   const { socket } = SocketContextProvider();
 
-  const { setChats } = ChatContextProvider()
+  const { setChats, contacts } = ChatContextProvider()
   const [value, setValue]: any = useState("")
   return (
     <div className="h-max w-full bg-white p-2 px-4 flex gap-4 items-center justify-between">

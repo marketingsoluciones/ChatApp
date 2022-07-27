@@ -3,6 +3,7 @@ export const format = (date?: Date | number, locale?: string, options?: object) 
 };
 
 export const getRelativeTime = (date: number): string => {
+  if (typeof (date) == "string") { date = new Date(date).getTime() }
   const units: any = {
     year: 24 * 60 * 60 * 1000 * 365,
     month: (24 * 60 * 60 * 1000 * 365) / 12,
@@ -20,7 +21,6 @@ export const getRelativeTime = (date: number): string => {
       return rtf.format(Math.round(elapsed / units[u]), u)
     }
   return ""
-
 };
 
 export const getHour = (number: number): string => {

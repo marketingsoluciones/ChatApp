@@ -10,7 +10,7 @@ import {
   useContext,
 } from "react";
 import useFetch from '../hooks/useFetch';
-import { HandleCreateChat, HandleDataContacts, HandleDataNotifications, HandleDataEvents } from '../handles'
+import { HandleCreateChat, HandleDataContacts, HandleDataNotifications, HandleDataEvents, HandleReceivesMessage } from '../handles'
 
 
 interface stateConversation {
@@ -105,6 +105,13 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
   const fetch = () => {
     fetchy({ query: queries.getChats, variables: { uid: user?.uid, origin: "chatevents", limit, skip } });
   }
+
+  const [testData, setTestData] = useState()
+  useEffect(() => {
+    console.log("testData", testData)
+  }, [testData]);
+
+
   useEffect(() => {
     if (!isMounted && chats?.total > 0 && contacts?.total > 0) {
       setIsMounted(true)
@@ -131,17 +138,41 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
     fetchyEvents({ query: queries.getEventsGuess, variables: { uid: user?.uid }, apiRoute: "graphqlApp" })
   }, [user?.uid]);
 
-  const handleCreateChat = HandleCreateChat(setConversation, setChats)
+  const handleCreateChat = (() => {
+    // console.log(11223311, contacts)
+    return HandleCreateChat({ setConversation, setChats, setTestData, userUid: user?.uid ? user?.uid : "", contacts })
+  })()
+  const handleReceivesMessage = (() => {
+    // console.log(11223311, contacts)
+    return HandleReceivesMessage({ setChats })
+  })()
   const handleDataContacts = HandleDataContacts(setContacts)
   const handleDataNotifications = HandleDataNotifications(setNotifications)
   const handleDataEvents = HandleDataEvents(setEvents)
 
   useEffect(() => {
-    socket?.on("chatBusiness:create", handleCreateChat)
+    socket?.on("chatEvents:create", handleCreateChat)
+    socket?.on("chatEvents:message", handleReceivesMessage)
     return () => {
-      socket?.off('chatBusiness:create', handleCreateChat)
+      socket?.off("chatEvents:create")
+      socket?.off("chatEvents:message")
     }
-  }, [socket, handleCreateChat]);
+  }, [socket, handleCreateChat, handleReceivesMessage]);
+
+  // useEffect(() => {
+  //   socket?.on("chatEvents:message", (data) => {
+  //     const chatsNew = chats?.results?.map((elem: any) => {
+  //       if (elem._id == data.chatID) {
+  //         elem.messages.push(data)
+  //       }
+  //       return elem
+  //     })
+  //     console.log(chatsNew)
+  //   })
+  //   return () => {
+  //     socket?.off('chatEvents:message')
+  //   }
+  // }, [socket, chats]);
 
   useEffect(() => {
     socketApp?.on("dataContact", handleDataContacts)
