@@ -9,7 +9,7 @@ import { fetchApi, queries } from "./Fetching";
 import { useToast } from "../hooks/useToast";
 
 export const useAuthentication = () => {
-  console.log("entro")
+  //console.log("entro")
   const { setLoading } = LoadingContextProvider();
   const { setUser } = AuthContextProvider();
   const toast = useToast();
@@ -99,7 +99,7 @@ export const useAuthentication = () => {
     toast("success", "Gracias por visitarnos, te esperamos luego 😀");
   }, [router, setUser, toast])
 
-  
+
 
 
   const resetPassword = async (values: any, setStage: any) => {// funcion para conectar con con firebase para enviar el correo 
@@ -116,8 +116,8 @@ export const useAuthentication = () => {
       toast("error", "introduce un correo")
     }
   };
-  
-  
+
+
   return { signIn, getSessionCookie, _signOut, resetPassword };
 
 };

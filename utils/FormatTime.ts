@@ -22,3 +22,19 @@ export const getRelativeTime = (date: number): string => {
   return ""
 
 };
+
+export const getHour = (number: number): string => {
+  const date = new Date(number)
+  let t = null
+  const h = (() => {
+    if (date.getHours() > 11) {
+      t = "p.m."
+      return date.getHours() - 12
+    } date.getHours()
+    t = "a.m."
+    return date.getHours() + 1
+  })()
+  const m = date.getMinutes()
+  const resp = `${h}:${m} ${t}`
+  return resp
+};

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { AuthContextProvider } from "../context";
 import Conversation from "./Conversation";
 import { HeaderChat } from "./HeaderChat";
 import { SendMessage } from "./SendMessage";
@@ -6,8 +7,10 @@ import { SendMessage } from "./SendMessage";
 interface propsBoxChat {
   active: boolean
   chat?: any
+  setChat: any
 }
-const BoxChat: FC<propsBoxChat> = ({ active, chat }) => {
+const BoxChat: FC<propsBoxChat> = ({ active, chat, setChat }) => {
+  const { user } = AuthContextProvider()
   //${active ? "" : "hidden"} 
   return (
     <>
@@ -16,9 +19,9 @@ const BoxChat: FC<propsBoxChat> = ({ active, chat }) => {
           <HeaderChat chat={chat} />
         </div>
         <div className="calHeight4 bg-base ">
-          <Conversation />
+          <Conversation chat={chat} user={user} />
         </div>
-        <SendMessage />
+        <SendMessage chat={chat} setChat={setChat} user={user} />
       </div>
       <style>
         {`

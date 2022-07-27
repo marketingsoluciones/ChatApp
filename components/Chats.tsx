@@ -57,7 +57,7 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
   useEffect(() => {
     if (chatId) {
       const chat: any = chats?.results?.filter((elem: any) => elem?._id == chatId)[0]
-      setChat(chat)
+      setChat({ ...chat })
       return
     }
     const contact = contacts?.results?.filter((elem: any) => elem?.uid == contactUid)[0]
@@ -66,12 +66,12 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
       title: contact?.nickName,
       photoURL: contact?.photoURL,
       type: 'chatevents',
-      addedes: {
+      addedes: [{
         type: "participante",
         userUid: contactUid
-      }
+      }]
     }
-    setChat(chatFilter ? chatFilter : chat)
+    setChat(chatFilter ? { ...chatFilter } : { ...chat })
   }, [active, setChat, chats, chatId, contactUid, contacts])
 
 

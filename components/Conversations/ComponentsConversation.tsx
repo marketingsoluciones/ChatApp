@@ -30,7 +30,7 @@ export const Message: FC<propsMessage> = ({ message, date, emisor = true, type }
   };
   return (
     <>
-      <div
+      <div 
         className={`flex gap-4 items-center ${emisor ? "flex-row-reverse" : ""} p-px`}
       >
         <div className={`${emisor ? "bg-rose-100" : "bg-white"} rounded-xl shadow-md `}>
