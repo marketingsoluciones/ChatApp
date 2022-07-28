@@ -132,7 +132,7 @@ export const HandleReceivesMessage = ({ setChats }: HandleMessageChat) => {
     setChats((old: { total: number, results: Chat[] }) => {
       const i = old.results.findIndex((elem: any) => elem._id == data.chatID)
       old.results[i].messages.push(data)
-      return old
+      return { ...old, received: !old?.received ? + 1 : old.received +1}
     })
   }, [setChats])
   return handleReceivesMessage
@@ -160,7 +160,7 @@ export const HandleSendMessage = (props: HandleSendMessage) => {
             //_id: "",
             createdAt: Date.now(),
           }]
-          props.setChat(elem)
+          //props.setChat(elem)
         }
         return (elem)
       })

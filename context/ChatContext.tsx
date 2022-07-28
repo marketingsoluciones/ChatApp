@@ -18,7 +18,8 @@ interface stateConversation {
   data: Chat | null;
 }
 interface ResultFetchChats {
-  total: number | null;
+  received: number | null;
+  total1: number | null;
   results: Chat[];
 }
 interface ResultFetchContacts {
@@ -54,7 +55,7 @@ type Context = {
 };
 
 const initialContext: Context = {
-  chats: { total: null, results: [] },
+  chats: { received: 0, total1: null, results: [] },
   setChats: () => null,
   loadingChats: false,
   errorChats: false,
@@ -125,6 +126,7 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
       }, [])
       const resultsOrder = resultsReduce.sort((a: any, b: any) => a.updateAt - b.updateAt)
       const chatsNew = {
+        received: 0,
         total: chats.total,
         results: resultsOrder
       }
