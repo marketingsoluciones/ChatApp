@@ -1,6 +1,5 @@
 import { Chat, Contact, Notification } from '../interfaces/index';
-import { SetStateAction, useEffect, useState, useCallback } from 'react';
-import { ChatContextProvider } from '../context';
+import { useCallback } from 'react';
 
 export const HandleDataContacts = (setContacts: any) => {
   const handleDataContacts = useCallback((data: Contact) => {
@@ -94,10 +93,9 @@ type HandleCreateChat = {
   contacts: any
   setConversation: any
   setChats: any
-  setTestData: any
 }
 
-export const HandleCreateChat = ({ setConversation, setChats, setTestData, userUid, contacts }: HandleCreateChat) => {
+export const HandleCreateChat = ({ setChats, userUid, contacts }: HandleCreateChat) => {
   const handleCreateChat = useCallback((data: any) => {
     const add = data.addedes.filter((elem: any) => elem.userUid != userUid)[0]
     const contact = contacts.results.filter((elem: any) => elem.uid == add.userUid)[0]

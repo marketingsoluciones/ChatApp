@@ -1,15 +1,15 @@
 import React, { FC, useReducer } from "react";
 import { DotsIcon, FileIcon } from "./icons";
 import { AuthContextProvider } from '../context';
-import {Section} from '../components/Section';
+import { Section } from '../components/Section';
 import { getRelativeTime } from "../utils/FormatTime";
 import SectionContact from '../components/DatosContacto/SectionContact'
 
 interface propsContact {
   active: boolean
-  chat?:any
+  chat?: any
 }
-const ContactInfo: FC<propsContact> = ({ active,chat }) => {
+const ContactInfo: FC<propsContact> = ({ active, chat }) => {
 
   return (
     <>
@@ -33,7 +33,7 @@ const ContactInfo: FC<propsContact> = ({ active,chat }) => {
 
 export default ContactInfo;
 
-const Profile: FC<any> = ({chat}) => {
+const Profile: FC<any> = ({ chat }) => {
   return (
     <div className="bg-white h-max w-full rounded-lg  flex flex-col items-center justify-center">
       <SectionContact key={chat?._id} onClick={() => { }} image={chat?.photoURL} name={chat?.title} info={chat?.onLine?.status ?? chat?._id ? "Online" : chat?.onLine?.status != undefined ? getRelativeTime(chat?.onLine?.dateConection) : <br />} _id={chat?._id} />
@@ -41,15 +41,14 @@ const Profile: FC<any> = ({chat}) => {
   );
 };
 
-const Information: FC<any> = ({chat}) => {
-  console.log("propiedades del chat",chat)
+const Information: FC<any> = ({ chat }) => {
   const { user } = AuthContextProvider()
-  
+
   interface propsInfo {
     title: string;
     contain: string;
     border?: boolean;
- 
+
   }
 
   const Info: FC<propsInfo> = ({ title, contain, border = true, }) => {

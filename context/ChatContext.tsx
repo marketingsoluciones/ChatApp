@@ -1,17 +1,10 @@
 import { Chat, Contact, Notification, Event } from '../interfaces/';
 import { SetStateAction, useEffect, useState, useCallback } from 'react';
 import { queries } from '../utils/Fetching';
-
 import { AuthContextProvider, SocketContextProvider, NotificationContextProvider } from '.';
-import {
-  createContext,
-  FC,
-  Dispatch,
-  useContext,
-} from "react";
+import { createContext, FC, Dispatch, useContext } from "react";
 import useFetch from '../hooks/useFetch';
 import { HandleCreateChat, HandleDataContacts, HandleDataNotifications, HandleDataEvents, HandleReceivesMessage } from '../handles'
-
 
 interface stateConversation {
   state: boolean;
@@ -107,12 +100,6 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
     fetchy({ query: queries.getChats, variables: { uid: user?.uid, origin: "chatevents", limit, skip } });
   }
 
-  const [testData, setTestData] = useState()
-  useEffect(() => {
-    console.log("testData", testData)
-  }, [testData]);
-
-
   useEffect(() => {
     if (!isMounted && chats?.total > 0 && contacts?.total > 0) {
       setIsMounted(true)
@@ -142,7 +129,7 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
 
   const handleCreateChat = (() => {
     // console.log(11223311, contacts)
-    return HandleCreateChat({ setConversation, setChats, setTestData, userUid: user?.uid ? user?.uid : "", contacts })
+    return HandleCreateChat({ setConversation, setChats, userUid: user?.uid ? user?.uid : "", contacts })
   })()
   const handleReceivesMessage = (() => {
     // console.log(11223311, contacts)

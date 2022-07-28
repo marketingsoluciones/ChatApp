@@ -9,12 +9,12 @@ export const BackButtonListener: FC = ({ children }) => {
   const url = ''
 
   useEffect(() => {
-    console.log(1234567)
+    console.log("BackButton Activado")
     history.pushState(state, title, url)
     window.onpopstate = e => {
       setPressed(true)
       setPressedCount(pressedCount + 1)
-      console.log(5555)
+      console.log("presionado ir atrás")
       history.pushState(state, title, url)
     };
   });

@@ -1,22 +1,19 @@
-import { FC, useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect } from "react"
 import BoxChat from "../components/BoxChat"
 import Chats from '../components/Chats'
 import ContactInfo from "../components/ContactInfo"
 import { useSwipeable } from 'react-swipeable'
 import PageLogin from './login'
-import { AuthContextProvider, LoadingContextProvider } from '../context';
+import { AuthContextProvider } from '../context';
 import { Navigation } from "../components/Surface/Navigation";
 import { useRouter } from "next/router"
 import { fetchApi, queries } from "../utils/Fetching";
-import { BackButtonListener } from "../components/BackButtonListener"
-import Configuration from './configuracion'
 import DatosConfirmation from './Confirmation'
 import BoxChatIni from "../components/BoxChatIni"
 
 export default function Home() {
   const r = useRouter()
   const { setEmailPassword, user, verificandoCookie } = AuthContextProvider()
-  ////console.log("authContext")
   const [montado, setMontado] = useState(false)
   useEffect(() => {
     fetchApi({
@@ -27,29 +24,12 @@ export default function Home() {
     })
   }, [r?.query, setEmailPassword]);
 
-  useEffect(() => {
-    console.log(11111111, "NO MONTADO")
-    if (!montado) {
-      console.log(111112222, "seteo MONTADO")
-      setMontado(true)
-    }
-  }, [montado, setMontado]);
-
-
-
-
   const [active, setActive] = useState(0)
   const [chat, setChat] = useState(null)
   useEffect(() => {
-    console.log(123, chat)
   }, [chat]);
   const handler = useSwipeable({
-    // onSwipedLeft: (eventdata) => {
-    //   console.log("izquierda")
-    //   if (active >= 0 && active < 2) {
-    //     setActive(active + 1)
-    //   }
-    // },
+
     onSwipedRight: (eventdata) => {
       if (active <= 2 && active > 0) {
         setActive(active - 1)
@@ -63,16 +43,13 @@ export default function Home() {
     myRef.current = el;
   }
   if (verificandoCookie) {
-    ////console.log("hizo la verificación de cookie")
     if (!user) {
-      ////console.log("pero no pazó la verificación")
       return <PageLogin />
     }
     else {
       if (!user.displayName) {
         return <DatosConfirmation />
       } else {
-        ////console.log("y pazó la verificación devolviendo el usuario")
         return (
           <>
             <Navigation />
@@ -98,7 +75,6 @@ export default function Home() {
           </>
         )
       }
-
     }
   }
   return <></>

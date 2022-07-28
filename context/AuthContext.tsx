@@ -14,6 +14,8 @@ import Cookies from 'js-cookie'
 import { signInWithCustomToken } from "firebase/auth";
 //import { LoadingContextProvider } from "./LoadingContext";
 
+const develop = process.env.DEVELOP
+
 export interface UserMax extends User {
   city?: string;
   country?: string;
@@ -55,16 +57,16 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
   const [user, setUser] = useState<Partial<UserMax | null>>(null);
   const [verificandoCookie, setVerificandoCookie] = useState<Partial<boolean | null>>(null);
   const [emailPassword, setEmailPassword] = useState();
-  const [userTemp, setUserTemp] = useState<Partial<UserMax | null>>(null); 
+  const [userTemp, setUserTemp] = useState<Partial<UserMax | null>>(null);
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user: any) => {
       const sessionCookie = Cookies.get("sessionBodas");
-      console.info("Verificando cookie", sessionCookie);
+      develop && console.info("Verificando cookie", sessionCookie);
       if (sessionCookie) {
-        console.info("Tengo cookie de sesion");
+        develop && console.info("Tengo cookie de sesion");
         if (user) {
-          console.info("Tengo user de contexto firebase");
+          develop && console.info("Tengo user de contexto firebase");
           const moreInfo = await fetchApi({
             query: queries.getUser,
             variables: { uid: user?.uid },
@@ -72,13 +74,13 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
             //setLoading(false)
             setVerificandoCookie(true)
           })
-          moreInfo && console.info("Tengo datos de la base de datos");
+          develop && moreInfo && console.info("Tengo datos de la base de datos");
           setUser({ ...user, ...moreInfo });
-          console.info("Guardo datos en contexto react");
+          develop && console.info("Guardo datos en contexto react");
         } else {
-          console.info("NO tengo user de contexto de firebase");
-          console.log("queries.authStatus", queries.authStatus)
-          console.log("sessionCookie", sessionCookie)
+          develop && console.info("NO tengo user de contexto de firebase");
+          develop && console.log("queries.authStatus", queries.authStatus)
+          develop && console.log("sessionCookie", sessionCookie)
           const asdf = await fetchApi({
             query: queries.authStatus,
             variables: { sessionCookie },
@@ -86,11 +88,11 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
             //setLoading(false)
             setVerificandoCookie(true)
           })
-          console.log("asdf", asdf)
+          develop && console.log("asdf", asdf)
           const customToken = asdf?.customToken
-          console.info("Llamo con mi sessionCookie para traerme customToken");
+          develop && console.info("Llamo con mi sessionCookie para traerme customToken");
           customToken && signInWithCustomToken(auth, customToken);
-          console.info("Hago sesion con el custom token");
+          develop && console.info("Hago sesion con el custom token");
         }
       } else {
         setVerificandoCookie(true)
@@ -107,7 +109,7 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, setUser,userTemp, setUserTemp,verificandoCookie, setVerificandoCookie, emailPassword, setEmailPassword }}>
+    <AuthContext.Provider value={{ user, setUser, userTemp, setUserTemp, verificandoCookie, setVerificandoCookie, emailPassword, setEmailPassword }}>
       {children}
     </AuthContext.Provider>
   );
