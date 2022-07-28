@@ -26,15 +26,15 @@ export const getRelativeTime = (date: number): string => {
 export const getHour = (number: number): string => {
   const date = new Date(number)
   let t = null
-  const h = (() => {
+  let h = (() => {
     if (date.getHours() > 11) {
       t = "p.m."
       return date.getHours() - 12
     } date.getHours()
     t = "a.m."
-    return date.getHours() + 1
+    return date.getHours()
   })()
-  const m = date.getMinutes()
-  const resp = `${h}:${m} ${t}`
+  let m = date.getMinutes()
+  const resp = `${h == 0 ? 12 : h}:${m < 10 ? `0${m}` : m} ${t}`
   return resp
 };
