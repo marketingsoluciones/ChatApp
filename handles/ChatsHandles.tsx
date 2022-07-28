@@ -129,10 +129,10 @@ type HandleMessageChat = {
 }
 export const HandleReceivesMessage = ({ setChats }: HandleMessageChat) => {
   const handleReceivesMessage = useCallback((data: any) => {
-    setChats((old: { total: number, results: Chat[] }) => {
+    setChats((old: { received: number, total: number, results: Chat[] }) => {
       const i = old.results.findIndex((elem: any) => elem._id == data.chatID)
       old.results[i].messages.push(data)
-      return { ...old, received: !old?.received ? + 1 : old.received +1}
+      return { ...old, received: old.received + 1 }
     })
   }, [setChats])
   return handleReceivesMessage
