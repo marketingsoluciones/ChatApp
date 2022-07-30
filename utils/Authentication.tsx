@@ -59,6 +59,17 @@ export const useAuthentication = () => {
         const res: UserCredential = await types[type]();
         if (res) {
           const token = (await res?.user?.getIdTokenResult())?.token;
+          console.log(res?.user?.uid)
+          const exist = await fetchApi({
+            query: queries.getExistUser,
+            variables: { uid: res?.user?.uid, idToken: token },
+            apiRoute: "graphqlApp"
+          })
+          console.log("exist", exist)
+          if (!exist) {
+            throw new Error('user does not exist into events bd')
+          }
+
           const sessionCookie = await getSessionCookie(token)
           if (sessionCookie) {
 
@@ -67,6 +78,7 @@ export const useAuthentication = () => {
               query: queries.getUser,
               variables: { uid: res.user.uid },
             });
+            console.log("moreInfo", moreInfo)
             if (moreInfo?.errors) {
               throw new Error("no hay datos bd");
               //setStage("register")

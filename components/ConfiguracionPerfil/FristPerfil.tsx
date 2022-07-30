@@ -37,7 +37,7 @@ const DatosAcceso = () => {
     useEffect(() => {
         setFieldValue("email", user?.email);
         setFieldValue("displayName", user?.displayName);
-    }, [user]);
+    }, [user, setFieldValue]);
 
 
     const handleEditPassword = async () => {
@@ -75,9 +75,9 @@ const DatosAcceso = () => {
     }
 
     const PostDatos = () => {
-        if(handleEditPassword()!==null){
+        if (handleEditPassword() !== null) {
             handleEditDisplayName()
-        }else{
+        } else {
             console.log("error")
         }
     }
@@ -108,7 +108,7 @@ const DatosAcceso = () => {
                         name={"password"}
                         placeholder={"**********"}
                         type={"text"}
-                        
+
                     />
                 </div>
 

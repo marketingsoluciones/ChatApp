@@ -1,14 +1,9 @@
-import { FC, MouseEventHandler, useContext } from "react";
-import { GoogleProvider, FacebookProvider, auth } from "../../firebase";
+import { FC, MouseEventHandler } from "react";
+import { GoogleProvider, FacebookProvider } from "../../firebase";
 import { Icon } from "../Surface/Footer";
 import { AppleIcon, FacebookIcon, GoogleIcon } from "../Icons/";
-import { signInWithPopup, UserCredential } from "firebase/auth";
-import router from "next/router";
-import { GraphQL, fetchApi, queries } from "../../utils/Fetching";
 import { useToast } from "../../hooks/useToast";
-import { AuthContextProvider, LoadingContextProvider } from "../../context";
-//import { setCookie } from "../../utils/Cookies";
-import { api } from "../../api";
+import { LoadingContextProvider } from "../../context";
 import { useAuthentication } from "../../utils/Authentication";
 
 interface propsRegisterQuestion {

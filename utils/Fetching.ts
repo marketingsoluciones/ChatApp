@@ -91,6 +91,7 @@ export const fetchApi: CallableFunction = async ({
 };
 
 type queries = {
+  getExistUser: string;
   getContacts: string;
   getEventsGuess: string
   getSignInStatus: string
@@ -108,6 +109,9 @@ type queries = {
 };
 
 export const queries: queries = {
+  getExistUser: `query($uid: String){
+    queryExisteInvitado(uid:$uid)
+  }`,
   getContacts: `query($uid: String){
     queryenInvitados(uid:$uid){
       total

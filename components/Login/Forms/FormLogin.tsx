@@ -12,15 +12,14 @@ type MyFormValues = {
   wrong: any;
 };
 
-const FormLogin: FC <any>= ({setStage}) => {
+const FormLogin: FC<any> = ({ setStage }) => {
   const { signIn } = useAuthentication();
   const toast = useToast()
   const { setLoading } = LoadingContextProvider()
-  const { emailPassword } = AuthContextProvider()
   const initialValues: MyFormValues = {
-    identifier: emailPassword?.email ?? '',
-    password: emailPassword?.password ?? '',
-    wrong: "",
+    identifier: '',
+    password: '',
+    wrong: ""
   };
 
   const errorsCode: any = {
@@ -45,7 +44,6 @@ const FormLogin: FC <any>= ({setStage}) => {
       <Form className=" text-gray-200 flex flex-col gap-4 py-4 w-full md:w-3/4">
         <span className="w-full relative ">
           <InputField
-
             label={"Correo electronico"}
             name="identifier"
             placeholder="jhondoe@gmail.com"
@@ -59,7 +57,7 @@ const FormLogin: FC <any>= ({setStage}) => {
           <InputField
             name="password"
             placeholder="******"
-            type={emailPassword?.password ? "text" : "password"}
+            type={"password"}
             icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
             label={"Contraseña"}
 

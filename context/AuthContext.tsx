@@ -43,7 +43,7 @@ const initialContext: Context = {
   user: null,
   setUser: (user) => { },
   verificandoCookie: null,
-  setVerificandoCookie: (user) => { },
+  setVerificandoCookie: (user) => null,
   emailPassword: { email: undefined, password: undefined },
   setEmailPassword: () => { },
   setUserTemp: (user) => { },

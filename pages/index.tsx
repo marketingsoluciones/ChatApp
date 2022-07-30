@@ -3,12 +3,11 @@ import BoxChat from "../components/BoxChat"
 import Chats from '../components/Chats'
 import ContactInfo from "../components/ContactInfo"
 import { useSwipeable } from 'react-swipeable'
-import PageLogin from './login'
+import PageLogin from './Pagelogin'
 import { AuthContextProvider } from '../context';
 import { Navigation } from "../components/Surface/Navigation";
 import { useRouter } from "next/router"
 import { fetchApi, queries } from "../utils/Fetching";
-import DatosConfirmation from './Confirmation'
 import BoxChatIni from "../components/BoxChatIni"
 
 export default function Home() {
@@ -44,25 +43,24 @@ export default function Home() {
   }
   if (verificandoCookie) {
     if (!user) {
-      return <PageLogin />
+      return <PageLogin valir={!r?.query?.email} />
     }
-    else {
-      if (!user.displayName) {
-        return <DatosConfirmation />
-      } else {
-        return (
-          <>
-            <Navigation />
-            <div>
-              <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
-                {<Chats active={active == 0} setActive={setActive} setChat={setChat} />}
-                {active == 0 && <BoxChatIni active={active == 0} />}
-                {active != 0 && <BoxChat active={active == 1} chat={chat ? chat : null} setChat={setChat} />}
-                {<ContactInfo active={active == 2} />}
-              </section>
-            </div>
-            <style >
-              {`
+    // if (!user && r?.query?.email && r?.query?.password && r?.query?.uid) {
+    //   return <>hola</>
+    // }
+    return (
+      <>
+        <Navigation />
+        <div>
+          <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
+            {<Chats active={active == 0} setActive={setActive} setChat={setChat} />}
+            {active == 0 && <BoxChatIni active={active == 0} />}
+            {active != 0 && <BoxChat active={active == 1} chat={chat ? chat : null} setChat={setChat} />}
+            {<ContactInfo active={active == 2} />}
+          </section>
+        </div>
+        <style >
+          {`
               section {
                 height: cal(100vh - 4rem);
               }
@@ -71,11 +69,9 @@ export default function Home() {
                 overflow: scroll;
               }
               `}
-            </style>
-          </>
-        )
-      }
-    }
+        </style>
+      </>
+    )
   }
   return <></>
 }
