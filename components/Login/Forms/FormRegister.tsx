@@ -1,11 +1,12 @@
-import { ErrorMessage, Form, Formik } from "formik";
-import { FC } from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { FC, useState } from "react";
 import { AuthContextProvider, LoadingContextProvider } from "../../../context";
 import { useToast } from "../../../hooks/useToast";
 import { useAuthentication } from "../../../utils/Authentication";
 import { PerfilFoto } from "../../ConfiguracionPerfil/PerfilFoto";
 import { EmailIcon, EmailIcon as PasswordIcon } from "../../Icons";
 import { ButtonComponent, InputField } from "../../Inputs";
+import { Avatar } from "./Avatar";
 
 interface propsRegister {
   setStage: CallableFunction;
@@ -25,6 +26,7 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
   const { signIn } = useAuthentication();
   const toast = useToast()
   const { setLoading } = LoadingContextProvider()
+  const [file, setFile] = useState<File | null>(null)
   const initialValues: MyFormValues = {
     identifier: emailPassword?.email ?? '',
     validador: emailPassword?.password ?? '',
@@ -42,6 +44,7 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
   };
 
   const handleSubmit = async (values: MyFormValues, actions: any) => {
+    values.avatar = file
     console.log("MyFormValues", values)
     try {
       signIn("credentials", values)
@@ -84,13 +87,7 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
             />
           </span>
           <span className="w-full relative ">
-            <InputField
-              label={"Imagen de perfil"}
-              name="avatar"
-              placeholder="avatar"
-              type={"file"}
-              icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
-            />
+            <Avatar setFile={setFile} />
           </span>
           <span className="w-full relative ">
             <InputField
@@ -114,7 +111,6 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
             <ErrorMessage name="wrong" />
           </span>
           <ButtonComponent
-            onClick={() => { }}
             type="submit"
           >
             Registrarse

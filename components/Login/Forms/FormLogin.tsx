@@ -5,6 +5,7 @@ import { InputField, ButtonComponent } from "../../Inputs";
 import { useToast } from '../../../hooks/useToast';
 import { AuthContextProvider, LoadingContextProvider } from "../../../context";
 import { useAuthentication } from '../../../utils/Authentication';
+import ToastContainer from "../../Toast/ToastContainer";
 
 type MyFormValues = {
   identifier: string;
@@ -33,6 +34,7 @@ const FormLogin: FC<any> = ({ setStage }) => {
     try {
       signIn("credentials", values)
     } catch (error: any) {
+      console.log(123)
       setLoading(false)
       console.error(JSON.stringify(error));
       toast("error", JSON.stringify(errorsCode[error.code]))
@@ -69,7 +71,7 @@ const FormLogin: FC<any> = ({ setStage }) => {
         <button onClick={() => setStage("resetPassword")} className="text-sm text-primary w-full text-left hover:text-gray-300 transition cursor-pointer">
           Olvidé mi contraseña
         </button >
-
+        {/* <ToastContainer toasts={[{ id: 1, type: "error", message: "algo" }]} /> */}
         <ButtonComponent
           onClick={() => { }}
           type="submit"
