@@ -12,8 +12,8 @@ const DynamicChatsProvider = dynamic((): any =>
   import("../context").then((mod) => mod.ChatProvider)
 );
 
-const DynamicNotificationProvider = dynamic((): any =>
-  import("../context").then((mod) => mod.NotificationProvider)
+const DynamicToastProvider = dynamic((): any =>
+  import("../context").then((mod) => mod.ToastProvider)
 );
 
 const DefaultLayout: FC = ({ children }) => {
@@ -25,11 +25,11 @@ const DefaultLayout: FC = ({ children }) => {
       <DynamicSocketProvider>
         <DynamicChatsProvider>
           <LoadingProvider>
-            <ToastProvider>
-              <main className="h-auto bg-base">
+            <DynamicToastProvider>
+              <div className="relative min-h-screen w-full h-full">
                 {children}
-              </main>
-            </ToastProvider>
+              </div>
+            </DynamicToastProvider>
           </LoadingProvider>
         </DynamicChatsProvider>
       </DynamicSocketProvider>

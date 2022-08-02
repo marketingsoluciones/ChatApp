@@ -94,6 +94,7 @@ export const useAuthentication = () => {
           console.log("No hay session cookie");
         }
       } catch (error) {
+        toast("success", "Inicio de sesión con exito");
         console.log("error", error)
       }
       setLoading(false);
