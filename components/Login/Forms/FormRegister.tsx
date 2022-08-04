@@ -137,8 +137,8 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
               required
             />
           </span>
-          <span className="w-full relative ">
-            <Avatar setFile={setFile} diameter={24} />
+          <span >
+            <Avatar setFile={setFile} diameter={20} />
           </span>
           <span className="w-full relative ">
             <InputField

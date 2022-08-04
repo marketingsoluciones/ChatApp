@@ -11,7 +11,7 @@ type propsAvatar = {
 
 export const Avatar: FC<propsAvatar> = ({ setFile, photoURL, diameter }: propsAvatar) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [avatar, setAvatar] = useState<string | any>("http://96.126.110.203:4500//uploads/69e26e/tux-i640.webp")
+  const [avatar, setAvatar] = useState<string | any>()
   const toast = useToast();
 
 
@@ -41,7 +41,7 @@ export const Avatar: FC<propsAvatar> = ({ setFile, photoURL, diameter }: propsAv
   }
 
   return (
-    <div className={`h-${diameter} w-${diameter}`}>
+    <div className={`bg-black h-${diameter} w-${diameter}`}>
       <label htmlFor="photo" className={"relative"}>
         <img src={photoURL ?? avatar} alt={"imagen del perfil"} className={`border-primary border-2 rounded-full objeto-cover h-${diameter} w-${diameter} hover:opacity-50 cursor-pointer object-cover object-center`} />
         {loading && (
