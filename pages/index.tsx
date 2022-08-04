@@ -12,7 +12,7 @@ import BoxChatIni from "../components/BoxChatIni"
 
 export default function Home() {
   const r = useRouter()
-  const { setEmailPassword, user, verificandoCookie } = AuthContextProvider()
+  const { emailPassword, setEmailPassword, user, verificandoCookie } = AuthContextProvider()
   const [montado, setMontado] = useState(false)
   useEffect(() => {
     fetchApi({
@@ -20,7 +20,7 @@ export default function Home() {
       variables: { uid: r?.query?.uid },
     }).then((value: any) => {
       !value && setEmailPassword(r?.query)
-      setEmailPassword(r?.query)
+      /////setEmailPassword(r?.query)
     })
   }, [r?.query, setEmailPassword]);
 
@@ -44,7 +44,7 @@ export default function Home() {
   }
   if (verificandoCookie) {
     if (!user) {
-      return <PageLogin valir={!r?.query?.email} />
+      return <PageLogin valir={!r?.query?.email && !emailPassword?.email} />
     }
     // if (!user && r?.query?.email && r?.query?.password && r?.query?.uid) {
     //   return <>hola</>

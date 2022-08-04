@@ -49,7 +49,7 @@ const ImageProfile: FC = () => {
                     await updateProfile(auth.currentUser, {
                         photoURL: createURL(result.i640)
                     })
-                    
+                    console.log(8888, result.i640)
                     setUser(old => ({ ...old, photoURL: createURL(result.i640) }))
                 }
             }

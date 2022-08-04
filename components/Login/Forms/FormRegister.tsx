@@ -90,6 +90,7 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
             await updateProfile(auth.currentUser, {
               photoURL: createURL(result.i640)
             })
+            console.log(8888, result.i640)
             setUser(old => ({ ...old, photoURL: createURL(result.i640) }))
           }
         })
@@ -117,15 +118,18 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
               icon={<EmailIcon className="absolute w-4 h-4 inset-y-0 left-4 m-auto text-gray-500" />}
               disabled
             />
-
-            <InputField
+            {/* <InputField
               label={"Validador"}
               name="validador"
               placeholder="******"
               type={"label"}
               icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
               disabled
-            />
+            /> */}
+          </span>
+          <span className="w-full relative flex inline-flex items-start">
+            <p className="text-sm text-gray-500">Seleccione foto para el perfil público</p>
+            <Avatar setFile={setFile} diameter={20} />
           </span>
           <span className="w-full relative ">
             <InputField
@@ -133,12 +137,9 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
               name="nickName"
               placeholder="Seudonimo"
               type={"text"}
-              icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
+              // icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
               required
             />
-          </span>
-          <span >
-            <Avatar setFile={setFile} diameter={20} />
           </span>
           <span className="w-full relative ">
             <InputField
@@ -146,7 +147,7 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
               name="password"
               placeholder="******"
               type={"password"}
-              icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
+              // icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
               required
             />
           </span>
@@ -155,7 +156,7 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
               name="rePassword"
               placeholder="******"
               type={"password"}
-              icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
+              // icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
               label={"Ingrese nuevamente password"}
               required
             />
