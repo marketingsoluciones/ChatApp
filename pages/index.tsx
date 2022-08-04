@@ -44,7 +44,7 @@ export default function Home() {
   }
   if (verificandoCookie) {
     if (!user) {
-      return <PageLogin valir={!r?.query?.email && !emailPassword?.email} />
+      return <PageLogin valir={!emailPassword?.email} />
     }
     // if (!user && r?.query?.email && r?.query?.password && r?.query?.uid) {
     //   return <>hola</>
