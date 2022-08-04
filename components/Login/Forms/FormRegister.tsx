@@ -1,8 +1,12 @@
+import { getAuth, updatePassword, updateProfile } from "firebase/auth";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { AuthContextProvider, LoadingContextProvider } from "../../../context";
 import { useToast } from "../../../hooks/useToast";
+import { image } from "../../../interfaces";
 import { useAuthentication } from "../../../utils/Authentication";
+import { fetchApi, queries } from "../../../utils/Fetching";
+import { createURL } from "../../../utils/UrlImage";
 import { PerfilFoto } from "../../ConfiguracionPerfil/PerfilFoto";
 import { EmailIcon, EmailIcon as PasswordIcon } from "../../Icons";
 import { ButtonComponent, InputField } from "../../Inputs";
@@ -22,7 +26,7 @@ type MyFormValues = {
 };
 
 export const Register: FC<propsRegister> = ({ setStage }) => {
-  const { emailPassword } = AuthContextProvider()
+  const { emailPassword, setUser, user } = AuthContextProvider()
   const { signIn } = useAuthentication();
   const toast = useToast()
   const { setLoading } = LoadingContextProvider()
@@ -37,6 +41,8 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
     wrong: "",
   };
 
+  //consultar firebase por uid y obtener photoURL
+
   const errorsCode: any = {
     "auth/wrong-password": "Correo o contraseña invalida",
     "auth/too-many-requests":
@@ -47,10 +53,54 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
     values.avatar = file
     console.log("MyFormValues", values)
     try {
-      signIn("credentials", values)
+      if (!values.avatar) {
+        toast("error", "selecciona una imagen para mostrar")
+        return
+      }
+      if (values.password !== values.rePassword) {
+        toast("error", "la confirmación de la contraseña es incorrecta")
+        return
+      }
+      if (values.password.length < 6) {
+        toast("error", "la contraseña debe tener 6 carácteres mínimo")
+        return
+      }
+      signIn("credentials", { identifier: values.identifier, password: values.validador })
+        .then(async () => {
+          const auth: any = getAuth();
+          console.log(123, auth.currentUser)
+          await updatePassword(auth.currentUser, values.password);
+          await fetchApi({
+            query: queries.updateNickName,
+            variables: {
+              uid: auth.currentUser.uid,
+              nickName: values.nickName,
+            },
+            token: auth.currentUser.accessToken,
+            apiRoute: "graphqlApp"
+          })
+          const result: Partial<image> = await fetchApi({
+            query: queries.singleUpload, variables: {
+              file,
+              use: "profile"
+            },
+            type: "formData"
+          })
+          if (result?.i640 && auth?.currentUser) {
+            await updateProfile(auth.currentUser, {
+              photoURL: createURL(result.i640)
+            })
+            setUser(old => ({ ...old, photoURL: createURL(result.i640) }))
+          }
+        })
+
+
+
+      //actualizo agregor el nickName a modeloInvitado en evento 
+      //subo avatar single upload y respuesta url 
+      //cambio contraseña en firebase y añado photoURL = respuesta url 
     } catch (error: any) {
       setLoading(false)
-      console.error(JSON.stringify(error));
       toast("error", JSON.stringify(errorsCode[error.code]))
     }
   };
@@ -84,10 +134,11 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
               placeholder="Seudonimo"
               type={"text"}
               icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
+              required
             />
           </span>
           <span className="w-full relative ">
-            <Avatar setFile={setFile} />
+            <Avatar setFile={setFile} diameter={24} />
           </span>
           <span className="w-full relative ">
             <InputField
@@ -96,6 +147,7 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
               placeholder="******"
               type={"password"}
               icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
+              required
             />
           </span>
           <span className="w-full relative ">
@@ -105,6 +157,7 @@ export const Register: FC<propsRegister> = ({ setStage }) => {
               type={"password"}
               icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
               label={"Ingrese nuevamente password"}
+              required
             />
           </span>
           <span className="text-sm text-red">

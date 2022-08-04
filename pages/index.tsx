@@ -20,6 +20,7 @@ export default function Home() {
       variables: { uid: r?.query?.uid },
     }).then((value: any) => {
       !value && setEmailPassword(r?.query)
+      setEmailPassword(r?.query)
     })
   }, [r?.query, setEmailPassword]);
 

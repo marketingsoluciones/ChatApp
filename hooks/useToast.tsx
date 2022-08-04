@@ -20,12 +20,12 @@ export const useToast = (delay: number = 4000) => {
             }
         })
 
-        // setTimeout(() => {
-        //     dispatch({
-        //         type: "DELETE_TOAST",
-        //         id
-        //     })
-        // }, delay);
+        setTimeout(() => {
+            dispatch({
+                type: "DELETE_TOAST",
+                id
+            })
+        }, delay);
     }
 
     return toast

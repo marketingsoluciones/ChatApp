@@ -95,6 +95,7 @@ type queries = {
   getContacts: string;
   getEventsGuess: string
   getSignInStatus: string
+  updateNickName: string
   // revisar cuáles se usan de aquí en adelante
   signOut: string
   auth: string
@@ -143,6 +144,9 @@ export const queries: queries = {
   }`,
   getSignInStatus: `query($uid: ID){
     getSignInStatus(uid:$uid)
+  }`,
+  updateNickName: `mutation ($uid: String, $nickName:String){
+    updateNickName(uid:$uid, nickName:$nickName)
   }`,
   // revisar cuáles se usan de aquí en adelante
   signOut: `mutation ($sessionCookie :String){

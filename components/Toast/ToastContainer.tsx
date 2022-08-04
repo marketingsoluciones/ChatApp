@@ -5,9 +5,8 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { capitalize } from "../../utils/Capitalize";
 
 const ToastContainer = ({ toasts }: { toasts: toastType[] }) => {
-  console.log(555555, toasts)
   return (
-    <div className="fixed bottom-0 w-full z-[1000]">
+    <div className="container fixed bottom-0 w-full z-[1000]">
       <TransitionGroup
         component="div"
         className={"max-w-xl transition"}
@@ -25,7 +24,6 @@ const ToastContainer = ({ toasts }: { toasts: toastType[] }) => {
 export default ToastContainer;
 
 const Toast: FC<toastType> = ({ message, type, id }) => {
-  console.log(8888)
   const { dispatch } = ToastContextProvider();
   const [isVisible, setVisible] = useState(false);
   const types = {

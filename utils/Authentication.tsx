@@ -59,13 +59,12 @@ export const useAuthentication = () => {
         const res: UserCredential = await types[type]();
         if (res) {
           const token = (await res?.user?.getIdTokenResult())?.token;
-          console.log(res?.user?.uid)
           const exist = await fetchApi({
             query: queries.getExistUser,
-            variables: { uid: res?.user?.uid, idToken: token },
+            variables: { uid: res?.user?.uid },
+            token: token,
             apiRoute: "graphqlApp"
           })
-          console.log("exist", exist)
           if (!exist) {
             throw new Error('user does not exist into events bd')
           }
@@ -78,9 +77,8 @@ export const useAuthentication = () => {
               query: queries.getUser,
               variables: { uid: res.user.uid },
             });
-            console.log("moreInfo", moreInfo)
             if (moreInfo?.errors) {
-              throw new Error("no hay datos bd");
+              throw Error("no hay datos bd");
               //setStage("register")
             }
             // Actualizar estado con los dos datos
@@ -93,9 +91,24 @@ export const useAuthentication = () => {
         } else {
           console.log("No hay session cookie");
         }
-      } catch (error) {
-        toast("success", "Inicio de sesión con exito");
+      } catch (error: any) {
+        const errorCode: string = error?.code ? error.code : error?.message
+        switch (errorCode) {
+          case "auth/too-many-requests":
+            toast("error", "usuario o contraseña inválida");
+            break;
+          case "user does not exist into events bd":
+            toast("error", "debes estar invitado a un evento para poder ingresar");
+            break;
+          case "user does not exist into events bd":
+            toast("error", "debes estar invitado a un evento para poder ingresar");
+            break;
+          default:
+            break;
+        }
+
         console.log("error", error)
+        console.log("errorCode", error?.code ? error.code : error?.message)
       }
       setLoading(false);
     },

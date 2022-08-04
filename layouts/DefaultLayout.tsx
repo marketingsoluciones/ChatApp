@@ -26,7 +26,7 @@ const DefaultLayout: FC = ({ children }) => {
         <DynamicChatsProvider>
           <LoadingProvider>
             <DynamicToastProvider>
-              <div className="relative min-h-screen w-full h-full">
+              <div className="min-h-screen w-full h-full">
                 {children}
               </div>
             </DynamicToastProvider>

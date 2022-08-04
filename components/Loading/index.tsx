@@ -1,5 +1,5 @@
 import { FC } from 'react';
-const Loading : FC = () => {
+const Loading: FC = () => {
   return (
     <div className="text-primary w-screen h-screen bg-white flex items-center justify-center fixed z-50  top-0 left-0">
       <LoadingItem text={"Procesando, espere un momento"} />
@@ -10,11 +10,12 @@ const Loading : FC = () => {
 export default Loading;
 
 const sizes = {
-  small : "w-10 h-10",
+  xsmall: "w-1 h-1",
+  small: "w-10 h-10",
   medium: "w-16 h-16",
-  large : "w-20 h-20"
+  large: "w-20 h-20"
 }
-export const LoadingItem : FC <{text: string, size?: keyof typeof sizes}> = ({text, size = "large"}) => {
+export const LoadingItem: FC<{ text: string, size?: keyof typeof sizes }> = ({ text, size = "large" }) => {
   return (
     <div className='w-max flex items-center gap-2'>
       <svg
