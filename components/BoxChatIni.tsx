@@ -16,7 +16,7 @@ const BoxChatIni: FC<propsBoxChat> = ({ active }) => {
           </p>
         </div>
       </div>
-      <style>{`
+      <style jsx>{`
       @media screen and (max-width: 700px){
         .medium {
           display: none;

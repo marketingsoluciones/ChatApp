@@ -22,7 +22,7 @@ export const MessageText: FC<propsMesageTetx> = ({ message, date, emisor }) => (
       </p>
       {/* </div> */}
     </div>
-    <style>{`
+    <style jsx>{`
     @media screen and (max-width: 767px){
         .maxWText {
           width: 230px;

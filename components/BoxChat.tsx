@@ -23,7 +23,7 @@ const BoxChat: FC<propsBoxChat> = ({ active, chat, setChat }) => {
         </div>
         <SendMessage chat={chat} setChat={setChat} user={user} />
       </div>
-      <style>
+      <style jsx>
         {`
       // .chats {
       //   height: calc(100vh - 4rem);

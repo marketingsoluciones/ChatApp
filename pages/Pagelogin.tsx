@@ -81,7 +81,7 @@ const PageLogin: FC<propsPageLogin> = ({ valir }) => {
         </div>
         <div className="hidden md:block banner w-full h-full col-span-2 " />
       </div>
-      <style >
+      <style jsx>
         {`
           .banner {
             background-image: url("/banner-login.webp");

@@ -18,7 +18,7 @@ const ContactInfo: FC<propsContact> = ({ active, chat }) => {
         <Information chat={chat} />
         <SharedFiles />
       </div>
-      <style >
+      <style jsx>
         {`
       .chats {
         height: calc(100vh - 4rem);
@@ -101,7 +101,7 @@ const SharedFiles: FC = () => {
           <DotsIcon className="w-4 w-4 transform rotate-90" />
 
         </div>
-        <style >
+        <style jsx>
           {`
                     .file {
                         background-image: url("/file.svg");

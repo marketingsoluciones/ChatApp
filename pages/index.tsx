@@ -60,7 +60,7 @@ export default function Home() {
             {<ContactInfo active={active == 2} />}
           </section>
         </div>
-        <style >
+        <style jsx>
           {`
               section {
                 height: cal(100vh - 4rem);

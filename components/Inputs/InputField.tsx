@@ -35,7 +35,7 @@ export const InputField: FC<propsField> = ({
         <input className={className} {...field} {...props} />
         {icon}
       </div>
-      <style>
+      <style jsx>
         {`
           input[type="number"]::-webkit-inner-spin-button,
           input[type="number"]::-webkit-outer-spin-button {

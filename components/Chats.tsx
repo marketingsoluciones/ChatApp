@@ -128,7 +128,7 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
           </div>
         </div>
       </div>
-      <style>
+      <style jsx>
         {`
           .calHeight {
             height: calc(100vh - 4rem);

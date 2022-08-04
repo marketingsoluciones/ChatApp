@@ -19,7 +19,7 @@ export const MessageFile: FC<propsMessageFile> = ({ emisor }) => (
       <div className="flex gap-3 items-center">
       </div>
     </div>
-    <style>
+    <style jsx>
       {`
           .file {
             background-image: url("/file.svg");
