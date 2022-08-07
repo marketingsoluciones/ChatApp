@@ -15,7 +15,7 @@ export const Profile: FC = () => {
           <h2  className=" truncate font-medium leading-tight text-sm text-black">
             {user?.displayName}
           </h2>
-          <p className="truncate font-regular leading-tight text-xs text-gray-200">
+          <p className="truncate font-regular leading-tight text-xs text-gray-700">
             {user?.role}
           </p>
         </span>

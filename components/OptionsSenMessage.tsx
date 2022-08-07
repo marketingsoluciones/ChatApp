@@ -5,7 +5,7 @@ export const OptionsSendMessage: FC = () => {
   const [show, setShow] = useState(false);
   return (
     <div className="flex items-center justify-center relative">
-      <PlusIcon className="text-gray-100 w-7 h-7 cursor-pointer" onClick={() => setShow(!show)} />
+      <PlusIcon className="text-gray-500 w-7 h-7 cursor-pointer" onClick={() => setShow(!show)} />
       <div className={`flex flex-col gap-4 absolute top-0 -mt-6 transform	-translate-y-full ${show ? "opacity-100" : "opacity-0"}`}>
         <Circle icon={<CameraIcon />} />
         <Circle icon={<MicIcon />} />

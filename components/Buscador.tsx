@@ -12,7 +12,7 @@ export const Buscador: FC = (props) => {
         className="focus:outline-none bg-white rounded shadow-sm px-4 py-1 w-full text-sm focus:ring transition truncate"
         {...props}
       />
-      <SearchIcon className="w-4 h-4 absolute inset-y-0 my-auto right-3 text-gray-200 opacity-60 h-max" />
+      <SearchIcon className="w-4 h-4 absolute inset-y-0 my-auto right-3 text-gray-700 opacity-60 h-max" />
     </span>
   );
 };

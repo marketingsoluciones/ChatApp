@@ -12,7 +12,7 @@ export const Notification: FC<propsNotication> = ({ valir, value, onClick }) => 
   <>
     <div className="flex items-center px-4 md:border-l md:border-r md:border-base h-full cursor-pointer" onClick={onClick}>
       <span className="relative">
-        <BellIcon className="w-6 h-6 text-gray-100" />
+        <BellIcon className="w-6 h-6 text-gray-500" />
         <LedIndicator valir={valir} value={value} />
       </span>
     </div>

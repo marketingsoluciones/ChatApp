@@ -18,8 +18,8 @@ export const Item: FC<propsItem> = memo(({ image, name, info, _id, onLine }) => 
     >
       <CircleImage image={image} name={name} onLine={onLine} />
       <span className="w-full truncate">
-        <h3 className="font-semibold text-gray-300 text-sm">{name}</h3>
-        <p className="font-regular text-gray-200 text-xs w-full truncate">{info}</p>
+        <h3 className="text-gray-700 text-sm">{name}</h3>
+        <p className="font-regular text-gray-500 text-xs w-full truncate">{info}</p>
       </span>
     </div>
   );

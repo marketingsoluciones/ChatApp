@@ -27,7 +27,7 @@ export const SendMessage: FC<propsSendMessage> = ({ chat, setChat, user }) => {
         onChange={(e) => { setValue(e.target.value) }}
         value={value}
       />
-      <div className="text-gray-200 hover:text-primary cursor-pointer hover:opacity-90 transition button" onClick={() => {
+      <div className="text-gray-700 hover:text-primary cursor-pointer hover:opacity-90 transition button" onClick={() => {
         value != "" && HandleSendMessage({ chat, messageSend: value, userUid: user?.uid ?? "", setChats, setChat, socket }), setValue("")
       }}>
         <SendIcon className="w-5 h-5" />

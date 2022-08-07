@@ -58,15 +58,15 @@ const Information: FC<any> = ({ chat }) => {
         className={`flex flex-col items-start justify-center py-2 ${border ? "border-b border-base" : ""
           }`}
       >
-        <h3 className="text-sm text-gray-300">{title}</h3>
-        <p className="text-sm text-gray-200">{contain}</p>
+        <h3 className="text-sm text-gray-700">{title}</h3>
+        <p className="text-sm text-gray-500">{contain}</p>
       </div>
     );
   };
   return (
 
     <div className="bg-white h-max w-full rounded-lg p-4">
-      <h2 className="text-gray-200 text-md pb-2">Informacion personal</h2>
+      <h2 className="text-gray-500 text-md pb-2">Informacion personal</h2>
       {/* <Info title="Pais" contain={user?.country ? user.country : "error"} /> */}
       {/* <Info title="Phone" contain="yo lo quitaria" /> */}
       <Info
@@ -94,8 +94,8 @@ const SharedFiles: FC = () => {
           <div className="relative flex gap-4 items-center">
             <div className="w-12 file h-12" />
             <span className="flex flex-col gap-1">
-              <p className="text-sm text-gray-300">{titleFile}</p>
-              <p className="text-sm text-gray-200">{sizeFile}</p>
+              <p className="text-sm text-gray-700">{titleFile}</p>
+              <p className="text-sm text-gray-500">{sizeFile}</p>
             </span>
           </div>
           <DotsIcon className="w-4 w-4 transform rotate-90" />
@@ -128,7 +128,7 @@ const SharedFiles: FC = () => {
   };
   return (
     <div className="bg-white h-max w-full rounded-lg p-4 h-96">
-      <h2 className="text-gray-200 text-md pb-2">Archivos compartidos</h2>
+      <h2 className="text-gray-700 text-md pb-2">Archivos compartidos</h2>
       <UploadedFile titleFile={"Imagen Prueba"} sizeFile="2 mb" extensionFile={".jpg"} />
     </div>
   );

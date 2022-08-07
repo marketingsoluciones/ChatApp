@@ -43,7 +43,7 @@ const FormLogin: FC<any> = ({ setStage }) => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-      <Form className=" text-gray-200 flex flex-col gap-4 py-4 w-full md:w-3/4">
+      <Form className=" text-gray-700 flex flex-col gap-4 py-4 w-full md:w-3/4">
         <span className="w-full relative ">
           <InputField
             label={"Correo electronico"}
@@ -68,7 +68,7 @@ const FormLogin: FC<any> = ({ setStage }) => {
         <span className="text-sm text-red">
           <ErrorMessage name="wrong" />
         </span>
-        <button onClick={() => setStage("resetPassword")} className="text-sm text-primary w-full text-left hover:text-gray-300 transition cursor-pointer">
+        <button onClick={() => setStage("resetPassword")} className="text-sm text-primary w-full text-left hover:text-gray-500 transition cursor-pointer">
           Olvidé mi contraseña
         </button >
         {/* <ToastContainer toasts={[{ id: 1, type: "error", message: "algo" }]} /> */}

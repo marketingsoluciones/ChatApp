@@ -17,7 +17,7 @@ export const MessageText: FC<propsMesageTetx> = ({ message, date, emisor }) => (
         </p>
       </div>
       {/* <div className=" "> */}
-      <p className="maxWText text-right text-gray-200 text-xs lg:pl-2 pr-3 lg:pr-6 lg:w-22 lg:h-2">
+      <p className="maxWText text-right text-gray-700 text-xs lg:pl-2 pr-3 lg:pr-6 lg:w-22 lg:h-2">
         {date}
       </p>
       {/* </div> */}

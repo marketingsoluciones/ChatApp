@@ -11,7 +11,7 @@ export const MessageFile: FC<propsMessageFile> = ({ emisor }) => (
     <div className="flex gap-10 w-full">
       <div className="flex gap-4">
         <div className="file w-10 h-10" />
-        <span className={emisor ? "text-white" : "text-gray-200"}>
+        <span className={emisor ? "text-white" : "text-gray-700"}>
           <p className="text-sm ">FileImage.jpg</p>
           <p className="text-xs">2 mb</p>
         </span>
