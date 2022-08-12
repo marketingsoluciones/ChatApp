@@ -33,7 +33,7 @@ export const Message: FC<propsMessage> = ({ message, date, emisor = true, type }
       <div 
         className={`flex gap-4 items-center ${emisor ? "flex-row-reverse" : ""} p-px`}
       >
-        <div className={`${emisor ? "bg-rose-100" : "bg-white"} rounded-xl shadow-md `}>
+        <div className={`${emisor ? "bg-rose" : "bg-white"} rounded-xl shadow-md `}>
           {types[type]}
           {/* {<DotsIcon
             className={`h-4 absolute rotate-90 transform text-gray-200 ${emisor

@@ -60,17 +60,17 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
       setChat({ ...chat })
       return
     }
-    const contact = contacts?.results?.filter((elem: any) => elem?.uid == contactUid)[0]
-    const chatFilter = chats?.results?.filter((elem: any) => elem?.title == contact?.nickName)[0]
-    const chat: any = {
-      title: contact?.nickName,
-      photoURL: contact?.photoURL,
-      type: 'chatevents',
-      addedes: [{
-        type: "participante",
-        userUid: contactUid
-      }]
-    }
+  const contact = contacts?.results?.filter((elem: any) => elem?.uid == contactUid)[0]
+  const chatFilter = chats?.results?.filter((elem: any) => elem?.title == contact?.nickName)[0]
+  const chat: any = {
+    title: contact?.nickName,
+    photoURL: contact?.photoURL,
+    type: 'chatevents',
+    addedes: [{
+      type: "participante",
+      userUid: contactUid
+    }]
+  }
     setChat(chatFilter ? { ...chatFilter } : { ...chat })
   }, [active, setChat, chats, chatId, contactUid, contacts])
 
@@ -85,13 +85,13 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
     <>
       <div className={`${active ? "" : "hidden"} lg:flex col-span-12 lg:col-span-3 w-full h-full chats flex-col flex items-center justify-start overflow-auto pt-1 `}>
         
-          <Buscador  />
-          <div className="flex w-full pt-1 ">
+        <Buscador  />
+        <div className="flex w-full pt-1 ">
             <Button className={className} onClick={() => { setPage(0) }} title="Chats" />
             <Button className={className} onClick={() => { setPage(1), setResultsContact(contacts?.results) }} title="Contactos" />
             <Button className={className} onClick={() => { setPage(2) }} title="Eventos" />
-          </div>
-      
+        </div>
+  
         
         <div className="w-full h-full bg-white  ">
           <div className="col-span-12 lg:col-span-3 calHeight2">
@@ -103,21 +103,21 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
               modules={[Pagination, Scrollbar]}
             >
               <SlideTo page={page} setResultsContact={setResultsContact} contacts={contacts} />
-              <SwiperSlide className="w-full calHeight3" onScroll={handleScroll}>
+              <SwiperSlide className="w-full calHeight3 pb-3" onScroll={handleScroll}>
                 {
                   chats?.results?.map((item: any, idx: any) => (
                     <Section key={idx} onClick={() => { HandleChats(setActive, setChatId, item?._id) }} image={item.photoURL} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} onLine={item.onLine.status} />
                   ))
                 }
               </SwiperSlide>
-              <SwiperSlide className="w-full  calHeight3">
+              <SwiperSlide className="w-full  calHeight3 pb-3">
                 {
                   resultsContact?.length > 0 && resultsContact?.map((item: any, idx: any) => (
                     <Section key={idx} onClick={() => { HandleContacts({ setPage, setActive, setContactUid, setChatId, item }) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map(((it: any) => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} onLine={item.onLine.status} />
                   ))
                 }
               </SwiperSlide>
-              <SwiperSlide className="w-full calHeight3">
+              <SwiperSlide className="w-full calHeight3 pb-3">
                 {
                   resultsEvents?.map((item, idx) => (
                     <Section key={idx} onClick={() => { HandleEvents({ setPage, setResultsContact, contacts, item }) }} image={Profile} name={item.nombre} info={item._id} _id={item._id} />

@@ -57,7 +57,7 @@ export default function Home() {
             {<Chats active={active == 0} setActive={setActive} setChat={setChat} />}
             {active == 0 && <BoxChatIni active={active == 0} />}
             {active != 0 && <BoxChat active={active == 1} chat={chat ? chat : null} setChat={setChat} />}
-            {<ContactInfo active={active == 2} />}
+            {/* {<ContactInfo active={active == 2} />} */}
           </section>
         </div>
         <style jsx>

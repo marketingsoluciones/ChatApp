@@ -19,7 +19,7 @@ const Conversation = ({ chat, user }: any) => {
 
 
     return (
-        <div className="h-full w-full pl-3 pr-3">
+        <div className="h-full w-full px-20 pb-0.5">
             {chat?.messages?.map((elem: any, idx: number) => {
                 return (
                     <Message key={idx} type={elem.type} emisor={user.uid == elem.emitUserUid} message={elem.message} date={getHour(elem.createdAt)} />

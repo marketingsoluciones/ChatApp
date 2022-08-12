@@ -6,7 +6,7 @@ import { capitalize } from "../../utils/Capitalize";
 
 const ToastContainer = ({ toasts }: { toasts: toastType[] }) => {
   return (
-    <div className="container fixed bottom-0 w-full z-[1000]">
+    <div className="container fixed bottom-0 w-full z-50">
       <TransitionGroup
         component="div"
         className={"max-w-xl transition"}
