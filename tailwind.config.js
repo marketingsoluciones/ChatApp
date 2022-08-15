@@ -17,6 +17,7 @@ module.exports = {
         "color-base": "#F2F2F2",
         green: "#13ce66",
         rose:"#FE8D99",
+        white:"#ffffff"
       },
       transitionProperty: {
         'height': 'height'

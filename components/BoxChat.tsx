@@ -14,14 +14,14 @@ const BoxChat: FC<propsBoxChat> = ({ active, chat, setChat }) => {
   //${active ? "" : "hidden"} 
   return (
     <>
-      <div className={`${active ? "" : "hidden"} bg-gray-100 lg:flex col-span-12 lg:col-span-9 bg-base w-full h-full flex flex-col  justify-between border-gray-100 border-r`}>
+      <div className={`${active ? "" : "hidden"}  z-100  bg-gray-100 lg:flex col-span-12 lg:col-span-9 bg-base w-full h-full flex flex-col  justify-between border-gray-100 border-r`}>
         <div className="h-20">
           <HeaderChat chat={chat} />
         </div>
-        <div className="calHeight4 bg-base pt-2">
+        <div className="calHeight4 bg-base pt-2 pb-2">
           <Conversation chat={chat} user={user} />
         </div>
-        <SendMessage chat={chat} setChat={setChat} user={user} />
+          <SendMessage chat={chat} setChat={setChat} user={user} />
       </div>
       <style jsx>
         {`
