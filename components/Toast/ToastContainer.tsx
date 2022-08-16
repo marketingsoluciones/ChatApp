@@ -6,13 +6,13 @@ import { capitalize } from "../../utils/Capitalize";
 
 const ToastContainer = ({ toasts }: { toasts: toastType[] }) => {
   return (
-    <div className="container fixed bottom-0 w-full z-50">
+    <div className="container fixed bottom-0 w-full z-[1000] ">
       <TransitionGroup
         component="div"
-        className={"max-w-xl transition"}
+        className={"max-w-xl transition "}
       >
         {toasts.map((toast) => (
-          <CSSTransition key={toast.id} timeout={100} classNames={"fade"}>
+          <CSSTransition key={toast.id} timeout={2000} classNames={"fade"}>
             <Toast id={toast.id} type={toast.type} message={toast.message} />
           </CSSTransition>
         ))}
@@ -27,7 +27,7 @@ const Toast: FC<toastType> = ({ message, type, id }) => {
   const { dispatch } = ToastContextProvider();
   const [isVisible, setVisible] = useState(false);
   const types = {
-    success: { icon: <IconError />, color: "bg-green-500" },
+    success: { icon: <IconError />, color: "bg-green" },
     error: { icon: <IconError />, color: "bg-red-500" },
     warning: { icon: <IconError />, color: "bg-yellow-500" },
     update: { icon: <IconError />, color: "bg-blue-500" },

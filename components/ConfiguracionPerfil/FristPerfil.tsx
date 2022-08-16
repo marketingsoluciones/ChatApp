@@ -66,7 +66,7 @@ const DatosAcceso = () => {
                 setUser(old => ({ ...old, displayName: values.displayName }))
                 toast("success", "Nombre actualizado con exito")
             } catch (error) {
-                toast("success", "Error al actualizar el nombre")
+                toast("error", "Error al actualizar el nombre")
                 console.log(error);
             }
         } else if (!canDisplayName) {
