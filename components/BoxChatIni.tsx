@@ -8,7 +8,7 @@ interface propsBoxChat {
 const BoxChatIni: FC<propsBoxChat> = ({ active }) => {
   return (
     <>
-      <div className={`bg-white  medium lg:flex col-span-12 lg:col-span-6 bg-base w-full h-full flex flex-col justify-between border-l-2 border-gray-100`}>
+      <div className={`bg-white  medium lg:flex col-span-12 lg:col-span-9 bg-base w-full h-full flex flex-col justify-between border-l-2 border-gray-100`}>
         <div className="text-center p-24">
           <LogoBoda width={160} height={100} />
           <p className="text-center">

@@ -6,7 +6,7 @@ import { LoadingContextProvider } from '../context';
 import { UserMax } from "../context/AuthContext";
 import { ResetPass } from "../components/Login/Forms/FormResetPass";
 import { Register } from "../components/Login/Forms/FormRegister";
-import { LogoFullColor } from "../components/Icons";
+import { LogoFullColor } from "../components/Icons/";
 //import { AuthContextProvider } from "../context";
 
 // Tipos de datos personalizados

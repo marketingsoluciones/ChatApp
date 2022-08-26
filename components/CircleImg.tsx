@@ -18,7 +18,7 @@ export const CircleImage: FC<propsCircleImage> = ({ image, name, onLine }) => (
             <p className="bg-red rounded-full w-10 h-10 p-2 text-center">{name?.split(" ")[0]?.slice(0, 1)?.toUpperCase()}{name?.split(" ")[1]?.slice(0, 1)?.toUpperCase()}</p>
         }
       </div>
-      {onLine && <svg className="bg-red rounded-full w-3 h-3 absolute bottom-1 right-1 border border-white" />}
+      {onLine && <svg className="bg-green rounded-full w-3 h-3 absolute bottom-0 right-0 border border-white" />}
     </span>
   </>
 );

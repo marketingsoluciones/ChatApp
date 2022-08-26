@@ -1,6 +1,6 @@
 import { ToastContextProvider } from "../context"
 
-export const useToast = (delay: number = 4000) => {
+export const useToast = (delay: number = 400) => {
     const { dispatch } = ToastContextProvider()
 
     enum types {
