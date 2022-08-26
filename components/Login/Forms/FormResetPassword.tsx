@@ -1,8 +1,7 @@
 import { Formik, Form, ErrorMessage } from "formik";
 import { FC } from "react";
-import { EmailIcon, EmailIcon as PasswordIcon } from "../../Icons/index";
+import { EmailIcon } from "../../Icons/index";
 import { InputField, ButtonComponent } from "../../Inputs";
-import router from "next/router";
 import { useToast } from '../../../hooks/useToast';
 import { LoadingContextProvider } from "../../../context";
 import { useAuthentication } from '../../../utils/Authentication';
@@ -42,7 +41,7 @@ const FormResetPassword: FC<any> = ({ setStage }) => {
       <Form className=" text-gray-700 flex flex-col gap-4 py-4 w-full md:w-3/4">
         <h1 className="text-primary mt-20">Introduce tu email para resetear tu contraseña</h1>
         <span className="w-full relative mt-8 mb-12">
-          <InputField label={"Correo electronico"} name="identifier" placeholder="jhondoe@gmail.com" type="email" icon={<EmailIcon className="absolute w-4 h-4 inset-y-0 left-4 m-auto text-gray-500" />} />
+          <InputField label={"Correo electronico"} name="identifier" type="email" icon={<EmailIcon className="absolute w-4 h-4 inset-y-0 left-4 m-auto text-gray-500" />} />
 
         </span>
         <span className="text-sm text-red">

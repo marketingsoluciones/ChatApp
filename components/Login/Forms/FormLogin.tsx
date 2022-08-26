@@ -1,6 +1,6 @@
 import { Formik, Form, ErrorMessage } from "formik";
-import { FC } from "react";
-import { EmailIcon, EmailIcon as PasswordIcon } from "../../Icons/";
+import { FC, useState } from "react";
+import { EmailIcon, Eye, EyeSlash, LockClosed } from "../../Icons/";
 import { InputField, ButtonComponent } from "../../Inputs";
 import { useToast } from '../../../hooks/useToast';
 import { AuthContextProvider, LoadingContextProvider } from "../../../context";
@@ -14,6 +14,7 @@ type MyFormValues = {
 };
 
 const FormLogin: FC<any> = ({ setStage }) => {
+  const [passwordView, setPasswordView] = useState(false)
   const { signIn } = useAuthentication();
   const toast = useToast()
   const { setLoading } = LoadingContextProvider()
@@ -48,7 +49,6 @@ const FormLogin: FC<any> = ({ setStage }) => {
           <InputField
             label={"Correo electronico"}
             name="identifier"
-            placeholder="jhondoe@gmail.com"
             type="email"
             icon={<EmailIcon className="absolute w-4 h-4 inset-y-0 left-4 m-auto text-gray-500" />}
           />
@@ -58,19 +58,22 @@ const FormLogin: FC<any> = ({ setStage }) => {
         <span className="w-full relative ">
           <InputField
             name="password"
-            placeholder="******"
-            type={"password"}
-            icon={<PasswordIcon className="absolute inset-y-0 left-4 m-auto w-4 h-4 text-gray-500" />}
+            type={!passwordView ? "password" : "text"}
+            autoComplete="off"
+            icon={<LockClosed className="absolute w-4 h-4 inset-y-0 left-4 m-auto  text-gray-500" />}
             label={"Contraseña"}
-
           />
+          <div onClick={() => { setPasswordView(!passwordView) }} className="absolute cursor-pointer inset-y-0 top-5 right-4 m-auto w-4 h-4 text-gray-500" >
+            {!passwordView ? <Eye /> : <EyeSlash />}
+          </div>
         </span>
+
         <span className="text-sm text-red">
           <ErrorMessage name="wrong" />
         </span>
-        <button onClick={() => setStage("resetPassword")} className="text-sm text-primary w-full text-left hover:text-gray-500 transition cursor-pointer">
+        <div onClick={() => setStage("resetPassword")} className="text-sm text-primary w-full text-left hover:text-gray-500 transition cursor-pointer">
           Olvidé mi contraseña
-        </button >
+        </div >
         {/* <ToastContainer toasts={[{ id: 1, type: "error", message: "algo" }]} /> */}
         <ButtonComponent
           onClick={() => { }}
