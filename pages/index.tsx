@@ -52,7 +52,7 @@ export default function Home() {
     return (
       <>
         <Navigation />
-        <div>
+        <div> 
           <section {...handler} ref={refPassthrough} className="grid grid-cols-12 bg-base mx-auto inset-x-0 ">
             {<Chats active={active == 0} setActive={setActive} setChat={setChat} />}
             {active == 0 && <BoxChatIni active={active == 0} />}

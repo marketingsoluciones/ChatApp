@@ -27,12 +27,12 @@ export const Navigation: FC = () => {
 
   return (
     <>
-      <div className="h-16 w-full" />
-      <div className=" h-16 w-full shadow-md fixed top-0 bg-white">
+      <div className="h-16 w-full " />
+      <div className=" h-16 w-full shadow-md fixed top-0 bg-white z-100 absolute">
         <nav className="flex justify-between items-center xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 md:px-0 w-full mx-auto inset-x-0 h-full">
           <LogoBoda width={160} height={100} />
           <div className="flex items-center justify-between md:gap-4 h-full">
-            <Button title={"Invita amigos"} onClick={handleInviteFriend} className="hidden md:block bg-primary text-white px-3 py-2 rounded-lg text-sm transition hover:opacity-90" />
+            {/* <Button title={"Invita amigos"} onClick={handleInviteFriend} className="hidden md:block bg-primary text-white px-3 py-2 rounded-lg text-sm transition hover:opacity-90" /> */}
             <Notification valir={valir} value={value} onClick={handleClickNotification} />
             <Profile />
           </div>
