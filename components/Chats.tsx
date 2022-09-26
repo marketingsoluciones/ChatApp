@@ -103,21 +103,21 @@ const A: FC<propsChats> = ({ active, setActive, setChat }) => {
               modules={[Pagination, Scrollbar]}
             >
               <SlideTo page={page} setResultsContact={setResultsContact} contacts={contacts} />
-              <SwiperSlide className="w-full calHeight3 pb-3" onScroll={handleScroll}>
+              <SwiperSlide className="w-full calHeight3 pb-3 overscroll-contain" onScroll={handleScroll}>
                 {
                   chats?.results?.map((item: any, idx: any) => (
                     <Section key={idx} onClick={() => { HandleChats(setActive, setChatId, item?._id) }} image={item.photoURL} name={item.title} info={getRelativeTime(item.updatedAt)} _id={item._id} onLine={item.onLine.status} />
                   ))
                 }
               </SwiperSlide>
-              <SwiperSlide className="w-full  calHeight3 pb-3">
+              <SwiperSlide className="w-full  calHeight3 pb-3 overscroll-contain">
                 {
                   resultsContact?.length > 0 && resultsContact?.map((item: any, idx: any) => (
                     <Section key={idx} onClick={() => { HandleContacts({ setPage, setActive, setContactUid, setChatId, item }) }} image={item.photoURL} name={item.nickName} info={`${item.eventos.map(((it: any) => it.nombre)).toString().replace(/,/g, ", ")}`} _id={item._id} onLine={item.onLine.status} />
                   ))
                 }
               </SwiperSlide>
-              <SwiperSlide className="w-full calHeight3 pb-3">
+              <SwiperSlide className="w-full calHeight3 pb-3 overscroll-contain">
                 {
                   resultsEvents?.map((item, idx) => (
                     <Section key={idx} onClick={() => { HandleEvents({ setPage, setResultsContact, contacts, item }) }} image={Profile} name={item.nombre} info={item._id} _id={item._id} />

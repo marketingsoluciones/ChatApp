@@ -19,7 +19,7 @@ const BoxChat: FC<propsBoxChat> = ({ active, chat, setChat }) => {
           <div>
             <HeaderChat chat={chat} />
           </div>
-          <div className="calHeight4 bg-base pt-2 pb-2">
+          <div className="calHeight4 bg-base pt-2 pb-2 overscroll-contain  ">
             <Conversation chat={chat} user={user} />
           </div>
 
