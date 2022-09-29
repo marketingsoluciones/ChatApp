@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FC, MouseEventHandler, useState } from "react";
 import { AuthContextProvider } from "../context";
 import { useAuthentication } from "../utils/Authentication";
+import ClickAwayListener from 'react-click-away-listener'
 
 export const Profile: FC = () => {
   const {user}  = AuthContextProvider()
@@ -20,9 +21,11 @@ export const Profile: FC = () => {
           </p>
         </span>
       </div>
-      <span className={`${show?"block absolute right-5 top-16":"hidden"}`}>
+      <ClickAwayListener onClickAway={()=> show && setShow(false)}>
+      <span className={`${show?"  block absolute right-5 top-20 md:right-56":"hidden"}`}>
           <ProfileMenu />
       </span>
+      </ClickAwayListener>
     </>
   )
 };
@@ -31,7 +34,7 @@ const ProfileMenu = () => {
   const { _signOut } = useAuthentication()
   return (
     <>
-      <div className={`w-40 h-20 rounded-xl h-max  bg-white shadow-md absolute right-2 inset-y-full overflow-hidden z-50 `}>
+      <div className={`w-40 h-20 rounded-md h-max  bg-white shadow-md absolute right-2 inset-y-full overflow-hidden z-50 `}>
         <div className=" grid gap-2 text-xs place-items-center p-2 ">
           <span className="flex gap-2">
             <img src="/logout.png" alt="salir" className="w-6 h-6"/>
