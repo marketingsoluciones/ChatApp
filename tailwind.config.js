@@ -1,4 +1,4 @@
-const { colors } = require('tailwindcss/defaultTheme')
+const { colors, spacing } = require('tailwindcss/defaultTheme')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     fontFamily: {
       "sans": ['Poppins', ...defaultTheme.fontFamily.sans],
+      "Roboto": ['Roboto', ...defaultTheme.fontFamily.sans],
     },
     extend: {
       colors: {
@@ -21,11 +22,19 @@ module.exports = {
       },
       transitionProperty: {
         'height': 'height'
+      },
+      spacing:{
+        '250':'250px',
+        '215':'215px',
+        '15':'15px',
+
       }
     },
   },
   variants: {
-    extend: {},
+    extend: {
+     
+    },
   },
   plugins: [],
 } 
