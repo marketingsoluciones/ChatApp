@@ -152,8 +152,8 @@ export const queries: queries = {
   signOut: `mutation ($sessionCookie :String){
     signOut(sessionCookie:$sessionCookie)
   }`,
-  auth: `mutation ($idToken : String){
-    auth(idToken: $idToken){
+  auth: `mutation ($idTokenChat : String){
+    auth(idTokenChat: $idTokenChat){
       sessionCookie
     }
   }`,

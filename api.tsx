@@ -20,8 +20,8 @@ const instanceApp: AxiosInstance = axios.create({ baseURL: process.env.NEXT_PUBL
 
 export const api: Fetching | any = {
     graphql: async (data: object, token: string): Promise<AxiosResponse> => {
-        //let tokenFinal: string | null = token || Cookies.get("idToken") || ""
-        const tokenFinal = Cookies.get("idToken")
+        //let tokenFinal: string | null = token || Cookies.get("idTokenChat") || ""
+        const tokenFinal = Cookies.get("idTokenChat")
         return await instance.post("/graphql", data, {
             headers: {
                 Authorization: `Bearer ${tokenFinal}`
@@ -29,8 +29,8 @@ export const api: Fetching | any = {
         })
     },
     graphqlApp: async (data: object, token: string): Promise<AxiosResponse> => {
-        //let tokenFinal: string | null = token || Cookies.get("idToken") || ""
-        const tokenFinal = Cookies.get("idToken")
+        //let tokenFinal: string | null = token || Cookies.get("idTokenChat") || ""
+        const tokenFinal = Cookies.get("idTokenChat")
         return await instanceApp.post("/graphql", data, {
             headers: {
                 Authorization: `Bearer ${tokenFinal}`

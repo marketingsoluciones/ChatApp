@@ -23,7 +23,7 @@ const SocketProvider: FC = ({ children }): JSX.Element => {
   const [socketApp, setSocketApp] = useState<Socket | null>(initialContext.socket);
 
   useEffect(() => {
-    const token = Cookies.get("idToken")
+    const token = Cookies.get("idTokenChat")
     if (token && !socket?.connected) {
       setSocket(api.socketIO({ token }));
     }

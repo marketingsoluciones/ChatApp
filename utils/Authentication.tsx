@@ -19,12 +19,12 @@ export const useAuthentication = () => {
     if (tokenID) {
       const authResult = await fetchApi({
         query: queries.auth,
-        variables: { idToken: tokenID },
+        variables: { idTokenChat: tokenID },
       });
       if (authResult?.sessionCookie) {
         const { sessionCookie } = authResult;
         // Setear en localStorage token JWT
-        Cookies.set("sessionBodas", sessionCookie, { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
+        Cookies.set("sessionChat", sessionCookie, { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
         return sessionCookie
       } else {
         console.warn("No se pudo cargar la cookie de sesión por que hubo un problema")
@@ -116,9 +116,9 @@ export const useAuthentication = () => {
   );
 
   const _signOut = useCallback(async () => {
-    await fetchApi({ query: queries.signOut, variables: { sessionCookie: Cookies.get("sessionBodas") } })
-    Cookies.remove("sessionBodas", { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
-    Cookies.remove("idToken", { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
+    await fetchApi({ query: queries.signOut, variables: { sessionCookie: Cookies.get("sessionChat") } })
+    Cookies.remove("sessionChat", { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
+    Cookies.remove("idTokenChat", { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
     setUser(null);
     await signOut(auth);
     await router.push("/");

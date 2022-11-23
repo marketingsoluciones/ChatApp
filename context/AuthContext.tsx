@@ -61,7 +61,7 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user: any) => {
-      const sessionCookie = Cookies.get("sessionBodas");
+      const sessionCookie = Cookies.get("sessionChat");
       develop && console.info("Verificando cookie", sessionCookie);
       if (sessionCookie) {
         develop && console.info("Tengo cookie de sesion");
@@ -103,7 +103,7 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
   useEffect(() => {
     auth.onIdTokenChanged(async user => {
       if (user) {
-        Cookies.set("idToken", await user.getIdToken())
+        Cookies.set("idTokenChat", await user.getIdToken(), { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" })
       }
     })
   }, [])
