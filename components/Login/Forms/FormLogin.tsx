@@ -44,7 +44,7 @@ const FormLogin: FC<any> = ({ setStage }) => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-      <Form className=" text-gray-700 flex flex-col gap-4 py-4 w-full md:w-3/4">
+      <Form className=" text-gray-700 flex flex-col gap-4  w-full md:w-3/4 pb-8">
         <span className="w-full relative ">
           <InputField
             label={"Correo electronico"}
