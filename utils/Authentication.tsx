@@ -19,7 +19,7 @@ export const useAuthentication = () => {
     if (tokenID) {
       const authResult = await fetchApi({
         query: queries.auth,
-        variables: { idTokenChat: tokenID },
+        variables: { idToken: tokenID },
       });
       if (authResult?.sessionCookie) {
         const { sessionCookie } = authResult;
@@ -118,7 +118,7 @@ export const useAuthentication = () => {
   const _signOut = useCallback(async () => {
     await fetchApi({ query: queries.signOut, variables: { sessionCookie: Cookies.get("sessionChat") } })
     Cookies.remove("sessionChat", { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
-    Cookies.remove("idTokenChat", { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
+    Cookies.remove("idTokenChat");
     setUser(null);
     await signOut(auth);
     await router.push("/");

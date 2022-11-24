@@ -103,7 +103,7 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
   useEffect(() => {
     auth.onIdTokenChanged(async user => {
       if (user) {
-        Cookies.set("idTokenChat", await user.getIdToken(), { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" })
+        Cookies.set("idTokenChat", await user.getIdToken())
       }
     })
   }, [])
