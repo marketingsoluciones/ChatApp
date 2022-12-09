@@ -22,7 +22,7 @@ export const Profile: FC = () => {
         </span>
       </div>
       <ClickAwayListener onClickAway={()=> show && setShow(false)}>
-      <span className={`${show?"  block absolute right-5 top-20 md:right-56":"hidden"}`}>
+      <span className={`${show?"  block absolute right-5 top-20 md:right-36":"hidden"}`}>
           <ProfileMenu />
       </span>
       </ClickAwayListener>
@@ -34,21 +34,32 @@ const ProfileMenu = () => {
   const { _signOut } = useAuthentication()
   return (
     <>
-      <div className={`w-40 h-20 rounded-md h-max  bg-white shadow-md absolute right-2 inset-y-full overflow-hidden z-50 `}>
-        <div className=" grid gap-2 text-xs place-items-center p-2 ">
-          <span className="flex gap-2">
-            <img src="/logout.png" alt="salir" className="w-6 h-6"/>
-            <button onClick={async()=>{_signOut()}}>cerrar sesion</button>
+      <div className={`w-28 h-32 rounded-md bg-slate-300 shadow-lg absolute right-2 inset-y-full overflow-hidden z-50 grid *gap-2 place-items-center  divide-y  p-2`}>
+        {/* <div className=" grid gap-2 text-xs place-items-center p-2 divide-y  "> */}
+          <span className="pt-1 cursor-pointer  ">
+            <Link href={process.env.NEXT_PUBLIC_EVENTSAPP??"/"} passHref>
+            
+            <a className="flex place-items-center gap-2">
+            <img src="/regreso.png" alt="volver" className="h-4 w-4" />  
+             app
+            </a>
+            </Link>
+            
           </span>
-          <span >
+          
+          <span className="pt-2 " >
             <Link href={"/configuracion"}>
-              <a className="flex gap-2 place-items-center">
+              <a className="flex gap-2 place-items-center ">
                 <UserIcon/>
                 perfil
               </a>
             </Link>
           </span>
-        </div>
+          <span className="flex gap-2 pt-2">
+            <img src="/logout.png" alt="salir" className="w-6 h-6"/>
+            <button onClick={async()=>{_signOut()}}>Salir</button>
+          </span>
+      {/*   </div> */}
       </div>
     </>
   );

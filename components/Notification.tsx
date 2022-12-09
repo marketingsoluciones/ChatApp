@@ -21,8 +21,8 @@ export const Notification: FC<propsNotication> = ({ valir, value, onClick }) => 
           <LedIndicator valir={valir} value={value} />
         </button>
         <ClickAwayListener onClickAway={()=>show && setShow(false)}>
-          <span className={`${show ? " md:translate-y-12 block absolute top-20 right-7 md:right-80" : "hidden"}`} >
-            {/* <NotificacionesMenu /> */}
+          <span className={`${show ? " md:translate-y-12 block absolute top-20 right-7 md:right-64" : "hidden"}`} >
+            <NotificacionesMenu />
           </span>
         </ClickAwayListener>
       </div>
