@@ -2,72 +2,98 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import Cookies from 'js-cookie';
 import { io } from "socket.io-client";
 //import { getCookie } from './utils/Cookies';
-
-
-type Fetching = {
-    graphql: CallableFunction
-    graphqlApp: CallableFunction
-    youtube: CallableFunction
-    restCountries: CallableFunction
-    socketIO: CallableFunction
-}
-
-
+import { getAuth } from "firebase/auth";
+import { parseJwt } from "./utils/Authentication";
+import { varGlobalDomain, varGlobalDevelopment, varGlobalSubdomain } from "./context/AuthContext"
 
 const instance: AxiosInstance = axios.create({ baseURL: process.env.NEXT_PUBLIC_BASE_URL })
 const instanceApp: AxiosInstance = axios.create({ baseURL: process.env.NEXT_PUBLIC_BASE_URL_APP })
 
+interface dataQuery {
+    query: string
+    variables: any
+}
 
-export const api: Fetching | any = {
-    graphql: async (data: object, token: string): Promise<AxiosResponse> => {
-        //let tokenFinal: string | null = token || Cookies.get("idTokenChat") || ""
-        const tokenFinal = Cookies.get("idTokenChat")
-        return await instance.post("/graphql", data, {
+interface ApisGraphql {
+    data: dataQuery | FormData
+}
+
+interface SocketConnet {
+    token: string
+    development: string
+    origin: string
+}
+
+type Fetching = {
+    ApiBodas: (args: ApisGraphql) => Promise<any>
+    ApiApp: (args: ApisGraphql) => Promise<any>
+    restCountries: CallableFunction
+    socketIOBodas: ({ token, development, origin }: SocketConnet) => any
+    socketIOApp: ({ token, development, origin }: SocketConnet) => any
+}
+
+export const api: Fetching = {
+    ApiBodas: async ({ data }: ApisGraphql) => {
+        if ('query' in data && 'variables' in data) {
+        }
+        let idToken = Cookies.get("idTokenChat")
+        if (getAuth().currentUser) {
+            //idToken = Cookies.get("idTokenChat")
+            if (!idToken) {
+                idToken = await getAuth().currentUser?.getIdToken(true)
+                const dateExpire = new Date(parseJwt(idToken ?? "").exp * 1000)
+                Cookies.set("idTokenChat", idToken ?? "", { domain: process.env.NEXT_PUBLIC_PRODUCTION ? varGlobalDomain : process.env.NEXT_PUBLIC_DOMINIO, expires: dateExpire })
+            }
+        }
+        return axios.post('https://api.bodasdehoy.com/graphql', data, {
             headers: {
-                Authorization: `Bearer ${tokenFinal}`
+                Authorization: `Bearer ${idToken}`,
+                Development: varGlobalDevelopment,
             }
         })
     },
-    graphqlApp: async (data: object, token: string): Promise<AxiosResponse> => {
-        //let tokenFinal: string | null = token || Cookies.get("idTokenChat") || ""
-        const tokenFinal = Cookies.get("idTokenChat")
-        return await instanceApp.post("/graphql", data, {
+
+    ApiApp: async ({ data }: ApisGraphql) => {
+        let idToken = Cookies.get("idTokenChat")
+        if (getAuth().currentUser) {
+            //idToken = Cookies.get("idTokenChat")
+            if (!idToken) {
+                idToken = await getAuth().currentUser?.getIdToken(true)
+                const dateExpire = new Date(parseJwt(idToken ?? "").exp * 1000)
+                Cookies.set("idTokenChat", idToken ?? "", { domain: process.env.NEXT_PUBLIC_PRODUCTION ? varGlobalDomain : process.env.NEXT_PUBLIC_DOMINIO, expires: dateExpire })
+            }
+        }
+        return axios.post('https://apiapp.bodasdehoy.com/graphql', data, {
             headers: {
-                Authorization: `Bearer ${tokenFinal}`
+                Authorization: `Bearer ${idToken}`,
+                Development: varGlobalDevelopment,
             }
         })
     },
-    youtube: async (data: any): Promise<AxiosResponse> => {
-        return await axios.get("https://www.googleapis.com/youtube/v3/search", {
-            params: {
-                key: process.env.NEXT_PUBLIC_API_KEY_CONSOLE_GOOGLE,
-                part: "id,snippet",
-                order: "date",
-                channelId: "UCuQNm4bt_zQc5miwSm4WYXA"
-            }
-        })
-    },
+
     restCountries: async (): Promise<AxiosResponse> => {
         return await axios.get('https://restcountries.com/v3.1/all')
     },
 
-    socketIO: ({ token }: { token: string }) => {
+    socketIOBodas: ({ token, development, origin }: SocketConnet) => {
         const socket = io(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
             auth: {
-                token: `Bearer ${token}`
+                token: `Bearer ${token}`,
+                development,
+                origin
             }
         })
-
         return socket
     },
 
-    socketIOApp: ({ token }: { token: string }) => {
+    socketIOApp: ({ token, development, origin }: SocketConnet) => {
         const socket = io(`${process.env.NEXT_PUBLIC_BASE_URL_APP}`, {
             auth: {
-                token: `Bearer ${token}`
+                token: `Bearer ${token}`,
+                development,
+                origin
             }
         })
-
         return socket
     }
 

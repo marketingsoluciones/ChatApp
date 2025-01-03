@@ -1,36 +1,39 @@
 import { FC, useState, MouseEventHandler, useEffect } from "react";
-import Button from '../Button'
 import { Notification } from '../Notification'
 import { Profile } from "../Profile"
-import { LogoBoda } from "../LogoBoda";
-
-
+import { AuthContextProvider } from "../../context";
+import Head from "next/head";
 
 export const Navigation: FC = () => {
+  const { config } = AuthContextProvider()
   const [valir, setValir] = useState<boolean>(false);
   const [value, setValue] = useState<number>(0);
-
 
   const handleClickNotification: MouseEventHandler = () => {
     setValir(false)
     setValue(0)
-    console.warn("desplegar notificaciones")
   }
   const handleInviteFriend: MouseEventHandler = () => {
-    console.log("click invitacion")
     setValue(value + 1)
   }
   useEffect(() => {
     if (value > 0) setValir(true)
   }, [value])
 
-
   return (
     <>
+      <Head>
+        <link id="favicon" rel="icon" href={config?.favicon} />
+        <title>Chat - {config?.headTitle}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="description" content="¡Bodas de Hoy Organizador! Organiza tu boda en un sólo click., user-scalable=no, width=device-width, initial-scale=1" />
+      </Head>
       <div className="h-16 w-full " />
-      <div className=" h-16 w-full shadow-md fixed top-0 bg-white z-100 absolute">
-        <nav className="flex justify-between items-center xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 md:px-0 w-full mx-auto inset-x-0 h-full">
-          <LogoBoda width={160} height={100} />
+      <div className="h-16 w-full shadow-md top-0 bg-white z-100 absolute">
+        <nav className="flex justify-between items-center xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 md:px-0 w-full mx-auto inset-x-0 h-full conte">
+          <div className=" w-80 h-10">
+            {config?.logoDirectory}
+          </div>
           <div className="flex items-center justify-between md:gap-4 h-full">
             {/* <Button title={"Invita amigos"} onClick={handleInviteFriend} className="hidden md:block bg-primary text-white px-3 py-2 rounded-lg text-sm transition hover:opacity-90" /> */}
             <Notification valir={valir} value={value} onClick={handleClickNotification} />

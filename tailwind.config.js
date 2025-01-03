@@ -12,28 +12,27 @@ module.exports = {
     extend: {
       colors: {
         ...colors,
-        primary: "#F7628C",
-        secondary: "#87F3B5",
-        tertiary: "#49516F",
-        "color-base": "#F2F2F2",
+        primary: `var(--color-primary)`,
+        secondary: `var(--color-secondary)`,
+        tertiary: `var(--color-tertiary)`,
+        "color-base": `var(--color-base)`,
         green: "#13ce66",
-        rose:"#FE8D99",
-        white:"#ffffff"
+        rose: "#FE8D99",
+        white: "#ffffff"
       },
       transitionProperty: {
         'height': 'height'
       },
-      spacing:{
-        '250':'250px',
-        '215':'215px',
-        '15':'15px',
-
+      spacing: {
+        '250': '250px',
+        '215': '215px',
+        '15': '15px',
       }
     },
   },
   variants: {
     extend: {
-     
+
     },
   },
   plugins: [],

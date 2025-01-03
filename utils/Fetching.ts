@@ -1,29 +1,21 @@
 import { api } from "../api";
-
-const types = {
-  json: "",
-  formData: "",
-};
+import { propsUseFetch } from "../hooks/useFetch";
 
 interface fetchApiProps {
-  query: string;
-  variables: object;
-  type: keyof typeof types;
-  token: string;
-  apiRoute?: string;
+  query: string
+  variables?: object
+  apiRoute: "ApiApp" | "ApiBodas"
+  type: "json" | "formData";
 }
-export const fetchApi: CallableFunction = async ({
-  query = ``,
-  variables = {},
-  type = "json",
-  token,
-  apiRoute = "graphql"
-}: fetchApiProps): Promise<any> => {
+
+
+
+export const fetchApi: (props: fetchApiProps) => Promise<any> = async ({ query, variables = {}, type = "json", apiRoute }) => {
   try {
     if (type === "json") {
       const {
         data: { data },
-      } = await api[`${apiRoute}`]({ query, variables }, token);
+      } = await api[`${apiRoute}`]({ data: { query, variables } });
       return Object.values(data)[0];
     } else if (type === "formData") {
       const formData = new FormData();
@@ -77,7 +69,7 @@ export const fetchApi: CallableFunction = async ({
         }
       });
 
-      const { data } = await api[`${apiRoute}`](formData, token);
+      const { data } = await api[`${apiRoute}`]({ data: formData });
 
       if (data.errors) {
         throw new Error(JSON.stringify(data.errors));
@@ -86,11 +78,11 @@ export const fetchApi: CallableFunction = async ({
       return Object.values(data.data)[0];
     }
   } catch (error) {
-    console.log(error);
+    console.log(error, apiRoute, query);
   }
 };
 
-type queries = {
+export type Queries = {
   getExistUser: string;
   getContacts: string;
   getEventsGuess: string
@@ -107,11 +99,127 @@ type queries = {
   getUser: string;
   deleteImages: string;
   singleUpload: string;
+  getEventsByID: string
+  getUsers: string
 };
 
-export const queries: queries = {
+export const queries: Queries = {
+  getUsers: `query ($uids:[ID]){
+    getUsers(uids:$uids){
+      uid
+      email
+      displayName
+      photoURL
+      onLine{
+        status
+        dateConection
+      }
+    }
+  }`,
+  getEventsByID: `query ($variable: String, $valor: String, $development: String!) {
+    queryenEvento( variable:$variable, valor:$valor, development:$development){
+      _id
+      development
+      compartido_array
+      detalles_compartidos_array{
+        email
+        uid
+        permissions{
+          title
+          value
+        }
+        createdAt
+        updatedAt
+      }
+      estatus
+      nombre
+      tipo
+      usuario_id
+      usuario_nombre
+      fecha
+      imgInvitacion{
+        _id
+        i1024
+        i800
+        i640
+        i320
+        createdAt
+      }
+      notificaciones_array{
+        _id
+        fecha_creacion
+        fecha_lectura
+        mensaje
+      }
+      itinerarios_array{
+        _id
+        title
+        tasks{
+          _id
+          fecha
+          hora
+          icon
+          descripcion
+          responsable
+          duracion
+          tags
+          tips
+          estatus
+          attachments{
+            _id
+            name
+            url
+            size
+            createdAt
+            updatedAt
+          }
+          spectatorView
+          comments{
+            _id
+            comment
+            uid
+            createdAt
+          }
+          commentsViewers
+        }
+        viewers
+        tipo
+        estatus
+      }
+      _id
+      invitados_array{
+        _id
+        nombre
+        grupo_edad
+        correo
+        telefono
+        chairs{
+          planSpaceID
+          sectionID
+          tableID
+          position
+          order
+        }
+        father
+        passesQuantity
+        nombre_mesa
+        puesto
+        asistencia
+        nombre_menu
+        rol
+        correo
+        sexo
+        movil
+        poblacion
+        pais
+        direccion
+        invitacion
+        fecha_invitacion
+      }
+    }
+  }`,
   getExistUser: `query($uid: String){
-    queryExisteInvitado(uid:$uid)
+    getExistUser(uid:$uid)
   }`,
   getContacts: `query($uid: String){
     queryenInvitados(uid:$uid){
@@ -283,7 +391,7 @@ export const GraphQL = {
   //   return getBussines;
   // },
 
-  uploadImage: async (file: any, id: string, use: string) => {
+  uploadImage: async (file: any, id: string, use: string, development: string) => {
     const newFile = new FormData();
     const params = {
       query: `mutation ($file: Upload!, $businessID : String, $use : String) {
@@ -324,7 +432,7 @@ export const GraphQL = {
       data: {
         data: { singleUpload },
       },
-    } = await api.graphql(newFile, config);
+    } = await api.ApiBodas({ data: newFile });
     return singleUpload;
   },
 };

@@ -5,7 +5,7 @@ import { AppleIcon, FacebookIcon2, GoogleIcon } from "../Icons/";
 import { useToast } from "../../hooks/useToast";
 import { LoadingContextProvider } from "../../context";
 import { useAuthentication } from "../../utils/Authentication";
-import {ButtonProvider} from "./Forms/ButtonProvider"
+import { ButtonProvider } from "./Forms/ButtonProvider"
 
 interface propsRegisterQuestion {
   onClick: MouseEventHandler;
@@ -25,8 +25,6 @@ export const RegisterQuestion: FC<propsRegisterQuestion> = ({ onClick }) => {
 };
 
 export const Providers: FC<any> = ({ setStage }) => {
-
-
   const { signIn } = useAuthentication();
   const toast = useToast();
   const { setLoading } = LoadingContextProvider();
@@ -58,19 +56,19 @@ export const Providers: FC<any> = ({ setStage }) => {
 
   return (
     <>
-    <div className={`text-center flex flex-col gap-2 w-full items-center `}>
-      {/* <div className="gap-4 flex items-center">
+      <div className={`text-center flex flex-col gap-2 w-full items-center `}>
+        {/* <div className="gap-4 flex items-center">
         {ListProviders.map((item, idx) => (
           <Icon key={idx} icon={item.icon} onClick={item.function} />
         ))}
       </div> */}
-      <div className="">
-        <ButtonProvider provider="Google" handle={GoogleProvider()} icon={<GoogleIcon className="ml-15 w-[20px] h-[20px] text-gray-500"/>}/>
-        <ButtonProvider provider="Facebook" handle={FacebookProvider} icon={<FacebookIcon2 className="ml-15 w-5 h-5 text-gray-500" />} />
-        <ButtonProvider provider="Apple" handle={AppleProvidor()} icon={<AppleIcon className="ml-15 w-[20px] h-[20px] text-gray-500" />}/>
+        <div className="">
+          <ButtonProvider provider="Google" handle={GoogleProvider()} icon={<GoogleIcon className="ml-15 w-[20px] h-[20px] text-gray-500" />} />
+          <ButtonProvider provider="Facebook" handle={FacebookProvider} icon={<FacebookIcon2 className="ml-15 w-5 h-5 text-gray-500" />} />
+          {/* <ButtonProvider provider="Apple" handle={AppleProvidor()} icon={<AppleIcon className="ml-15 w-[20px] h-[20px] text-gray-500" />}/> */}
+        </div>
       </div>
-    </div>
-    <style jsx>
+      <style jsx>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,600;1,400;1,600&display=swap');
         `}

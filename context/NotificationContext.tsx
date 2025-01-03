@@ -36,7 +36,7 @@ const NotificationProvider: FC = ({ children }): JSX.Element => {
   const [notication, setNotication, loadingContacts, errorContacts, fetchyApp] = useFetch({
     query: queries.getChats,
     variables: { uid: user?.uid },
-    apiRoute: "graphqlApp"
+    apiRoute: "ApiApp"
   });
 
   useEffect(() => {

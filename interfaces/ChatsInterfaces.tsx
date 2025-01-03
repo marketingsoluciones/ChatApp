@@ -17,9 +17,31 @@ export interface Contact {
   correo: string,
   eventos: Event[]
 }
+
+interface permission {
+  title: string
+  value: string
+}
+
+export interface detalles_compartidos_array {
+  uid: string
+  email: string
+  displayName: string
+  photoURL: string
+  onLine: onLine
+  permissions?: permission[]
+  owner?: boolean
+  createdAt?: Date
+  updatedAt?: Date
+  icon?: any
+}
+
 export interface Event {
   _id: string,
   nombre: string
+  compartido_array: string[]
+  detalles_compartidos_array: detalles_compartidos_array[]
+  usuario_id: string
 }
 export interface Chat {
   _id: string

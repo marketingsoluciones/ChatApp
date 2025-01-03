@@ -1,12 +1,24 @@
 import { useCallback } from "react";
-import { signInWithPopup, UserCredential, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithPopup, UserCredential, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, getAuth } from 'firebase/auth';
 import { useRouter } from "next/router";
 import Cookies from 'js-cookie';
 
 import { LoadingContextProvider, AuthContextProvider } from "../context";
-import { auth } from "../firebase";
 import { fetchApi, queries } from "./Fetching";
 import { useToast } from "../hooks/useToast";
+
+export const parseJwt = (token: string) => {
+  if (token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  }
+  return {}
+}
 
 export const useAuthentication = () => {
   //console.log("entro")
@@ -20,6 +32,8 @@ export const useAuthentication = () => {
       const authResult = await fetchApi({
         query: queries.auth,
         variables: { idToken: tokenID },
+        apiRoute: "ApiBodas",
+        type: "json"
       });
       if (authResult?.sessionCookie) {
         const { sessionCookie } = authResult;
@@ -48,22 +62,30 @@ export const useAuthentication = () => {
           5.- Mutar el contexto User de React con los datos de Firebase + MoreInfo (API BODAS)
       */
       setLoading(true);
+      console.log(100030, getAuth(), { type, payload })
 
       const types = {
-        provider: async () => await signInWithPopup(auth, payload),
-        credentials: async () => await signInWithEmailAndPassword(auth, payload.identifier, payload.password)
+        provider: async () => await signInWithPopup(getAuth(), payload),
+        credentials: async () => {
+          try {
+            return await signInWithEmailAndPassword(getAuth(), payload.identifier, payload.password)
+          } catch (error) {
+            toast("error", "usuario o contraseña inválida")
+          }
+        }
       };
 
       // Autenticar con firebase
       try {
-        const res: UserCredential = await types[type]();
+        const res: UserCredential | void = await types[type]();
+        console.log(100031, res)
         if (res) {
           const token = (await res?.user?.getIdTokenResult())?.token;
           const exist = await fetchApi({
             query: queries.getExistUser,
             variables: { uid: res?.user?.uid },
-            token: token,
-            apiRoute: "graphqlApp"
+            apiRoute: "ApiApp",
+            type: "json"
           })
           if (!exist) {
             throw new Error('user does not exist into events bd')
@@ -76,6 +98,8 @@ export const useAuthentication = () => {
             const moreInfo = await fetchApi({
               query: queries.getUser,
               variables: { uid: res.user.uid },
+              apiRoute: "ApiBodas",
+              type: "json"
             });
             if (moreInfo?.errors) {
               throw Error("no hay datos bd");
@@ -104,11 +128,10 @@ export const useAuthentication = () => {
             toast("error", "debes estar invitado a un evento para poder ingresar");
             break;
           default:
+            console.log("error", error)
+            console.log("errorCode", error?.code ? error.code : error?.message)
             break;
         }
-
-        console.log("error", error)
-        console.log("errorCode", error?.code ? error.code : error?.message)
       }
       setLoading(false);
     },
@@ -116,22 +139,24 @@ export const useAuthentication = () => {
   );
 
   const _signOut = useCallback(async () => {
-    await fetchApi({ query: queries.signOut, variables: { sessionCookie: Cookies.get("sessionChat") } })
+    await fetchApi({
+      query: queries.signOut,
+      variables: { sessionCookie: Cookies.get("sessionChat") },
+      apiRoute: "ApiBodas",
+      type: "json"
+    })
     Cookies.remove("sessionChat", { domain: process.env.NEXT_PUBLIC_DOMINIO ?? "" });
     Cookies.remove("idTokenChat");
     setUser(null);
-    await signOut(auth);
+    await signOut(getAuth());
     await router.push("/");
     toast("success", "Gracias por visitarnos, te esperamos luego 😀");
   }, [router, setUser, toast])
 
-
-
-
   const resetPassword = async (values: any, setStage: any) => {// funcion para conectar con con firebase para enviar el correo 
     if (values?.identifier !== "") {
       try {
-        await sendPasswordResetEmail(auth, values?.identifier);
+        await sendPasswordResetEmail(getAuth(), values?.identifier);
         setStage("login")
         toast("success", "Email enviado correctamente")
       } catch (error) {
@@ -142,7 +167,6 @@ export const useAuthentication = () => {
       toast("error", "introduce un correo")
     }
   };
-
 
   return { signIn, getSessionCookie, _signOut, resetPassword };
 

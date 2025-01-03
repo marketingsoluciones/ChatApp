@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { api } from '../api';
 
-interface propsUseFetch {
-  query: string | undefined
-  variables?: object | undefined
-  config?: object | undefined
-  apiRoute?: string
+export interface propsUseFetch {
+  query: string
+  variables?: object
+  config?: object
+  apiRoute: "ApiApp" | "ApiBodas"
 }
 
-const useFetch = ({ query, variables, config = {} }: propsUseFetch) => {
+const useFetch = ({ query, variables, config = {}, apiRoute }: propsUseFetch) => {
   const isMounted = useRef(true);
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,13 +20,13 @@ const useFetch = ({ query, variables, config = {} }: propsUseFetch) => {
     };
   }, []);
 
-  const fetchData = async ({ query, variables, config = {}, apiRoute = "graphql" }: Partial<propsUseFetch>) => {
+  const fetchData = async ({ query, variables, config = {}, apiRoute }: propsUseFetch) => {
     try {
       setData(null)
       setError(false)
       setLoading(true)
       if (query && variables) {
-        const { data: { data } } = await api[`${apiRoute}`]({ query, variables }, config)
+        const { data: { data } } = await api[`${apiRoute}`]({ data: { query, variables } })
         isMounted.current && setData(Object.values(data)[0])
       } else {
         throw new Error("No tengo query o variables")
@@ -40,7 +40,7 @@ const useFetch = ({ query, variables, config = {} }: propsUseFetch) => {
   }
 
   useEffect(() => {
-    isMounted.current && fetchData({ query, variables, config })
+    isMounted.current && fetchData({ query, variables, config, apiRoute })
   }, [query]);
 
   return [data, setData, loading, error, fetchData]

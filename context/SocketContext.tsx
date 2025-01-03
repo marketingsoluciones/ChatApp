@@ -18,17 +18,25 @@ const initialContext: Context = {
 const SocketContext = createContext<Context>(initialContext);
 
 const SocketProvider: FC = ({ children }): JSX.Element => {
-  const { user } = AuthContextProvider()
+  const { user, config } = AuthContextProvider()
   const [socket, setSocket] = useState<Socket | null>(initialContext.socket);
   const [socketApp, setSocketApp] = useState<Socket | null>(initialContext.socket);
 
   useEffect(() => {
     const token = Cookies.get("idTokenChat")
     if (token && !socket?.connected) {
-      setSocket(api.socketIO({ token }));
+      setSocket(api.socketIOBodas({
+        token,
+        development: config.development,
+        origin: window?.origin
+      }));
     }
     if (token && !socketApp?.connected) {
-      setSocketApp(api.socketIOApp({ token }));
+      setSocketApp(api.socketIOApp({
+        token,
+        development: config.development,
+        origin: window?.origin
+      }));
     }
     if (!token && socket) {
       socket.disconnect();

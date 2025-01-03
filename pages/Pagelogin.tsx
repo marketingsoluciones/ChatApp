@@ -1,13 +1,10 @@
 import { FC, ReactNode, useEffect, useState } from "react";
-import { ButtonClose } from "../components/Inputs";
 import router from "next/router";
 import { Login } from '../components/Login/Login';
 import { LoadingContextProvider } from '../context';
-import { UserMax } from "../context/AuthContext";
 import { ResetPass } from "../components/Login/Forms/FormResetPass";
 import { Register } from "../components/Login/Forms/FormRegister";
-import { LogoFullColor } from "../components/Icons/";
-//import { AuthContextProvider } from "../context";
+
 
 // Tipos de datos personalizados
 type Forms = {
@@ -26,9 +23,9 @@ const PageLogin: FC<propsPageLogin> = ({ valir }) => {
   const { setLoading } = LoadingContextProvider()
 
   useEffect(() => {
-    console.log("useEffect")
+    console.log(100055, "useEffect")
     setLoading(false);
-  }, [setLoading]);
+  }, []);
 
   //const { user } = AuthContextProvider();
   const [stage, setStage] = useState<keyof typeof Stages>(valir ? "login" : "register");
@@ -72,8 +69,8 @@ const PageLogin: FC<propsPageLogin> = ({ valir }) => {
     <>
       <div className="w-screen fixed h-full top-0 left-0 md:grid z-30 grid-cols-5">
         <div className="w-full h-full col-span-3 relative flex items-center justify-center">
-     
-          <div className="flex flex-col items-center gap-4 w-full px-10 md:px-0 sm:w-3/4 md:w-2/3">            
+
+          <div className="flex flex-col items-center gap-4 w-full px-10 md:px-0 sm:w-3/4 md:w-2/3">
             {Stages[stage]}
           </div>
         </div>

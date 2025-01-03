@@ -29,7 +29,7 @@ const ImageProfile: FC = () => {
     const { user, setUser } = AuthContextProvider()
     const [loading, setLoading] = useState<boolean>(false)
     const toast = useToast();
-        
+
 
     const handleChange = async (e: any) => {
         setLoading(true)
@@ -65,18 +65,18 @@ const ImageProfile: FC = () => {
             toast("error", "error al cargar la imagen")
             console.log(error)
         }
-        
+
     }
 
     return (
         <div>
             <label htmlFor="photo" className={"relative"}>
-                    <img src={user?.photoURL ?? "/placeholder/user.png"} alt={"imagen del perfil"} className={"border-primary border-2 rounded-full objeto-cover h-40 w-40 hover:opacity-50 cursor-pointer object-cover object-center" }  />
-                    {loading && (
-                        <div className="flex items-center justify-center h-40 w-40 rounded-full bg-primary bg-opacity-90 absolute top-0 left-0 text-white">
-                        <LoadingItem size="small" text="Cargando"/>
+                <img src={user?.photoURL ?? "/placeholder/user.png"} alt={"imagen del perfil"} className={"border-primary border-2 rounded-full objeto-cover h-40 w-40 hover:opacity-50 cursor-pointer object-cover object-center"} />
+                {loading && (
+                    <div className="flex items-center justify-center h-40 w-40 rounded-full bg-primary bg-opacity-90 absolute top-0 left-0 text-white">
+                        <LoadingItem size="small" text="Cargando" />
                     </div>
-                    )}
+                )}
             </label>
             <input type="file" id="photo" name="photo" className="hidden" onChange={handleChange} />
         </div>

@@ -1,68 +1,59 @@
-import { Chat, Contact, Notification, Event } from '../interfaces/';
+import { Chat, Contact, Notification, Event, detalles_compartidos_array } from '../interfaces/';
 import { SetStateAction, useEffect, useState, useCallback } from 'react';
-import { queries } from '../utils/Fetching';
+import { fetchApi, queries } from '../utils/Fetching';
 import { AuthContextProvider, SocketContextProvider, NotificationContextProvider } from '.';
 import { createContext, FC, Dispatch, useContext } from "react";
-import useFetch from '../hooks/useFetch';
 import { HandleCreateChat, HandleDataContacts, HandleDataNotifications, HandleDataEvents, HandleReceivesMessage } from '../handles'
 
 interface stateConversation {
   state: boolean;
-  data: Chat | null;
+  data: Chat | null
 }
 interface ResultFetchChats {
-  received: number | null;
-  total1: number | null;
-  results: Chat[];
+  received: number
+  total: number
+  results: Chat[]
 }
 interface ResultFetchContacts {
-  total: number | null;
-  results: Contact[];
+  total: number
+  results: Contact[]
 }
 interface ResultFetchNotifification {
-  total: number | null;
-  results: Notification[];
+  total: number
+  results: Notification[]
 }
 interface ResultFetchEvent {
-  total: number | null;
-  results: Event[];
+  total: number
+  results: Event[]
 }
 
 type Context = {
   chats: ResultFetchChats
   setChats: Dispatch<SetStateAction<ResultFetchChats>>
-  loadingChats?: boolean
-  errorChats?: boolean
-  fetch?: any
-  fetchy?: any
-  conversation?: stateConversation | null,
+  conversation?: stateConversation
   setConversation: Dispatch<SetStateAction<stateConversation>>
-  show?: boolean,
-  setShow: Dispatch<SetStateAction<boolean>>,
-  contacts: ResultFetchContacts,
+  show?: boolean
+  setShow: Dispatch<SetStateAction<boolean>>
+  contacts: ResultFetchContacts
   setContacts: Dispatch<SetStateAction<ResultFetchContacts>>
-  notifications: ResultFetchNotifification;
-  setNotifications: Dispatch<SetStateAction<Partial<Context | null>>>
-  events: ResultFetchEvent;
-  setEvents: Dispatch<SetStateAction<Partial<Context | null>>>
+  notifications: ResultFetchNotifification
+  setNotifications: Dispatch<SetStateAction<ResultFetchNotifification>>
+  events: ResultFetchEvent
+  setEvents: Dispatch<SetStateAction<ResultFetchEvent>>
 };
 
 const initialContext: Context = {
-  chats: { received: 0, total1: null, results: [] },
+  chats: { total: 0, received: 0, results: [] },
   setChats: () => null,
-  loadingChats: false,
-  errorChats: false,
-  fetch: () => { },
-  fetchy: () => { },
-  conversation: null,
+  conversation: { data: null, state: false },
   setConversation: () => { },
   show: false,
   setShow: () => { },
-  contacts: { total: null, results: [] },
+  contacts: { total: 0, results: [] },
   setContacts: () => null,
-  notifications: { total: null, results: [] },
+  notifications: { total: 0, results: [] },
   setNotifications: () => { },
-  events: { total: null, results: [] },
+  events: { total: 0, results: [] },
   setEvents: () => { }
 };
 
@@ -70,41 +61,55 @@ const ChatContext = createContext<Context>(initialContext);
 const initialState = { state: false, data: null };
 
 const ChatProvider: FC = ({ children }): JSX.Element => {
-  const { user } = AuthContextProvider()
-  const { socket, socketApp } = SocketContextProvider();
+  const { user, config, verificationDone } = AuthContextProvider()
+  const { socket, socketApp } = SocketContextProvider()
   const [limit, setLimit] = useState(20)
   const [skip, setSkip] = useState(0)
   const [show, setShow] = useState(false)
-  const [conversation, setConversation] = useState<stateConversation>(initialState);
+  const [conversation, setConversation] = useState<stateConversation>({ data: null, state: false })
+  const [chats, setChats] = useState<ResultFetchChats>({ received: 0, total: 0, results: [] })
+  const [contacts, setContacts] = useState<ResultFetchContacts>({ total: 0, results: [] })
+  const [events, setEvents] = useState<ResultFetchEvent>({ total: 0, results: [] })
+  const [notifications, setNotifications] = useState<ResultFetchNotifification>({ total: 0, results: [] })
   const [isMounted, setIsMounted] = useState(false)
-  const [chats, setChats, loadingChats, errorChats, fetchy] = useFetch({
-    query: queries.getChats,
-    variables: { uid: user?.uid },
-  });
-  const [contacts, setContacts, loadingContacts, errorContacts, fetchyApp] = useFetch({
-    query: queries.getChats,
-    variables: { uid: user?.uid },
-    apiRoute: "graphqlApp"
-  });
-  const [notifications, setNotifications, loadingNotifications, errorNotifications, fetchyNotifications] = useFetch({
-    query: queries.getChats,
-    variables: { uid: user?.uid },
-    apiRoute: "graphqlApp"
-  });
-  const [events, setEvents, loadingEvents, errorEvents, fetchyEvents] = useFetch({
-    query: queries.getEventsGuess,
-    variables: { uid: user?.uid },
-    apiRoute: "graphqlApp"
-  });
-  const fetch = () => {
-    fetchy({ query: queries.getChats, variables: { uid: user?.uid, origin: "chatevents", limit, skip } });
+
+  const getEvents = async () => {
+    try {
+      const eventsGuess: ResultFetchEvent = await fetchApi({
+        query: queries.getEventsGuess,
+        variables: { uid: user?.uid },
+        apiRoute: "ApiApp",
+        type: 'json'
+      })
+      const eventsOwner: Event[] = await fetchApi({
+        query: queries.getEventsByID,
+        variables: { variable: "usuario_id", valor: user?.uid, development: config?.development },
+        apiRoute: "ApiApp",
+        type: 'json'
+      })
+      console.log(100084, { eventsGuess, eventsOwner })
+      let eventsResult: Event[] = [...eventsGuess.results, ...eventsOwner]
+      const uniqueEvents: Event[] = [];
+      const seenIds: any = {};
+
+      for (const item of eventsResult) {
+        if (!seenIds[item._id]) {
+          uniqueEvents.push(item);
+          seenIds[item._id] = true;
+        }
+      }
+      return uniqueEvents
+    } catch (error) {
+      console.log(error)
+      return []
+    }
   }
 
   useEffect(() => {
     if (!isMounted && chats?.total > 0 && contacts?.total > 0) {
       setIsMounted(true)
-      const resultsReduce = chats.results.reduce((acc: any, item: any) => {
-        const itemFilter = contacts.results.filter((elem: any) => elem.uid == item.addedes[0]?.userUid)[0]
+      const resultsReduce = chats?.results.reduce((acc: any, item: any) => {
+        const itemFilter = contacts?.results.filter((elem: any) => elem.uid == item.addedes[0]?.userUid)[0]
         const itemNew = {
           ...item, title: itemFilter?.nickName, photoURL: itemFilter?.photoURL
         }
@@ -122,10 +127,81 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
   }, [chats, contacts, isMounted, setChats]);
 
   useEffect(() => {
-    fetchy({ query: queries.getChats, variables: { uid: user?.uid, origin: "chatevents", limit, skip } });
-    fetchyApp({ query: queries.getContacts, variables: { uid: user?.uid }, apiRoute: "graphqlApp" })
-    fetchyEvents({ query: queries.getEventsGuess, variables: { uid: user?.uid }, apiRoute: "graphqlApp" })
-  }, [user?.uid]);
+    if (verificationDone) {
+      fetchApi({
+        query: queries.getChats,
+        variables: { uid: user?.uid, origin: "chatevents", limit, skip },
+        apiRoute: "ApiBodas",
+        type: 'json'
+      }).then(result => setChats(result))
+      fetchApi({
+        query: queries.getContacts,
+        variables: { uid: user?.uid },
+        apiRoute: "ApiApp",
+        type: 'json'
+      }).then(result => setContacts(result))
+
+      getEvents()
+        .then(results => {
+          const events = {
+            total: results.length,
+            results: results
+          }
+          setEvents({ ...events })
+          interface Acc {
+            uid: string
+            eventos: Event[]
+            correo?: string
+          }
+          const moreContacts = events.results.reduce((acc: Acc[], item) => {
+            if (item.usuario_id !== user?.uid) {
+              const f1 = acc.findIndex(el => el.uid === item.usuario_id)
+              if (f1 < 0) {
+                acc.push({
+                  uid: item.usuario_id,
+                  eventos: [item]
+                })
+              } else {
+                acc[f1].eventos.push(item)
+              }
+            }
+            item.detalles_compartidos_array.map(elem => {
+              if (elem.uid !== user?.uid) {
+                const f1 = acc.findIndex(el => el.uid === elem.uid)
+                if (f1 < 0) {
+                  acc.push({
+                    uid: elem.uid,
+                    correo: elem.email,
+                    eventos: [item]
+                  })
+                } else {
+                  acc[f1].eventos.push(item)
+                }
+              }
+            })
+            return acc
+          }, [])
+          const allContacts = [...contacts?.results ?? [], ...moreContacts] as Contact[]
+          const uids = allContacts.map(elem => elem.uid)
+          fetchApi({
+            query: queries.getUsers,
+            variables: { uids },
+            apiRoute: "ApiBodas",
+            type: 'json'
+          }).then(result => {
+            const contacts = allContacts.map(elem => {
+              const f1 = result.findIndex((el: { uid: string; }) => el.uid === elem.uid)
+              return { ...elem, ...result[f1], nickName: result[f1]?.displayName }
+            })
+            console.log(contacts)
+            setContacts({
+              total: contacts.length,
+              results: [...contacts]
+            })
+          })
+        })
+    }
+  }, [user?.uid, verificationDone]);
 
   const handleCreateChat = (() => {
     // console.log(11223311, contacts)
@@ -173,7 +249,7 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
   }, [socketApp, handleDataContacts, handleDataNotifications, handleDataEvents]);
 
   return (
-    <ChatContext.Provider value={{ chats, setChats, loadingChats, errorChats, conversation, setConversation, fetchy, show, setShow, contacts, setContacts, notifications, setNotifications, events, setEvents }}>
+    <ChatContext.Provider value={{ chats, setChats, conversation, setConversation, show, setShow, contacts, setContacts, notifications, setNotifications, events, setEvents }}>
       {children}
     </ChatContext.Provider>
   );
