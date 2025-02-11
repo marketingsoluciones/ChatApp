@@ -126,11 +126,10 @@ const AuthProvider: FC = ({ children }): JSX.Element => {
       varGlobalDomain = resp?.domain
       varGlobalSubdomain = resp?.subdomain
       varGlobalDevelopment = resp?.development
-      console.log(resp)
+
       setConfig(resp)
       try {
         initializeApp(resp?.fileConfig)
-        console.log(100051, getAuth())
       } catch (error) {
         console.log(90001, error)
       }

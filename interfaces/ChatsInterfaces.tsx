@@ -49,13 +49,13 @@ export interface Chat {
   messages: messageChat[]
   createdAt: number
   updatedAt: number
-  onLine: string
+  onLine: online
   title: string
   type: string
   photoURL: string
 }
 interface onLine {
-  status: Boolean
+  status: boolean
   dateConection: number
 }
 interface addedes {

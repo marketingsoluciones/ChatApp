@@ -13,6 +13,7 @@
     "@types/js-cookie": "^3.0.1",
     "@types/react-transition-group": "^4.4.5",
     "axios": "^0.26.1",
+    "chat-component-library": "^0.1.2",
     "emoji-mart": "^3.0.1",
     "firebase": "^9.6.11",
     "formik": "^2.2.9",

@@ -78,7 +78,6 @@ export const useAuthentication = () => {
       // Autenticar con firebase
       try {
         const res: UserCredential | void = await types[type]();
-        console.log(100031, res)
         if (res) {
           const token = (await res?.user?.getIdTokenResult())?.token;
           const exist = await fetchApi({

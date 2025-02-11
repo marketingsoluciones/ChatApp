@@ -16,9 +16,6 @@ module.exports = {
         secondary: `var(--color-secondary)`,
         tertiary: `var(--color-tertiary)`,
         "color-base": `var(--color-base)`,
-        green: "#13ce66",
-        rose: "#FE8D99",
-        white: "#ffffff"
       },
       transitionProperty: {
         'height': 'height'

@@ -22,12 +22,6 @@ export const Navigation: FC = () => {
 
   return (
     <>
-      <Head>
-        <link id="favicon" rel="icon" href={config?.favicon} />
-        <title>Chat - {config?.headTitle}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="description" content="¡Bodas de Hoy Organizador! Organiza tu boda en un sólo click., user-scalable=no, width=device-width, initial-scale=1" />
-      </Head>
       <div className="h-16 w-full " />
       <div className="h-16 w-full shadow-md top-0 bg-white z-100 absolute">
         <nav className="flex justify-between items-center xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md px-5 md:px-0 w-full mx-auto inset-x-0 h-full conte">

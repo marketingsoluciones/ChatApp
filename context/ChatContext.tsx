@@ -87,7 +87,7 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
         apiRoute: "ApiApp",
         type: 'json'
       })
-      console.log(100084, { eventsGuess, eventsOwner })
+
       let eventsResult: Event[] = [...eventsGuess.results, ...eventsOwner]
       const uniqueEvents: Event[] = [];
       const seenIds: any = {};
@@ -193,7 +193,6 @@ const ChatProvider: FC = ({ children }): JSX.Element => {
               const f1 = result.findIndex((el: { uid: string; }) => el.uid === elem.uid)
               return { ...elem, ...result[f1], nickName: result[f1]?.displayName }
             })
-            console.log(contacts)
             setContacts({
               total: contacts.length,
               results: [...contacts]

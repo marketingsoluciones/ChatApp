@@ -91,7 +91,7 @@ export const developments: ConfigDevelopment[] = [
     pathSignout: "https://bodasdehoy.com/signout",
     pathPerfil: "https://bodasdehoy.com/configuracion",
     pathDirectory: "https://bodasdehoy.com",
-    logoDirectory: <LogoNuevoBodasBlanco className="hover:opacity-80 transition text-primary w-full h-full object-contain" />,
+    logoDirectory: <LogoNuevoBodasBlanco className="hover:opacity-80 transition text-primary w-full h-7 md:h-9 object-contain" />,
     navbarDirectory: [{
       title: "Novia",
       path: "categoria/novias"
@@ -126,7 +126,7 @@ export const developments: ConfigDevelopment[] = [
     cookieGuest: "guestplanicador",
     pathDomain: "https://eventosplanificador.com",
     pathLogin: "",
-    logoDirectory: <LogoEventosOrganizador className="hover:opacity-80 transition text-primary w-full h-full object-contain" />,
+    logoDirectory: <LogoEventosOrganizador className="hover:opacity-80 transition text-primary w-full h-7 md:h-9 object-contain" />,
     headTitle: "Planificador de Eventos",
     theme: {
       primaryColor: "#6771ae",
@@ -145,7 +145,7 @@ export const developments: ConfigDevelopment[] = [
     cookieGuest: "guestorganizador",
     pathDomain: "https://eventosorganizador.com",
     pathLogin: "",
-    logoDirectory: <LogoEventosOrganizador className="hover:opacity-80 transition text-primary w-full h-full object-contain" />,
+    logoDirectory: <LogoEventosOrganizador className="hover:opacity-80 transition text-primary w-full h-7 md:h-9 object-contain" />,
     headTitle: "Organizador de Eventos",
     theme: {
       primaryColor: "#6096B9"/* "#6771ae" */,
@@ -165,7 +165,7 @@ export const developments: ConfigDevelopment[] = [
     pathDomain: "https://vivetuboda.com",
     pathLogin: "",
     pathDirectory: "http://vivetuboda.com",
-    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-full object-contain" src="/LogoVivetuboda.png" />,
+    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-7 md:h-9 object-contain" src="LogoVivetuboda.png" />,
     headTitle: "Organizador de Eventos",
     theme: {
       primaryColor: "#F4A4A4"/* "#6771ae" */,
@@ -185,7 +185,7 @@ export const developments: ConfigDevelopment[] = [
     pathDomain: "https://www.champagne-events.com.mx/",
     pathLogin: "",
     pathDirectory: "champagne-events.com.mx",
-    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-full object-contain" src="https://i.ibb.co/Nsr8LgX/cropped-Logo-Gray-Champagne-1.png" />,
+    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-7 md:h-9 object-contain" src="https://i.ibb.co/Nsr8LgX/cropped-Logo-Gray-Champagne-1.png" />,
     headTitle: "App Champagne Event Planner",
     favicon: "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://champagne-events.com.mx/en/destination-weddings&size=16",
     theme: {
@@ -206,7 +206,7 @@ export const developments: ConfigDevelopment[] = [
     pathDomain: "https://annloevents.com/",
     pathLogin: "",
     pathDirectory: "annloevents.com",
-    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-full object-contain" src="https://i.ibb.co/R6by86b/logotipo-annlo-events.png" />,
+    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-7 md:h-9 object-contain" src="https://i.ibb.co/R6by86b/logotipo-annlo-events.png" />,
     headTitle: "Planificador Ann Lo Events",
     favicon: "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://annloevents.com&size=16",
     theme: {
@@ -227,7 +227,7 @@ export const developments: ConfigDevelopment[] = [
     pathDomain: "https://miamorcitocorazon.mx/",
     pathLogin: "",
     pathDirectory: "miamorcitocorazon.mx",
-    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-full object-contain" src="https://i.ibb.co/L8bTqBf/Amorcito-Corazon2.png" />,
+    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-7 md:h-9 object-contain" src="https://i.ibb.co/L8bTqBf/Amorcito-Corazon2.png" />,
     headTitle: "Planificador Ann Lo Events",
     favicon: "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://miamorcitocorazon.mx&size=16",
     theme: {
@@ -248,7 +248,7 @@ export const developments: ConfigDevelopment[] = [
     pathDomain: "https://eventosintegrados.com/",
     pathLogin: "",
     pathDirectory: "eventosintegrados.com",
-    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-full object-contain" src="https://i.ibb.co/p3qm62p/image-2-1.png" />,
+    logoDirectory: <img className="hover:opacity-80 transition text-primary w-full h-7 md:h-9 object-contain" src="https://i.ibb.co/p3qm62p/image-2-1.png" />,
     headTitle: "App - Eventos Empresariales, bodas a nivel nacional, wennding planner",
     favicon: "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://eventosintegrados.com&size=16",
     theme: {

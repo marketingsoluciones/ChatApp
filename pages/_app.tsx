@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import DefaultLayout from '../layouts/DefaultLayout'
 import { BackButtonListener } from '../components/BackButtonListener'
 import { AuthContextProvider } from '../context'
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -21,6 +22,12 @@ const Load = () => {
 
   return (
     <>
+      <Head>
+        <link id="favicon" rel="icon" href={config?.favicon} />
+        <title>{config?.headTitle}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="description" content="¡Bodas de Hoy Organizador! Organiza tu boda en un sólo click., user-scalable=no, width=device-width, initial-scale=1" />
+      </Head>
       <style jsx global>
         {`
       :root {
